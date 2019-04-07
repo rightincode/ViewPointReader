@@ -24,7 +24,7 @@ namespace ViewPointReader.Web
 
         private static List<VprWebSearchResult> BuildSearchResults(Task<SearchResponse> response)
         {
-            return response.Result.WebPages.Value.Select(webPage => 
+            return response.Result.WebPages.Value?.Select(webPage => 
                 new VprWebSearchResult
                 {
                     Id = webPage.Id,

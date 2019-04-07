@@ -11,7 +11,7 @@ namespace ViewPointReader.Rss.UnitTests.SearchingForRssFeed
         {
             var reader = new ViewPointReader();
 
-            var results = await reader.SearchForFeeds("Xamarin");
+            var results = await reader.SearchForFeeds("business success");
 
             Assert.IsTrue(results.Count > 0);
         }

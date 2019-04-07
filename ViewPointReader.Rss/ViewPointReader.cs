@@ -20,33 +20,33 @@ namespace ViewPointReader.Rss
             throw new NotImplementedException();
         }
 
-        public async Task<List<FeedItem>> SearchForFeeds(string queryText)
+        public async Task<List<Feed>> SearchForFeeds(string queryText)
         {
-            var results = new List<FeedItem>();
+            var results = new List<Feed>();
 
             var webSearchResults = await _vprWebSearchClient.SearchAsync(queryText);
-
-            //webSearchResults.ForEach(async x =>
-            //{
-            //    var htmlFeedLinks = await FeedReader.GetFeedUrlsFromUrlAsync(x.Url);
-
-            //    //results.AddRange(htmlFeedLinks.Select(htmlFeedLink => new FeedItem {Title = htmlFeedLink.Title, Link = htmlFeedLink.Url}));
-
-            //    foreach (var htmlFeedLink in htmlFeedLinks)
-            //    {
-            //        results.Add(new FeedItem
-            //        {
-            //            Title = htmlFeedLink.Title,
-            //            Link = htmlFeedLink.Url
-            //        });
-            //    }
-            //});
 
             foreach (var vprWebSearchResult in webSearchResults)
             {
                 var htmlFeedLinks = await FeedReader.GetFeedUrlsFromUrlAsync(vprWebSearchResult.Url);
 
-                results.AddRange(htmlFeedLinks.Select(htmlFeedLink => new FeedItem {Title = htmlFeedLink.Title, Link = htmlFeedLink.Url}));  
+                foreach (var htmlFeedLink in htmlFeedLinks)
+                {
+                    try
+                    {
+                        var feed = await FeedReader.ReadAsync(htmlFeedLink.Url);
+
+                        if (feed.Items.Count > 0)
+                        {
+                            results.Add(feed);  
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        Console.WriteLine(e);
+                        //throw;
+                    }
+                }
             }
 
             return results;

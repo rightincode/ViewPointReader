@@ -1,14 +1,14 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Threading.Tasks;
 
-namespace ViewPointReader.Rss.UnitTests.SearchingForRssFeed
+namespace ViewPointReader.Rss.IntegrationTests.SearchingForRssFeed
 {
     [TestClass]
     public class WhenPerformingASearch
     {
         [TestMethod]
         [Ignore]
-        public async Task AnyTheSearchIsValid()
+        public async Task AndTheSearchIsValid()
         {
             var reader = new ViewPointReader();
 

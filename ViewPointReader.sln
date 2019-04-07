@@ -13,15 +13,17 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ViewPointReader.Web", "View
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ViewPointReader.Web.UnitTests", "ViewPointReader.Web.UnitTests\ViewPointReader.Web.UnitTests.csproj", "{E5FA65D4-7A79-4D01-970C-AD5A85B7E2E4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ViewPointReader.Web.IntegrationTests", "ViewPointReader.Web.IntegrationTests\ViewPointReader.Web.IntegrationTests.csproj", "{C91B2B29-2FA6-4D38-9552-5CC17BB06BAF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ViewPointReader.Web.IntegrationTests", "ViewPointReader.Web.IntegrationTests\ViewPointReader.Web.IntegrationTests.csproj", "{C91B2B29-2FA6-4D38-9552-5CC17BB06BAF}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FeedReader", "..\FeedReader\FeedReader\FeedReader.csproj", "{3113E432-CAF3-43D6-ABB7-A630016E39C5}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FeedReader.Tests", "..\FeedReader\FeedReader.Tests\FeedReader.Tests.csproj", "{CE70B54F-0456-4854-8FA9-F6C70F943ABC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ViewPointReader.Rss", "ViewPointReader.Rss\ViewPointReader.Rss.csproj", "{E24390BC-0155-4566-B686-6467F22B57A2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ViewPointReader.Rss", "ViewPointReader.Rss\ViewPointReader.Rss.csproj", "{E24390BC-0155-4566-B686-6467F22B57A2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ViewPointReader.Rss.UnitTests", "ViewPointReader.Rss.UnitTests\ViewPointReader.Rss.UnitTests.csproj", "{36775FE6-6028-482D-A91B-DD5E8D9E8171}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ViewPointReader.Rss.UnitTests", "ViewPointReader.Rss.UnitTests\ViewPointReader.Rss.UnitTests.csproj", "{36775FE6-6028-482D-A91B-DD5E8D9E8171}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ViewPointReader.Rss.IntegrationTests", "ViewPointReader.Rss.IntegrationTests\ViewPointReader.Rss.IntegrationTests.csproj", "{E4AE9270-17F8-4901-B9FE-E626A9CB9E2F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -171,6 +173,18 @@ Global
 		{36775FE6-6028-482D-A91B-DD5E8D9E8171}.Release|iPhone.Build.0 = Release|Any CPU
 		{36775FE6-6028-482D-A91B-DD5E8D9E8171}.Release|iPhoneSimulator.ActiveCfg = Release|Any CPU
 		{36775FE6-6028-482D-A91B-DD5E8D9E8171}.Release|iPhoneSimulator.Build.0 = Release|Any CPU
+		{E4AE9270-17F8-4901-B9FE-E626A9CB9E2F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E4AE9270-17F8-4901-B9FE-E626A9CB9E2F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E4AE9270-17F8-4901-B9FE-E626A9CB9E2F}.Debug|iPhone.ActiveCfg = Debug|Any CPU
+		{E4AE9270-17F8-4901-B9FE-E626A9CB9E2F}.Debug|iPhone.Build.0 = Debug|Any CPU
+		{E4AE9270-17F8-4901-B9FE-E626A9CB9E2F}.Debug|iPhoneSimulator.ActiveCfg = Debug|Any CPU
+		{E4AE9270-17F8-4901-B9FE-E626A9CB9E2F}.Debug|iPhoneSimulator.Build.0 = Debug|Any CPU
+		{E4AE9270-17F8-4901-B9FE-E626A9CB9E2F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E4AE9270-17F8-4901-B9FE-E626A9CB9E2F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E4AE9270-17F8-4901-B9FE-E626A9CB9E2F}.Release|iPhone.ActiveCfg = Release|Any CPU
+		{E4AE9270-17F8-4901-B9FE-E626A9CB9E2F}.Release|iPhone.Build.0 = Release|Any CPU
+		{E4AE9270-17F8-4901-B9FE-E626A9CB9E2F}.Release|iPhoneSimulator.ActiveCfg = Release|Any CPU
+		{E4AE9270-17F8-4901-B9FE-E626A9CB9E2F}.Release|iPhoneSimulator.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

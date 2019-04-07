@@ -36,7 +36,7 @@ namespace ViewPointReader.Rss
                     {
                         var feed = await FeedReader.ReadAsync(htmlFeedLink.Url);
 
-                        if (feed.Items.Count > 0)
+                        if (results.Where(x => x.Link == feed.Link).Count() == 0 && feed.Items.Count > 0)
                         {
                             results.Add(feed);  
                         }

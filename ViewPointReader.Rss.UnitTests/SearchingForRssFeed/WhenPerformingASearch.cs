@@ -7,6 +7,7 @@ namespace ViewPointReader.Rss.UnitTests.SearchingForRssFeed
     public class WhenPerformingASearch
     {
         [TestMethod]
+        [Ignore]
         public async Task TestMethod1()
         {
             var reader = new ViewPointReader();

@@ -6,8 +6,8 @@ using ViewPointReader.Web.Models;
 
 namespace ViewPointReader.Web.Interfaces
 {
-    public interface IWebSearchClient
+    public interface IVprWebSearchClient
     {
-        Task<List<WebSearchUrlResult>> SearchAsync(string query, int offset, int count);
+        Task<List<VprWebSearchResult>> SearchAsync(string query);
     }
 }

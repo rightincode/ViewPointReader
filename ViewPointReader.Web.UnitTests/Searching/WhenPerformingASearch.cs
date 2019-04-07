@@ -10,26 +10,26 @@ namespace ViewPointReader.Web.UnitTests.Searching
     [TestClass]
     public class WhenPerformingASearch
     {
-        private IWebSearchClient _webSearchClient;
+        private IVprWebSearchClient _iVprWebSearchClient;
 
         [TestInitialize]
         public void TestStart()
         {
-            var webSearchClientMock = new Mock<IWebSearchClient>();
-            webSearchClientMock.Setup(x => x.SearchAsync(It.IsAny<string>(), It.IsAny<int>(), It.IsAny<int>()))
-                .Returns(() => Task.FromResult(new List<WebSearchUrlResult>
+            var webSearchClientMock = new Mock<IVprWebSearchClient>();
+            webSearchClientMock.Setup(x => x.SearchAsync(It.IsAny<string>()))
+                .Returns(() => Task.FromResult(new List<VprWebSearchResult>
                 {
-                    new WebSearchUrlResult()
+                    new VprWebSearchResult()
                 }));
 
-            _webSearchClient = webSearchClientMock.Object;
+            _iVprWebSearchClient = webSearchClientMock.Object;
 
         }
 
         [TestMethod]
         public async Task AndTheQueryIsBlank()
         {
-            List<WebSearchUrlResult> results = await _webSearchClient.SearchAsync("", 0, 0);
+            List<VprWebSearchResult> results = await _iVprWebSearchClient.SearchAsync("");
 
             Assert.IsTrue(results.Count > 0);
         }

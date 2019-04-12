@@ -1,0 +1,42 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="ViewPointReader.Views.VprSearchView">
+    <StackLayout>
+        <StackLayout Orientation="Horizontal">
+            <Entry x:Name="TxtSearchTerm" 
+                   Placeholder="Enter topic..."
+                   FontSize="Medium"
+                   WidthRequest="250"
+                   Text="{Binding VprSearchViewModel.SearchPhrase, Mode=TwoWay}"></Entry>
+            <Button x:Name="BtnSearch"
+                    Text="Search"
+                    FontSize="Medium"
+                    WidthRequest="100"
+                    Command="{Binding VprSearchViewModel.FeedSearchCommand}"></Button>
+        </StackLayout>
+        
+        <StackLayout Orientation="Vertical">
+
+            <ListView x:Name="MyListView"
+                        ItemsSource="{Binding VprSearchViewModel.SearchResults}" HasUnevenRows="True" VerticalOptions="FillAndExpand"
+                        ItemTapped="Handle_ItemTapped"
+                        CachingStrategy="RecycleElement">
+               
+                <ListView.ItemTemplate>
+                  <DataTemplate>
+                    <ViewCell>
+                      <StackLayout>
+                        <Label Text="{Binding Title}" 
+                               FontSize="Medium" TextColor="Red" />
+                        <Label Text="{Binding Description}" 
+                               FontSize="Small"/>
+                      </StackLayout>
+                    </ViewCell>
+                  </DataTemplate>
+                </ListView.ItemTemplate>
+                
+              </ListView>
+        </StackLayout>
+    </StackLayout>
+</ContentPage>

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ViewPointReader.Rss.Interfaces
 {
-    public interface IViewPointReader
+    public interface IViewPointRssReader
     {
         Task<List<Feed>> SearchForFeeds(string queryText);
         Task<List<FeedItem>> LoadSubscribedFeeds();

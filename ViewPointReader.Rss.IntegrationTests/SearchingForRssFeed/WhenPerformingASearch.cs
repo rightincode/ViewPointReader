@@ -10,7 +10,7 @@ namespace ViewPointReader.Rss.IntegrationTests.SearchingForRssFeed
         [Ignore]
         public async Task AndTheSearchIsValid()
         {
-            var reader = new ViewPointReader();
+            var reader = new ViewPointRssReader();
 
             var results = await reader.SearchForFeeds("business success");
 

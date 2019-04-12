@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<TabbedPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:ViewPointReader.Views"
+             x:Class="ViewPointReader.Views.MainPage">
+
+    <ContentPage Title="Subscribed"></ContentPage>
+    <NavigationPage Title="Search">
+        <x:Arguments>
+            <local:VprSearchView />
+        </x:Arguments>
+    </NavigationPage>
+    <ContentPage Title="Recommended"></ContentPage>
+</TabbedPage>

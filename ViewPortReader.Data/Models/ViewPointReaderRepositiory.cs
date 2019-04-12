@@ -25,7 +25,7 @@ namespace ViewPointReader.Data.Models
             catch (SQLiteException ex)
             {
                 Debug.WriteLine(ex.Message);
-            };
+            }
         }
 
         public Task<int> DeleteFeedSubscriptionAsync(IFeedSubscription feedSubscription)

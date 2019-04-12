@@ -1,0 +1,26 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="ViewPointReader.Views.VprSubscribedView"
+             Title="SubscribedFeeds">
+  <ListView x:Name="FeedSubscriptions"
+            ItemsSource="{Binding FeedSubscriptions}"
+            ItemTapped="Handle_ItemTapped"
+            HasUnevenRows="True" 
+            VerticalOptions="FillAndExpand"
+            CachingStrategy="RecycleElement">
+
+        <ListView.ItemTemplate>
+            <DataTemplate>
+                <ViewCell>
+                    <StackLayout>
+                        <Label Text="{Binding Title}" 
+                               FontSize="Medium" TextColor="Red" />
+                        <Label Text="{Binding Description}" 
+                               FontSize="Small"/>
+                    </StackLayout>
+                </ViewCell>
+            </DataTemplate>
+        </ListView.ItemTemplate>
+    </ListView>
+</ContentPage>

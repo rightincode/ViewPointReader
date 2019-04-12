@@ -4,11 +4,19 @@
              xmlns:local="clr-namespace:ViewPointReader.Views"
              x:Class="ViewPointReader.Views.MainPage">
 
-    <ContentPage Title="Subscribed"></ContentPage>
+    <NavigationPage Title="Subscribed">
+        <x:Arguments>
+            <local:VprSubscribedView />
+        </x:Arguments>
+    </NavigationPage>
     <NavigationPage Title="Search">
         <x:Arguments>
             <local:VprSearchView />
         </x:Arguments>
     </NavigationPage>
-    <ContentPage Title="Recommended"></ContentPage>
+    <NavigationPage Title="Recommended">
+        <x:Arguments>
+            <local:VprRecommendedView />
+        </x:Arguments>
+    </NavigationPage>
 </TabbedPage>

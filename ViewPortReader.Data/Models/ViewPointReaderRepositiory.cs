@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 using SQLite;
 using ViewPointReader.Core.Interfaces;
@@ -79,7 +81,7 @@ namespace ViewPointReader.Data.Models
                 Id = feedSubscription.Id,
                 Title = feedSubscription.Title,
                 Description = feedSubscription.Description,
-                KeyPhrases = feedSubscription.KeyPhrases,
+                KeyPhrases = FlattenStringListToCommaDelimitedString(feedSubscription.KeyPhrases),
                 SubscribedDate = feedSubscription.SubscribedDate
             };
 
@@ -93,11 +95,32 @@ namespace ViewPointReader.Data.Models
                 Id = feedSubscriptionDo.Id,
                 Title = feedSubscriptionDo.Title,
                 Description = feedSubscriptionDo.Description,
-                KeyPhrases = feedSubscriptionDo.KeyPhrases,
+                KeyPhrases = BuildStringListFromCommaDelimitedString(feedSubscriptionDo.KeyPhrases),
                 SubscribedDate = feedSubscriptionDo.SubscribedDate
             };
 
             return feedSubscription;
+        }
+
+        private string FlattenStringListToCommaDelimitedString(List<string> stringList)
+        {
+            var result = new StringBuilder();
+
+            if (stringList.Count > 0)
+            {
+                stringList.ForEach(x =>
+                {
+                    result.Append(x);
+                    result.Append(",");
+                });
+            }
+
+            return result.ToString();
+        }
+
+        private List<string> BuildStringListFromCommaDelimitedString(string commaDelimitedString)
+        {
+            return commaDelimitedString.Split(',').ToList();
         }
     }
 }

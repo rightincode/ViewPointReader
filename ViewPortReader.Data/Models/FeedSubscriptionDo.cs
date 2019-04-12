@@ -12,7 +12,7 @@ namespace ViewPointReader.Data.Models
         public int Id { get ; set ; }
         public string Title { get ; set ; }
         public string Description { get ; set ; }
-        public string[] KeyPhrases { get ; set ; }
+        public string KeyPhrases { get ; set ; }
         public DateTime SubscribedDate { get ; set ; }
 
         public FeedSubscriptionDo() { }

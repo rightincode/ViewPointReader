@@ -9,7 +9,7 @@ namespace ViewPointReader.Core.Interfaces
         int Id { get; set; }
         string Title { get; set; }
         string Description { get; set; }
-        string[] KeyPhrases { get; set; }
+        List<string> KeyPhrases { get; set; }
         DateTime SubscribedDate { get; set; }
     }
 }

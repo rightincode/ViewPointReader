@@ -3,6 +3,8 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Threading.Tasks;
+using ViewPointReader.Core.Interfaces;
+using ViewPointReader.Data.Interfaces;
 using ViewPointReader.ViewModels;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -15,6 +17,7 @@ namespace ViewPointReader.Views
     public partial class VprSearchView : ContentPage
     {
         private readonly IViewPointRssReader _viewPointRssReader = ((App)Application.Current).ServiceProvider.GetService<IViewPointRssReader>();
+        private readonly IViewPointReaderRepository _viewPointReaderRepository = ((App)Application.Current).ServiceProvider.GetService<IViewPointReaderRepository>();
 
         public VprSearchViewModel VprSearchViewModel { get; }
 
@@ -22,7 +25,7 @@ namespace ViewPointReader.Views
         {
             InitializeComponent();
 
-            VprSearchViewModel = new VprSearchViewModel(_viewPointRssReader);
+            VprSearchViewModel = new VprSearchViewModel(_viewPointRssReader, _viewPointReaderRepository);
 
             BindingContext = this;
         }
@@ -37,5 +40,10 @@ namespace ViewPointReader.Views
             //Deselect Item
             ((ListView)sender).SelectedItem = null;
         }
+
+        //private Task<int> SaveSubscription(IFeedSubscription feedSubscription)
+        //{
+        //    return;
+        //}
     }
 }

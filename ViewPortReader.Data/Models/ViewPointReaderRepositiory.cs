@@ -81,7 +81,7 @@ namespace ViewPointReader.Data.Models
                 Id = feedSubscription.Id,
                 Title = feedSubscription.Title,
                 Description = feedSubscription.Description,
-                KeyPhrases = FlattenStringListToCommaDelimitedString(feedSubscription.KeyPhrases),
+                KeyPhrases = BuildCommaDelimitedStringFromStringList(feedSubscription.KeyPhrases),
                 SubscribedDate = feedSubscription.SubscribedDate
             };
 
@@ -102,7 +102,7 @@ namespace ViewPointReader.Data.Models
             return feedSubscription;
         }
 
-        private string FlattenStringListToCommaDelimitedString(List<string> stringList)
+        private string BuildCommaDelimitedStringFromStringList(List<string> stringList)
         {
             var result = new StringBuilder();
 

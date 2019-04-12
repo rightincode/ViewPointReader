@@ -5,11 +5,17 @@ using ViewPointReader.Rss.Interfaces;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using ViewPointReader.Views;
+using ViewPointReader.Data.Models;
+using ViewPointReader.Data.Interfaces;
+using ViewPointReader.Core.Interfaces;
+using ViewPointReader.Core.Models;
 
 namespace ViewPointReader
 {
     public partial class App : Application
     {
+        private readonly IFileHelper _fileHelper = DependencyService.Get<IFileHelper>();
+
         public IServiceProvider ServiceProvider { get; private set; }
 
         public App()
@@ -38,8 +44,8 @@ namespace ViewPointReader
         {
             var services = new ServiceCollection();
             services.AddTransient<IViewPointRssReader, ViewPointRssReader>();
-            //services.AddTransient<ITipCalcTransaction, TipCalcTransaction>();
-            //services.AddTransient<ITipDatabase>(s => new TipDatabase(_fileHelper));
+            services.AddTransient<IFeedSubscription, FeedSubscription>();
+            services.AddTransient<IViewPointReaderRepository>(s => new ViewPointReaderRepository(_fileHelper));
             ServiceProvider = services.BuildServiceProvider();
         }
     }

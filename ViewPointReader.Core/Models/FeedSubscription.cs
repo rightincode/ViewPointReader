@@ -11,6 +11,9 @@ namespace ViewPointReader.Core.Models
         public string Description { get; set; }
         public List<string> KeyPhrases { get; set; }
         public DateTime SubscribedDate { get; set; }
+        public string Url { get; set; }
+        public string ImageUrl { get; set; }
+        public DateTime? LastUpdated { get; set; }
 
         public FeedSubscription()
         {

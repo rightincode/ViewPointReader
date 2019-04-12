@@ -81,6 +81,9 @@ namespace ViewPointReader.Data.Models
                 Id = feedSubscription.Id,
                 Title = feedSubscription.Title,
                 Description = feedSubscription.Description,
+                Url = feedSubscription.Url,
+                ImageUrl = feedSubscription.ImageUrl,
+                LastUpdated = feedSubscription.LastUpdated,
                 KeyPhrases = BuildCommaDelimitedStringFromStringList(feedSubscription.KeyPhrases),
                 SubscribedDate = feedSubscription.SubscribedDate
             };
@@ -95,6 +98,9 @@ namespace ViewPointReader.Data.Models
                 Id = feedSubscriptionDo.Id,
                 Title = feedSubscriptionDo.Title,
                 Description = feedSubscriptionDo.Description,
+                Url = feedSubscriptionDo.Url,
+                ImageUrl = feedSubscriptionDo.ImageUrl,
+                LastUpdated = feedSubscriptionDo.LastUpdated,
                 KeyPhrases = BuildStringListFromCommaDelimitedString(feedSubscriptionDo.KeyPhrases),
                 SubscribedDate = feedSubscriptionDo.SubscribedDate
             };
@@ -106,7 +112,7 @@ namespace ViewPointReader.Data.Models
         {
             var result = new StringBuilder();
 
-            if (stringList.Count > 0)
+            if (stringList?.Count > 0)
             {
                 stringList.ForEach(x =>
                 {

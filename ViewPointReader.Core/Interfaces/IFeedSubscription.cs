@@ -9,6 +9,9 @@ namespace ViewPointReader.Core.Interfaces
         int Id { get; set; }
         string Title { get; set; }
         string Description { get; set; }
+        string Url { get; set; }
+        string ImageUrl { get; set; }
+        DateTime? LastUpdated { get; set; }
         List<string> KeyPhrases { get; set; }
         DateTime SubscribedDate { get; set; }
     }

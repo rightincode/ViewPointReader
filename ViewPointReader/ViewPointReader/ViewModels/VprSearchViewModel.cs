@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using ViewPointReader.Core.Interfaces;
+using ViewPointReader.Core.Models;
 using ViewPointReader.Data.Interfaces;
 using ViewPointReader.Rss.Interfaces;
 using Xamarin.Forms;
@@ -57,8 +58,20 @@ namespace ViewPointReader.ViewModels
             }
         }
 
-        private Task<int> SaveSubscription(IFeedSubscription feedSubscription)
+        public Task<int> SaveSubscription(Feed feed)
         {
+            var feedSubscription = new FeedSubscription
+            {
+                Title = feed.Title,
+                Description = feed.Description,
+                Url = feed.Link,
+                ImageUrl = feed.ImageUrl,
+                LastUpdated = feed.LastUpdatedDate,
+                SubscribedDate = DateTime.Now
+            };
+
+            //TODO: Get key phrases from Azure Cognitive Services
+
             return _viewPointReaderRepository.SaveFeedSubscriptionAsync(feedSubscription);
         }
     }

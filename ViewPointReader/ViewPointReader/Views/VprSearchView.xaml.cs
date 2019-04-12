@@ -3,6 +3,7 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Threading.Tasks;
+using CodeHollow.FeedReader;
 using ViewPointReader.Core.Interfaces;
 using ViewPointReader.Data.Interfaces;
 using ViewPointReader.ViewModels;
@@ -17,6 +18,8 @@ namespace ViewPointReader.Views
     public partial class VprSearchView : ContentPage
     {
         private readonly IViewPointRssReader _viewPointRssReader = ((App)Application.Current).ServiceProvider.GetService<IViewPointRssReader>();
+
+        //TODO: protect from usage directly from this codebehind file
         private readonly IViewPointReaderRepository _viewPointReaderRepository = ((App)Application.Current).ServiceProvider.GetService<IViewPointReaderRepository>();
 
         public VprSearchViewModel VprSearchViewModel { get; }
@@ -35,15 +38,15 @@ namespace ViewPointReader.Views
             if (e.Item == null)
                 return;
 
-            //await DisplayAlert("Item Tapped", "An item was tapped.", "OK");
+            await SaveSubscription((Feed)e.Item);
 
             //Deselect Item
             ((ListView)sender).SelectedItem = null;
         }
 
-        //private Task<int> SaveSubscription(IFeedSubscription feedSubscription)
-        //{
-        //    return;
-        //}
+        private Task<int> SaveSubscription(Feed feed)
+        {
+            return VprSearchViewModel.SaveSubscription(feed);
+        }
     }
 }

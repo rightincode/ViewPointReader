@@ -20,7 +20,7 @@ namespace ViewPointReader.Web
         public Task<List<VprWebSearchResult>> SearchAsync(string query)
         {
             return Task.Run(() => BuildSearchResults(_azureWebSearchApiClient.Web.SearchAsync(
-                query,null,null,null,null,null,null,1,null,10,null,null,null,null,null, safeSearch:"Strict",null,null,null)));
+                query,null,null,null,null,null,null,1,null,25,null,null,null,null,null, safeSearch:"Strict",null,null,null)));
         }
 
         private static List<VprWebSearchResult> BuildSearchResults(Task<SearchResponse> response)

@@ -1,6 +1,7 @@
 ﻿using CodeHollow.FeedReader;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
@@ -28,27 +29,74 @@ namespace ViewPointReader.Rss
             {
                 var webSearchResults = await _vprWebSearchClient.SearchAsync(queryText);
 
+                //var htmlFeedLinksTasks = new List<Task<IEnumerable<HtmlFeedLink>>>();
+
+                //foreach (var vprWebSearchResult in webSearchResults)
+                //{
+                //    try
+                //    {
+                //        htmlFeedLinksTasks.Add(FeedReader.GetFeedUrlsFromUrlAsync(vprWebSearchResult.Url));
+                //    }
+                //    catch (Exception e)
+                //    {
+                //        Console.WriteLine(e);
+                //        //throw;
+                //    }
+                //}
+
+                //var htmlFeedLinkEnumerableArray = await Task.WhenAll(htmlFeedLinksTasks);
+
+                //foreach (var htmlFeedLinks in htmlFeedLinkEnumerableArray)
+                //{
+                //    try
+                //    {
+                //        var feedTasks = ProcessHtmlFeedLinks(htmlFeedLinks);
+                //        var feeds = await Task.WhenAll(feedTasks);
+
+                //        foreach (var feed in feeds)
+                //        {
+                //            if (results.All(x => x.Link != feed.Link) && feed.Items.Count > 0)
+                //            {
+                //                results.Add(feed);
+                //            }
+                //        }
+                //    }
+                //    catch (Exception e)
+                //    {
+                //        Console.WriteLine(e);
+                //        throw;
+                //    }
+
+                //}
+
+                var stopwatch = Stopwatch.StartNew();
+
                 foreach (var vprWebSearchResult in webSearchResults)
                 {
                     try
                     {
+                        stopwatch.Start();
+
                         var htmlFeedLinks = await FeedReader.GetFeedUrlsFromUrlAsync(vprWebSearchResult.Url);
 
-                        foreach (var htmlFeedLink in htmlFeedLinks)
-                        {
-                            try
-                            {
-                                var feed = await FeedReader.ReadAsync(htmlFeedLink.Url);
+                        stopwatch.Stop();
+                        Console.WriteLine(
+                            $"Time to retrieve feeds from {vprWebSearchResult.Url} was {stopwatch.ElapsedMilliseconds}ms");
+                        Console.WriteLine();
+                        stopwatch.Restart();
+                       
+                        var feedTasks = ProcessHtmlFeedLinks(htmlFeedLinks);
+                        var feeds = await Task.WhenAll(feedTasks);
 
-                                if (results.All(x => x.Link != feed.Link) && feed.Items.Count > 0)
-                                {
-                                    results.Add(feed);
-                                }
-                            }
-                            catch (Exception e)
+                        stopwatch.Stop();
+                        Console.WriteLine($"Time to read feeds for {vprWebSearchResult.Url} was {stopwatch.ElapsedMilliseconds}ms ");
+                        Console.WriteLine();
+
+                        foreach (var feed in feeds)
+                        {
+                            if (results.All(x => x.Link != feed.Link) && feed.Items.Count > 0)
                             {
-                                Console.WriteLine(e);
-                                //throw;
+                                results.Add(feed);
                             }
                         }
                     }
@@ -66,6 +114,26 @@ namespace ViewPointReader.Rss
             }
 
             return results;
+        }
+
+        private IEnumerable<Task<Feed>> ProcessHtmlFeedLinks(IEnumerable<HtmlFeedLink> htmlFeedLinks)
+        {
+            var feedTasks = new List<Task<Feed>>();
+
+            foreach (var htmlFeedLink in htmlFeedLinks)
+            {
+                try
+                {
+                    feedTasks.Add(FeedReader.ReadAsync(htmlFeedLink.Url));
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e);
+                    //throw;
+                }
+            }
+
+            return feedTasks;
         }
     }
 }

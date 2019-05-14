@@ -33,7 +33,7 @@ namespace ViewPointReader.Rss
             var results = new List<Feed>();
             try
             {
-                var webSearchResults = await _vprWebSearchClient.SearchAsync(queryText);
+                var webSearchResults = await _vprWebSearchClient.SearchAsync(queryText + " blog");
 
                 //var htmlFeedLinksTasks = new List<Task<IEnumerable<HtmlFeedLink>>>();
 

@@ -64,6 +64,7 @@
     <CodesignEntitlements>Entitlements.plist</CodesignEntitlements>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="FileHelper.cs" />
     <Compile Include="Main.cs" />
     <Compile Include="AppDelegate.cs" />
     <None Include="Entitlements.plist" />
@@ -129,6 +130,10 @@
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
   <ItemGroup>
+    <ProjectReference Include="..\..\ViewPortReader.Data\ViewPointReader.Data.csproj">
+      <Project>{3265ee12-96ee-4435-8e73-f3207f10cda5}</Project>
+      <Name>ViewPointReader.Data</Name>
+    </ProjectReference>
     <ProjectReference Include="..\ViewPointReader\ViewPointReader.csproj">
       <Project>{6CD41414-D436-4A9A-862E-E023F799C2FA}</Project>
       <Name>ViewPointReader</Name>

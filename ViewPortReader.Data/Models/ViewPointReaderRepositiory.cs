@@ -64,14 +64,8 @@ namespace ViewPointReader.Data.Models
 
         public Task<int> SaveFeedSubscriptionAsync(IFeedSubscription feedSubscription)
         {
-            if (feedSubscription.Id > 0)
-            {
-                return _databaseConnection.UpdateAsync(TransformToSubscriptionDo(feedSubscription));
-            }
-            else
-            {
-                return _databaseConnection.InsertAsync(TransformToSubscriptionDo(feedSubscription));
-            }
+            return feedSubscription.Id > 0 ? _databaseConnection.UpdateAsync(TransformToSubscriptionDo(feedSubscription)) 
+                : _databaseConnection.InsertAsync(TransformToSubscriptionDo(feedSubscription));
         }
 
         private FeedSubscriptionDo TransformToSubscriptionDo(IFeedSubscription feedSubscription)

@@ -27,7 +27,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ViewPointReader.Rss.Integra
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ViewPointReader.Data", "ViewPortReader.Data\ViewPointReader.Data.csproj", "{3265EE12-96EE-4435-8E73-F3207F10CDA5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ViewPointReader.Core", "ViewPointReader.Core\ViewPointReader.Core.csproj", "{95D7C7D1-316A-40C4-B33B-725FDF1060F2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ViewPointReader.Core", "ViewPointReader.Core\ViewPointReader.Core.csproj", "{95D7C7D1-316A-40C4-B33B-725FDF1060F2}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Targets", "Targets", "{B08701F9-610C-47C7-9D4A-86BF49A6DCD2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -216,6 +218,10 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{0B5C1BB3-F70A-4365-BF36-E6BF4F0CE279} = {B08701F9-610C-47C7-9D4A-86BF49A6DCD2}
+		{94B0FD09-76BD-40D7-96DE-D5C9471E5500} = {B08701F9-610C-47C7-9D4A-86BF49A6DCD2}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {A8BBB922-C3EE-4FF8-B011-11D39B734D0F}

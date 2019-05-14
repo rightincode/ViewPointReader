@@ -1,8 +1,8 @@
 ﻿using System.Threading.Tasks;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using ViewPointReader.Web.Interfaces;
+using ViewPointReader.CognitiveServices.Interfaces;
 
-namespace ViewPointReader.Web.IntegrationTests.Searching
+namespace ViewPointReader.CognitiveServices.IntegrationTests.Searching
 {
     [TestClass]
     public class WhenPerformingASearch

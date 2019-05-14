@@ -9,11 +9,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ViewPointReader.iOS", "View
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ViewPointReader", "ViewPointReader\ViewPointReader\ViewPointReader.csproj", "{AD38E6E5-2BF5-494E-B29F-F6A7CED021F1}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ViewPointReader.Web", "ViewPointReader.Web\ViewPointReader.Web.csproj", "{109E7E8C-EBB9-4C08-A4B7-3EB51B246411}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ViewPointReader.CognitiveServices", "ViewPointReader.CognitiveServices\ViewPointReader.CognitiveServices.csproj", "{109E7E8C-EBB9-4C08-A4B7-3EB51B246411}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ViewPointReader.Web.UnitTests", "ViewPointReader.Web.UnitTests\ViewPointReader.Web.UnitTests.csproj", "{E5FA65D4-7A79-4D01-970C-AD5A85B7E2E4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ViewPointReader.CognitiveServices.UnitTests", "ViewPointReader.CognitiveServices.UnitTests\ViewPointReader.CognitiveServices.UnitTests.csproj", "{E5FA65D4-7A79-4D01-970C-AD5A85B7E2E4}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ViewPointReader.Web.IntegrationTests", "ViewPointReader.Web.IntegrationTests\ViewPointReader.Web.IntegrationTests.csproj", "{C91B2B29-2FA6-4D38-9552-5CC17BB06BAF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ViewPointReader.CognitiveServices.IntegrationTests", "ViewPointReader.CognitiveServices.IntegrationTests\ViewPointReader.CognitiveServices.IntegrationTests.csproj", "{C91B2B29-2FA6-4D38-9552-5CC17BB06BAF}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FeedReader", "..\FeedReader\FeedReader\FeedReader.csproj", "{3113E432-CAF3-43D6-ABB7-A630016E39C5}"
 EndProject

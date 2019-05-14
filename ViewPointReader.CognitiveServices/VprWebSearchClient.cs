@@ -1,12 +1,12 @@
-﻿using Microsoft.Azure.CognitiveServices.Search.WebSearch;
-using Microsoft.Azure.CognitiveServices.Search.WebSearch.Models;
-using System.Collections.Generic;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using System.Linq;
-using ViewPointReader.Web.Interfaces;
-using ViewPointReader.Web.Models;
+using System.Threading.Tasks;
+using Microsoft.Azure.CognitiveServices.Search.WebSearch;
+using Microsoft.Azure.CognitiveServices.Search.WebSearch.Models;
+using ViewPointReader.CognitiveServices.Interfaces;
+using ViewPointReader.CognitiveServices.Models;
 
-namespace ViewPointReader.Web
+namespace ViewPointReader.CognitiveServices
 {
     public class VprWebSearchClient : IVprWebSearchClient
     {

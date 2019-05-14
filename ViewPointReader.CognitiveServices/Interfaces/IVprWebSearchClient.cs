@@ -1,10 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using ViewPointReader.Web.Models;
+using ViewPointReader.CognitiveServices.Models;
 
-namespace ViewPointReader.Web.Interfaces
+namespace ViewPointReader.CognitiveServices.Interfaces
 {
     public interface IVprWebSearchClient
     {

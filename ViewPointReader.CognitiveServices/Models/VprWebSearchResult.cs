@@ -1,4 +1,4 @@
-﻿namespace ViewPointReader.Web.Models
+﻿namespace ViewPointReader.CognitiveServices.Models
 {
     public class VprWebSearchResult
     {

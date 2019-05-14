@@ -6,9 +6,9 @@ using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 using CodeHollow.FeedReader.Feeds;
+using ViewPointReader.CognitiveServices;
+using ViewPointReader.CognitiveServices.Interfaces;
 using ViewPointReader.Rss.Interfaces;
-using ViewPointReader.Web;
-using ViewPointReader.Web.Interfaces;
 using FeedItem = CodeHollow.FeedReader.FeedItem;
 
 namespace ViewPointReader.Rss

@@ -1,11 +1,11 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Moq;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using ViewPointReader.Web.Interfaces;
-using ViewPointReader.Web.Models;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Moq;
+using ViewPointReader.CognitiveServices.Interfaces;
+using ViewPointReader.CognitiveServices.Models;
 
-namespace ViewPointReader.Web.UnitTests.Searching
+namespace ViewPointReader.CognitiveServices.UnitTests.Searching
 {
     [TestClass]
     public class WhenPerformingASearch

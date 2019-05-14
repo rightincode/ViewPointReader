@@ -75,8 +75,7 @@ namespace ViewPointReader.ViewModels
                 feedSubscription.KeyPhrases = await _viewPointRssReader.ExtractKeyPhrasesAsync(feedSubscription.Description);
             }
             
-            //return await _viewPointReaderRepository.SaveFeedSubscriptionAsync(feedSubscription);
-            return 0;
+            return await _viewPointReaderRepository.SaveFeedSubscriptionAsync(feedSubscription);
         }
     }
 }

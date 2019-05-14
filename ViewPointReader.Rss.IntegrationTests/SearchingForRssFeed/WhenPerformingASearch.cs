@@ -12,7 +12,7 @@ namespace ViewPointReader.Rss.IntegrationTests.SearchingForRssFeed
         {
             var reader = new ViewPointRssReader();
 
-            var results = await reader.SearchForFeeds("business success");
+            var results = await reader.SearchForFeedsAsync("business success");
 
             Assert.IsTrue(results.Count > 0);
         }

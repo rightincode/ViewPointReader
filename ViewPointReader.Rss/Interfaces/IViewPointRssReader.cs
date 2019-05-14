@@ -8,7 +8,8 @@ namespace ViewPointReader.Rss.Interfaces
 {
     public interface IViewPointRssReader
     {
-        Task<List<Feed>> SearchForFeeds(string queryText);
+        Task<List<Feed>> SearchForFeedsAsync(string queryText);
         Task<List<FeedItem>> LoadSubscribedFeeds();
+        Task<List<string>> ExtractKeyPhrasesAsync(string feedDescription);
     }
 }

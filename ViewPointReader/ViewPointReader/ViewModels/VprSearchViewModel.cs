@@ -40,7 +40,7 @@ namespace ViewPointReader.ViewModels
                 Title = "Searching..."
             });
 
-            var results = await _viewPointRssReader.SearchForFeeds(SearchPhrase);
+            var results = await _viewPointRssReader.SearchForFeedsAsync(SearchPhrase);
 
             SearchResults.Clear();
 
@@ -58,7 +58,7 @@ namespace ViewPointReader.ViewModels
             }
         }
 
-        public Task<int> SaveSubscription(Feed feed)
+        public async Task<int> SaveSubscription(Feed feed)
         {
             var feedSubscription = new FeedSubscription
             {
@@ -70,9 +70,13 @@ namespace ViewPointReader.ViewModels
                 SubscribedDate = DateTime.Now
             };
 
-            //TODO: Get key phrases from Azure Cognitive Services
-
-            return _viewPointReaderRepository.SaveFeedSubscriptionAsync(feedSubscription);
+            if (!string.IsNullOrEmpty(feedSubscription.Description))
+            {
+                feedSubscription.KeyPhrases = await _viewPointRssReader.ExtractKeyPhrasesAsync(feedSubscription.Description);
+            }
+            
+            //return await _viewPointReaderRepository.SaveFeedSubscriptionAsync(feedSubscription);
+            return 0;
         }
     }
 }

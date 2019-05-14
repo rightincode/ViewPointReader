@@ -16,13 +16,19 @@ namespace ViewPointReader.Rss
     public class ViewPointRssReader : IViewPointRssReader
     {
         private readonly IVprWebSearchClient _vprWebSearchClient = new VprWebSearchClient("62212ab381824133b4f2dfbeef5ddfb7");
+        private readonly IVprTextAnalyticsClient _vprTextAnalyticsClient = new VprTextAnalyticsClient("0ae5b7dd8d584b3196516ce807b9aa4e");
+
+        public async Task<List<string>> ExtractKeyPhrasesAsync(string feedDescription)
+        {
+            return await _vprTextAnalyticsClient.ExtractKeyPhrasesAsync(feedDescription);
+        }
 
         public Task<List<FeedItem>> LoadSubscribedFeeds()
         {
             throw new NotImplementedException();
         }
 
-        public async Task<List<Feed>> SearchForFeeds(string queryText)
+        public async Task<List<Feed>> SearchForFeedsAsync(string queryText)
         {
             var results = new List<Feed>();
             try

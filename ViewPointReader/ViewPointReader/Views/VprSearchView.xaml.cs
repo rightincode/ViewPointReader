@@ -33,7 +33,7 @@ namespace ViewPointReader.Views
             BindingContext = this;
         }
 
-        async void Handle_ItemTapped(object sender, ItemTappedEventArgs e)
+        public async void Handle_ItemTapped(object sender, ItemTappedEventArgs e)
         {
             if (e.Item == null)
                 return;
@@ -44,9 +44,9 @@ namespace ViewPointReader.Views
             ((ListView)sender).SelectedItem = null;
         }
 
-        private Task<int> SaveSubscription(Feed feed)
+        private async Task SaveSubscription(Feed feed)
         {
-            return VprSearchViewModel.SaveSubscription(feed);
+            await VprSearchViewModel.SaveSubscription(feed);
         }
     }
 }

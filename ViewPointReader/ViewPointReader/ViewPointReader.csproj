@@ -18,6 +18,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\ViewPointReader.Core\ViewPointReader.Core.csproj" />
+    <ProjectReference Include="..\..\ViewPointReader.ModelBuilder\ViewPointReader.ModelBuilder.csproj" />
     <ProjectReference Include="..\..\ViewPointReader.Rss\ViewPointReader.Rss.csproj" />
     <ProjectReference Include="..\..\ViewPortReader.Data\ViewPointReader.Data.csproj" />
   </ItemGroup>

@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.ML;
 using Microsoft.ML.Data;
 using Microsoft.ML.Trainers;
+using ViewPointReader.Core.Interfaces;
 using ViewPointReader.Core.Models;
 using ViewPointReader.Data;
 using ViewPointReader.Data.Interfaces;
@@ -15,15 +17,21 @@ namespace ViewPointReader.ModelBuilder
     public class ModelBuilder
     {
         private readonly ViewPointReaderRepository _feedRepository;
+        private ITransformer _trainedModel;
+        private IFileHelper _fileHelper;
 
         public ModelBuilder()
         {
             _feedRepository = new ViewPointReaderRepository(new FileHelper());
+            _fileHelper = new FileHelper();
+            LoadModel();
         }
 
         public ModelBuilder(IFileHelper fileHelper)
         {
             _feedRepository = new ViewPointReaderRepository(fileHelper);
+            _fileHelper = fileHelper;
+            LoadModel();
         }
 
         public async Task BuildModel()
@@ -32,7 +40,7 @@ namespace ViewPointReader.ModelBuilder
 
             var sourceData = await _feedRepository.GetFeedSubscriptionsAsync();
             IDataView trainingData = mlContext.Data.LoadFromEnumerable<FeedData>(FormatFeedData(sourceData));
-            trainingData = mlContext.Data.Cache(trainingData);
+            //trainingData = mlContext.Data.Cache(trainingData);
 
             #region not used
 
@@ -68,9 +76,41 @@ namespace ViewPointReader.ModelBuilder
             #endregion
 
             //save model
-            var fileHelper = new FileHelper();
-            mlContext.Model.Save(model, trainingData.Schema, fileHelper.GetLocalFilePath("VprRecommendationModel.mdl"));
+            mlContext.Model.Save(model, trainingData.Schema, _fileHelper.GetLocalFilePath("VprRecommendationModel.mdl"));
 
+        }
+
+        private void LoadModel()
+        {
+            MLContext mlContext = new MLContext();
+            var modelPath = _fileHelper.GetLocalFilePath("VprRecommendationModel.mdl");
+
+            try
+            {
+                using (FileStream stream = new FileStream(modelPath, FileMode.Open, FileAccess.Read, FileShare.Read))
+                {
+                    _trainedModel = mlContext.Model.Load(stream, out var modelInputSchema);
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+        }
+
+        public float ScoreFeed(IFeedSubscription feedSubscription)
+        {
+            MLContext mlContext = new MLContext();
+            var predictionEngine = mlContext.Model.CreatePredictionEngine<FeedData, FeedRecommendation>(_trainedModel);
+
+            if (!feedSubscription.KeyPhrases.Any()) return 0;
+            var testFeedData = new FeedData
+            {
+                KeyPhrases = feedSubscription.KeyPhrases.ToArray()
+            };
+
+            var prediction = predictionEngine.Predict(testFeedData);
+            return prediction.Score;
         }
 
         private FeedData[] FormatFeedData(List<FeedSubscription> sourceData)

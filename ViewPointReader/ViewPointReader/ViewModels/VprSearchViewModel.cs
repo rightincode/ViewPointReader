@@ -1,7 +1,9 @@
 ﻿using CodeHollow.FeedReader;
+using Microsoft.ML;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.IO;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
@@ -17,6 +19,7 @@ namespace ViewPointReader.ViewModels
     {
         private readonly IViewPointRssReader _viewPointRssReader;
         private readonly IViewPointReaderRepository _viewPointReaderRepository;
+        private readonly ModelBuilder.ModelBuilder _modelBuilder;
 
         public ObservableCollection<Feed> SearchResults { get; set; }
         public string SearchPhrase { get; set; }
@@ -27,6 +30,8 @@ namespace ViewPointReader.ViewModels
             _viewPointReaderRepository = viewPointReaderRepository;
 
             SearchResults = new ObservableCollection<Feed>();
+
+            _modelBuilder = new ModelBuilder.ModelBuilder(((App) Application.Current)._fileHelper);
         }
 
         public ICommand FeedSearchCommand => new Command( async () => { await Search(); });
@@ -47,6 +52,7 @@ namespace ViewPointReader.ViewModels
             foreach (var feed in results)
             {
                 SearchResults.Add(feed);
+                ScoreAndSave(feed);
             }
 
             if (SearchResults.Count == 0)
@@ -60,7 +66,25 @@ namespace ViewPointReader.ViewModels
 
         public async Task<int> SaveSubscription(Feed feed)
         {
-            var feedSubscription = new FeedSubscription
+            var feedSubscription = await CovertFeedToIFeedSubscription(feed);
+            
+            return await _viewPointReaderRepository.SaveFeedSubscriptionAsync(feedSubscription);
+        }
+
+        private async Task ScoreAndSave(Feed feed)
+        {
+            ((App)Application.Current).RecommendedFeeds = new List<IFeedSubscription>();
+
+            var recommendedFeed = await CovertFeedToIFeedSubscription(feed);
+
+            recommendedFeed.RecommendationScore = _modelBuilder.ScoreFeed(recommendedFeed);
+
+            ((App)Application.Current).RecommendedFeeds.Add(recommendedFeed);
+        }
+
+        private async Task<IFeedSubscription> CovertFeedToIFeedSubscription(Feed feed)
+        {
+            var feedSubscription =  new FeedSubscription
             {
                 Title = feed.Title,
                 Description = feed.Description,
@@ -74,8 +98,8 @@ namespace ViewPointReader.ViewModels
             {
                 feedSubscription.KeyPhrases = await _viewPointRssReader.ExtractKeyPhrasesAsync(feedSubscription.Description);
             }
-            
-            return await _viewPointReaderRepository.SaveFeedSubscriptionAsync(feedSubscription);
+
+            return feedSubscription;
         }
     }
 }

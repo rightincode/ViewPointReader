@@ -14,5 +14,6 @@ namespace ViewPointReader.Core.Interfaces
         DateTime? LastUpdated { get; set; }
         List<string> KeyPhrases { get; set; }
         DateTime SubscribedDate { get; set; }
+        float RecommendationScore { get; set; }
     }
 }

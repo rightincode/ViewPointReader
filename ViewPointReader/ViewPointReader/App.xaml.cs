@@ -1,5 +1,7 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using ViewPointReader.Rss;
 using ViewPointReader.Rss.Interfaces;
 using Xamarin.Forms;
@@ -14,9 +16,11 @@ namespace ViewPointReader
 {
     public partial class App : Application
     {
-        private readonly IFileHelper _fileHelper = DependencyService.Get<IFileHelper>();
+        public readonly IFileHelper _fileHelper = DependencyService.Get<IFileHelper>();
 
         public IServiceProvider ServiceProvider { get; private set; }
+
+        public List<IFeedSubscription> RecommendedFeeds { get; set; }
 
         public App()
         {
@@ -47,6 +51,13 @@ namespace ViewPointReader
             services.AddTransient<IFeedSubscription, FeedSubscription>();
             services.AddTransient<IViewPointReaderRepository>(s => new ViewPointReaderRepository(_fileHelper));
             ServiceProvider = services.BuildServiceProvider();
+
+            UpdateVprRecommendationModel();
         }
-    }
+
+        private void UpdateVprRecommendationModel()
+        {
+            var modelBuilder = new ModelBuilder.ModelBuilder(_fileHelper);
+            modelBuilder.BuildModel();
+        }}
 }

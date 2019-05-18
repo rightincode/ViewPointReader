@@ -24,14 +24,12 @@ namespace ViewPointReader.ModelBuilder
         {
             _feedRepository = new ViewPointReaderRepository(new FileHelper());
             _fileHelper = new FileHelper();
-            LoadModel();
         }
 
         public ModelBuilder(IFileHelper fileHelper)
         {
             _feedRepository = new ViewPointReaderRepository(fileHelper);
             _fileHelper = fileHelper;
-            LoadModel();
         }
 
         public async Task BuildModel()
@@ -53,8 +51,9 @@ namespace ViewPointReader.ModelBuilder
                 //            {"Features"}))); 
 
                 #endregion
-            
-                var pipeline = mlContext.Transforms.Text.FeaturizeText("keyPhrasesFeaturized", nameof(FeedData.KeyPhrases))
+
+                var pipeline = mlContext.Transforms.Text
+                    .FeaturizeText("keyPhrasesFeaturized", nameof(FeedData.KeyPhrases))
                     .Append(mlContext.Transforms.Concatenate("Features", "keyPhrasesFeaturized"))
                     .Append(mlContext.BinaryClassification.Trainers.FieldAwareFactorizationMachine(new string[]
                         {"Features"}));
@@ -78,11 +77,16 @@ namespace ViewPointReader.ModelBuilder
                 #endregion
 
                 //save model
-                mlContext.Model.Save(model, trainingData.Schema, _fileHelper.GetLocalFilePath("VprRecommendationModel.mdl"));
+                mlContext.Model.Save(model, trainingData.Schema,
+                    _fileHelper.GetLocalFilePath("VprRecommendationModel.mdl"));
             }
             catch (Exception e)
             {
                 Console.WriteLine(e.Message);
+            }
+            finally
+            {
+                LoadModel();
             }
         }
 

@@ -16,7 +16,8 @@ namespace ViewPointReader
 {
     public partial class App : Application
     {
-        public readonly IFileHelper _fileHelper = DependencyService.Get<IFileHelper>();
+        public readonly IFileHelper FileHelper = DependencyService.Get<IFileHelper>();
+        public ModelBuilder.ModelBuilder ModelBuilder;
 
         public IServiceProvider ServiceProvider { get; private set; }
 
@@ -49,7 +50,7 @@ namespace ViewPointReader
             var services = new ServiceCollection();
             services.AddTransient<IViewPointRssReader, ViewPointRssReader>();
             services.AddTransient<IFeedSubscription, FeedSubscription>();
-            services.AddTransient<IViewPointReaderRepository>(s => new ViewPointReaderRepository(_fileHelper));
+            services.AddTransient<IViewPointReaderRepository>(s => new ViewPointReaderRepository(FileHelper));
             ServiceProvider = services.BuildServiceProvider();
 
             UpdateVprRecommendationModel();
@@ -57,7 +58,7 @@ namespace ViewPointReader
 
         private void UpdateVprRecommendationModel()
         {
-            var modelBuilder = new ModelBuilder.ModelBuilder(_fileHelper);
-            modelBuilder.BuildModel();
+            ModelBuilder = new ModelBuilder.ModelBuilder(FileHelper);
+            ModelBuilder.BuildModel();
         }}
 }

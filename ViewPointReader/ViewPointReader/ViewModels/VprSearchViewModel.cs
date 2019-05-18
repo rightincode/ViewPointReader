@@ -19,19 +19,20 @@ namespace ViewPointReader.ViewModels
     {
         private readonly IViewPointRssReader _viewPointRssReader;
         private readonly IViewPointReaderRepository _viewPointReaderRepository;
-        private readonly ModelBuilder.ModelBuilder _modelBuilder;
+        private ModelBuilder.ModelBuilder _modelBuilder;
 
         public ObservableCollection<Feed> SearchResults { get; set; }
         public string SearchPhrase { get; set; }
 
-        public VprSearchViewModel(IViewPointRssReader viewPointRssReader, IViewPointReaderRepository viewPointReaderRepository)
+        public VprSearchViewModel(IViewPointRssReader viewPointRssReader
+            , IViewPointReaderRepository viewPointReaderRepository)
         {
             _viewPointRssReader = viewPointRssReader;
             _viewPointReaderRepository = viewPointReaderRepository;
 
             SearchResults = new ObservableCollection<Feed>();
 
-            _modelBuilder = new ModelBuilder.ModelBuilder(((App) Application.Current)._fileHelper);
+            _modelBuilder = ((App) Application.Current).ModelBuilder;
         }
 
         public ICommand FeedSearchCommand => new Command( async () => { await Search(); });
@@ -49,11 +50,15 @@ namespace ViewPointReader.ViewModels
 
             SearchResults.Clear();
 
+            var scoreAndSaveTasks = new List<Task>();
+
             foreach (var feed in results)
             {
                 SearchResults.Add(feed);
-                ScoreAndSave(feed);
+                scoreAndSaveTasks.Add(ScoreAndSave(feed));
             }
+
+            await Task.WhenAll(scoreAndSaveTasks);
 
             if (SearchResults.Count == 0)
             {
@@ -76,7 +81,7 @@ namespace ViewPointReader.ViewModels
             ((App)Application.Current).RecommendedFeeds = new List<IFeedSubscription>();
 
             var recommendedFeed = await CovertFeedToIFeedSubscription(feed);
-
+            
             recommendedFeed.RecommendationScore = _modelBuilder.ScoreFeed(recommendedFeed);
 
             ((App)Application.Current).RecommendedFeeds.Add(recommendedFeed);

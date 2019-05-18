@@ -120,7 +120,11 @@ namespace ViewPointReader.Data.Models
 
         private List<string> BuildStringListFromCommaDelimitedString(string commaDelimitedString)
         {
-            return commaDelimitedString.Split(',').ToList();
+            var result = commaDelimitedString.Split(',').ToList();
+
+            result.RemoveAll(string.IsNullOrEmpty);
+
+            return result;
         }
     }
 }

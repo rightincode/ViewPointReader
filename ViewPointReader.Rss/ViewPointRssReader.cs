@@ -35,6 +35,9 @@ namespace ViewPointReader.Rss
             {
                 var webSearchResults = await _vprWebSearchClient.SearchAsync(queryText + " blog");
 
+                #region commented code
+
+
                 //var htmlFeedLinksTasks = new List<Task<IEnumerable<HtmlFeedLink>>>();
 
                 //foreach (var vprWebSearchResult in webSearchResults)
@@ -75,6 +78,8 @@ namespace ViewPointReader.Rss
 
                 //}
 
+                #endregion
+
                 var stopwatch = Stopwatch.StartNew();
 
                 foreach (var vprWebSearchResult in webSearchResults)
@@ -100,10 +105,10 @@ namespace ViewPointReader.Rss
 
                         foreach (var feed in feeds)
                         {
-                            if (results.All(x => x.Link != feed.Link) && feed.Items.Count > 0)
-                            {
-                                results.Add(feed);
-                            }
+                            if (results.Any(x => x.Link == feed.Link) || feed.Items.Count <= 0) continue;
+                            if (string.IsNullOrEmpty(feed.Title) || string.IsNullOrEmpty(feed.Description)) continue;
+                            feed.Title = feed.Title.Trim();
+                            results.Add(feed);
                         }
                     }
                     catch (Exception e)

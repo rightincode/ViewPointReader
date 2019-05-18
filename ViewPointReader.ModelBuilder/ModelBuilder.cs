@@ -38,46 +38,52 @@ namespace ViewPointReader.ModelBuilder
         {
             MLContext mlContext = new MLContext();
 
-            var sourceData = await _feedRepository.GetFeedSubscriptionsAsync();
-            IDataView trainingData = mlContext.Data.LoadFromEnumerable<FeedData>(FormatFeedData(sourceData));
-            //trainingData = mlContext.Data.Cache(trainingData);
+            try
+            {
+                var sourceData = await _feedRepository.GetFeedSubscriptionsAsync();
+                IDataView trainingData = mlContext.Data.LoadFromEnumerable<FeedData>(FormatFeedData(sourceData));
+                //trainingData = mlContext.Data.Cache(trainingData);
 
-            #region not used
+                #region not used
 
-            //var pipeline = mlContext.Transforms.Text.FeaturizeText("idFeaturized", nameof(FeedData.Id))
-            //        .Append(mlContext.Transforms.Text.FeaturizeText("keyPhrasesFeaturized", nameof(FeedData.KeyPhrases))
-            //        .Append(mlContext.Transforms.Concatenate("Features", "idFeaturized", "keyPhrasesFeaturized"))
-            //        .Append(mlContext.BinaryClassification.Trainers.FieldAwareFactorizationMachine(new string[]
-            //            {"Features"}))); 
+                //var pipeline = mlContext.Transforms.Text.FeaturizeText("idFeaturized", nameof(FeedData.Id))
+                //        .Append(mlContext.Transforms.Text.FeaturizeText("keyPhrasesFeaturized", nameof(FeedData.KeyPhrases))
+                //        .Append(mlContext.Transforms.Concatenate("Features", "idFeaturized", "keyPhrasesFeaturized"))
+                //        .Append(mlContext.BinaryClassification.Trainers.FieldAwareFactorizationMachine(new string[]
+                //            {"Features"}))); 
 
-            #endregion
+                #endregion
             
-            var pipeline = mlContext.Transforms.Text.FeaturizeText("keyPhrasesFeaturized", nameof(FeedData.KeyPhrases))
+                var pipeline = mlContext.Transforms.Text.FeaturizeText("keyPhrasesFeaturized", nameof(FeedData.KeyPhrases))
                     .Append(mlContext.Transforms.Concatenate("Features", "keyPhrasesFeaturized"))
                     .Append(mlContext.BinaryClassification.Trainers.FieldAwareFactorizationMachine(new string[]
                         {"Features"}));
 
-            //train model
-            var model = pipeline.Fit(trainingData);
+                //train model
+                var model = pipeline.Fit(trainingData);
 
-            #region manual testing of model
+                #region manual testing of model
 
-            //test model
+                //test model
 
-            //var predictionEngine = mlContext.Model.CreatePredictionEngine<FeedData, FeedRecommendation>(model);
+                //var predictionEngine = mlContext.Model.CreatePredictionEngine<FeedData, FeedRecommendation>(model);
 
-            //var testFeedData = new FeedData
-            //{
-            //    KeyPhrases = new string[] {"skating"}
-            //};
+                //var testFeedData = new FeedData
+                //{
+                //    KeyPhrases = new string[] {"skating"}
+                //};
 
-            //var testPrediction = predictionEngine.Predict(testFeedData);
+                //var testPrediction = predictionEngine.Predict(testFeedData);
 
-            #endregion
+                #endregion
 
-            //save model
-            mlContext.Model.Save(model, trainingData.Schema, _fileHelper.GetLocalFilePath("VprRecommendationModel.mdl"));
-
+                //save model
+                mlContext.Model.Save(model, trainingData.Schema, _fileHelper.GetLocalFilePath("VprRecommendationModel.mdl"));
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
         }
 
         private void LoadModel()

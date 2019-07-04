@@ -110,17 +110,26 @@ namespace ViewPointReader.ModelBuilder
 
         public float ScoreFeed(IFeedSubscription feedSubscription)
         {
-            MLContext mlContext = new MLContext();
-            var predictionEngine = mlContext.Model.CreatePredictionEngine<FeedData, FeedRecommendation>(_trainedModel);
-
             if (!feedSubscription.KeyPhrases.Any()) return 0;
             var testFeedData = new FeedData
             {
                 KeyPhrases = feedSubscription.KeyPhrases.ToArray()
             };
 
-            var prediction = predictionEngine.Predict(testFeedData);
-            return prediction.Score;
+            try
+            {
+                MLContext mlContext = new MLContext();
+                var predictionEngine = mlContext.Model.CreatePredictionEngine<FeedData, FeedRecommendation>(_trainedModel);
+
+                var prediction = predictionEngine.Predict(testFeedData);
+                return prediction.Score;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+            }
+
+            return 0;
         }
 
         private FeedData[] FormatFeedData(List<FeedSubscription> sourceData)

@@ -17,4 +17,8 @@
     <ProjectReference Include="..\ViewPointReader.CognitiveServices\ViewPointReader.CognitiveServices.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Searching\" />
+  </ItemGroup>
+
 </Project>

@@ -53,8 +53,8 @@ namespace ViewPointReader
             services.AddTransient<IViewPointRssReader, ViewPointRssReader>();
             services.AddTransient<IFeedSubscription, FeedSubscription>();
             services.AddTransient<IViewPointReaderRepository>(s => new ViewPointReaderRepository(FileHelper));
-            services.AddTransient<IVprWebSearchClient>(s => new VprWebSearchClient("62212ab381824133b4f2dfbeef5ddfb7"));
-            services.AddTransient<IVprTextAnalyticsClient>(s =>new VprTextAnalyticsClient("0ae5b7dd8d584b3196516ce807b9aa4e"));
+            services.AddTransient<IVprWebSearchClient>(s => new VprWebSearchClient("62212ab381824133b4f2dfbeef5ddfb7")); //TODO: must secure key
+            services.AddTransient<IVprTextAnalyticsClient>(s =>new VprTextAnalyticsClient("0ae5b7dd8d584b3196516ce807b9aa4e")); //TODO: must secure key
             ServiceProvider = services.BuildServiceProvider();
 
             UpdateVprRecommendationModel();

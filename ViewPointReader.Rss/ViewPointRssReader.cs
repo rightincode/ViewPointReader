@@ -3,10 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using System.Net;
 using System.Threading.Tasks;
-using CodeHollow.FeedReader.Feeds;
-using ViewPointReader.CognitiveServices;
 using ViewPointReader.CognitiveServices.Interfaces;
 using ViewPointReader.Rss.Interfaces;
 using FeedItem = CodeHollow.FeedReader.FeedItem;
@@ -120,14 +117,12 @@ namespace ViewPointReader.Rss
                     catch (Exception e)
                     {
                         Console.WriteLine(e);
-                        //throw;
                     }
                 }
             }
             catch (Exception e)
             {
                 Console.WriteLine(e);
-                //throw;
             }
 
             return results;
@@ -146,7 +141,6 @@ namespace ViewPointReader.Rss
                 catch (Exception e)
                 {
                     Console.WriteLine(e);
-                    //throw;
                 }
             }
 

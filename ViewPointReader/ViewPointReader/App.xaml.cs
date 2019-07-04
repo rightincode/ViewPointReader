@@ -2,6 +2,8 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using ViewPointReader.CognitiveServices;
+using ViewPointReader.CognitiveServices.Interfaces;
 using ViewPointReader.Rss;
 using ViewPointReader.Rss.Interfaces;
 using Xamarin.Forms;
@@ -51,6 +53,8 @@ namespace ViewPointReader
             services.AddTransient<IViewPointRssReader, ViewPointRssReader>();
             services.AddTransient<IFeedSubscription, FeedSubscription>();
             services.AddTransient<IViewPointReaderRepository>(s => new ViewPointReaderRepository(FileHelper));
+            services.AddTransient<IVprWebSearchClient>(s => new VprWebSearchClient("62212ab381824133b4f2dfbeef5ddfb7"));
+            services.AddTransient<IVprTextAnalyticsClient>(s =>new VprTextAnalyticsClient("0ae5b7dd8d584b3196516ce807b9aa4e"));
             ServiceProvider = services.BuildServiceProvider();
 
             UpdateVprRecommendationModel();

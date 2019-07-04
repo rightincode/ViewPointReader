@@ -15,8 +15,14 @@ namespace ViewPointReader.Rss
 {
     public class ViewPointRssReader : IViewPointRssReader
     {
-        private readonly IVprWebSearchClient _vprWebSearchClient = new VprWebSearchClient("62212ab381824133b4f2dfbeef5ddfb7");
-        private readonly IVprTextAnalyticsClient _vprTextAnalyticsClient = new VprTextAnalyticsClient("0ae5b7dd8d584b3196516ce807b9aa4e");
+        private readonly IVprWebSearchClient _vprWebSearchClient;
+        private readonly IVprTextAnalyticsClient _vprTextAnalyticsClient;
+
+        public ViewPointRssReader(IVprWebSearchClient vprWebSearchClient, IVprTextAnalyticsClient vprTextAnalyticsClient)
+        {
+            _vprWebSearchClient = vprWebSearchClient;
+            _vprTextAnalyticsClient = vprTextAnalyticsClient;
+        }
 
         public async Task<List<string>> ExtractKeyPhrasesAsync(string feedDescription)
         {

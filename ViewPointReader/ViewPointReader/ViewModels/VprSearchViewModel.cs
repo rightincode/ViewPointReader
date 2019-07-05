@@ -1,10 +1,7 @@
 ﻿using CodeHollow.FeedReader;
-using Microsoft.ML;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.IO;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using ViewPointReader.Core.Interfaces;
@@ -19,7 +16,7 @@ namespace ViewPointReader.ViewModels
     {
         private readonly IViewPointRssReader _viewPointRssReader;
         private readonly IViewPointReaderRepository _viewPointReaderRepository;
-        private ModelBuilder.ModelBuilder _modelBuilder;
+        private readonly ModelBuilder.ModelBuilder _modelBuilder;
 
         public ObservableCollection<Feed> SearchResults { get; set; }
         public string SearchPhrase { get; set; }

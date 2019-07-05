@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
+using ViewPointReader.Core.Models;
 
 namespace ViewPointReader.Core.Interfaces
 {
@@ -15,5 +15,6 @@ namespace ViewPointReader.Core.Interfaces
         List<string> KeyPhrases { get; set; }
         DateTime SubscribedDate { get; set; }
         float RecommendationScore { get; set; }
+        List<VprFeedItem> FeedItems { get; set; }
     }
 }

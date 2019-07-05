@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 using SQLite;
 using ViewPointReader.Data.Interfaces;
 
@@ -17,8 +15,5 @@ namespace ViewPointReader.Data.Models
         public string Url { get; set; }
         public string ImageUrl { get; set; }
         public DateTime? LastUpdated { get; set; }
-
-        public FeedSubscriptionDo() { }
-
     }
 }

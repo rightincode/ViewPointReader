@@ -93,12 +93,32 @@ namespace ViewPointReader.ViewModels
                 Url = feed.Link,
                 ImageUrl = feed.ImageUrl,
                 LastUpdated = feed.LastUpdatedDate,
-                SubscribedDate = DateTime.Now
+                SubscribedDate = DateTime.Now,
+                FeedItems = new List<VprFeedItem>()
             };
-
+            
             if (!string.IsNullOrEmpty(feedSubscription.Description))
             {
                 feedSubscription.KeyPhrases = await _viewPointRssReader.ExtractKeyPhrasesAsync(feedSubscription.Description);
+            }
+
+            if (feed.Items.Count == 0) return feedSubscription;
+
+            foreach (var feedItem in feed.Items)
+            {
+                var vprFeedItem = new VprFeedItem
+                {
+                    Author = feedItem.Author,
+                    Categories = feedItem.Categories,
+                    Content = feedItem.Content,
+                    Description = feedItem.Description,
+                    Link = feedItem.Link,
+                    PublishingDate = feedItem.PublishingDate,
+                    PublishingDateString = feedItem.PublishingDateString,
+                    Title = feedItem.Title
+                };
+
+                feedSubscription.FeedItems.Add(vprFeedItem);
             }
 
             return feedSubscription;

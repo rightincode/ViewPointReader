@@ -15,6 +15,7 @@ namespace ViewPointReader.Core.Models
         public string ImageUrl { get; set; }
         public DateTime? LastUpdated { get; set; }
         public float RecommendationScore { get; set; }
+        public List<VprFeedItem> FeedItems { get; set; }
 
         public FeedSubscription()
         {

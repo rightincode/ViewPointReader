@@ -20,7 +20,7 @@ namespace ViewPointReader.Data.Models
 
             try
             {
-                _databaseConnection.CreateTableAsync<FeedSubscriptionDo>().Wait();
+                _databaseConnection.CreateTablesAsync<FeedSubscriptionDo, VprFeedItemDo>().Wait();
             }
             catch (SQLiteException ex)
             {
@@ -62,10 +62,57 @@ namespace ViewPointReader.Data.Models
             });
         }
 
-        public Task<int> SaveFeedSubscriptionAsync(IFeedSubscription feedSubscription)
+        public async Task<int> SaveFeedSubscriptionAsync(IFeedSubscription feedSubscription)
         {
-            return feedSubscription.Id > 0 ? _databaseConnection.UpdateAsync(TransformToSubscriptionDo(feedSubscription)) 
-                : _databaseConnection.InsertAsync(TransformToSubscriptionDo(feedSubscription));
+            var feedSubscriptionDo = TransformToSubscriptionDo(feedSubscription);
+
+            if (feedSubscription.Id > 0)
+            {
+                await _databaseConnection.UpdateAsync(feedSubscriptionDo);
+            }
+            else
+            {
+                await _databaseConnection.InsertAsync(feedSubscriptionDo);
+            }
+
+            if (feedSubscription.FeedItems.Any())
+            {
+                await SaveFeedItems(feedSubscription.FeedItems, feedSubscriptionDo.Id);
+            }
+
+            return feedSubscription.Id;
+        }
+
+        //TODO: Research bulk insert option, transaction?
+        private Task SaveFeedItems(List<VprFeedItem> vprFeedItems, int subscriptionId)
+        {
+            return Task.Run(async () =>
+            {
+                foreach (var vprFeedItem in vprFeedItems)
+                {
+                    var vprFeedItemDo = new VprFeedItemDo
+                    {
+                        Id = vprFeedItem.Id,
+                        Author = vprFeedItem.Author,
+                        Content = vprFeedItem.Content,
+                        Description = vprFeedItem.Description,
+                        FeedSubscriptionDoId = subscriptionId,
+                        Link = vprFeedItem.Link,
+                        PublishingDate = vprFeedItem.PublishingDate,
+                        PublishingDateString = vprFeedItem.PublishingDateString,
+                        Title = vprFeedItem.Title
+                    };
+
+                    if (vprFeedItemDo.Id > 0)
+                    {
+                        await _databaseConnection.UpdateAsync(vprFeedItemDo);
+                    }
+                    else
+                    {
+                        await _databaseConnection.InsertAsync(vprFeedItemDo);
+                    }
+                }
+            });
         }
 
         private FeedSubscriptionDo TransformToSubscriptionDo(IFeedSubscription feedSubscription)
@@ -79,7 +126,7 @@ namespace ViewPointReader.Data.Models
                 ImageUrl = feedSubscription.ImageUrl,
                 LastUpdated = feedSubscription.LastUpdated,
                 KeyPhrases = BuildCommaDelimitedStringFromStringList(feedSubscription.KeyPhrases),
-                SubscribedDate = feedSubscription.SubscribedDate
+                SubscribedDate = feedSubscription.SubscribedDate,
             };
 
             return feedSubscriptionDo;
@@ -96,8 +143,30 @@ namespace ViewPointReader.Data.Models
                 ImageUrl = feedSubscriptionDo.ImageUrl,
                 LastUpdated = feedSubscriptionDo.LastUpdated,
                 KeyPhrases = BuildStringListFromCommaDelimitedString(feedSubscriptionDo.KeyPhrases),
-                SubscribedDate = feedSubscriptionDo.SubscribedDate
+                SubscribedDate = feedSubscriptionDo.SubscribedDate,
+                //FeedItems = new List<VprFeedItem>()
+                
             };
+
+            //if (feedSubscriptionDo.FeedItems == null) return feedSubscription;
+            //foreach (var feedItem in feedSubscriptionDo.FeedItems)
+            //{
+            //    var vprFeedItem = new VprFeedItem
+            //    {
+            //        Id = feedItem.Id,
+            //        Author = feedItem.Author,
+            //        Categories = feedItem.Categories,
+            //        Content = feedItem.Content,
+            //        Description = feedItem.Description,
+            //        FeedSubscriptionDoId = feedItem.FeedSubscriptionDoId,
+            //        Link = feedItem.Link,
+            //        PublishingDate = feedItem.PublishingDate,
+            //        PublishingDateString = feedItem.PublishingDateString,
+            //        Title = feedItem.Title
+            //    };
+
+            //    feedSubscription.FeedItems.Add(vprFeedItem);
+            //}
 
             return feedSubscription;
         }

@@ -19,7 +19,11 @@
         </StackLayout>
         
         <StackLayout Orientation="Vertical">
-
+            <Button x:Name="BtnClear"
+                    Text="Clear Search Results"
+                    WidthRequest="200"
+                    IsVisible="{Binding VprSearchViewModel.IsClearSearchButtonVisible}"
+                    Command="{Binding VprSearchViewModel.ClearResultsCommand}"></Button>
             <ListView x:Name="SearchedSubscriptions"
                         ItemsSource="{Binding VprSearchViewModel.SearchResults}" HasUnevenRows="True" VerticalOptions="FillAndExpand"
                         ItemTapped="Handle_ItemTapped"

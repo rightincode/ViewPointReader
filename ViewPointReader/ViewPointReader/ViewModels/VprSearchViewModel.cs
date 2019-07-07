@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using ViewPointReader.Core.Interfaces;
@@ -12,15 +13,36 @@ using Xamarin.Forms;
 
 namespace ViewPointReader.ViewModels
 {
-    public class VprSearchViewModel
+    public class VprSearchViewModel : INotifyPropertyChanged
     {
         private readonly IViewPointRssReader _viewPointRssReader;
         private readonly IViewPointReaderRepository _viewPointReaderRepository;
         private readonly ModelBuilder.ModelBuilder _modelBuilder;
+        private string _searchPhrase;
+        private bool _isClearSearchButtonVisible;
+
+        public event PropertyChangedEventHandler PropertyChanged;
 
         public ObservableCollection<Feed> SearchResults { get; set; }
-        public string SearchPhrase { get; set; }
+        public string SearchPhrase
+        {
+            get => _searchPhrase;
+            set
+            {
+                _searchPhrase = value;
+                OnPropertyChanged("SearchPhrase");
+            } }
 
+        public bool IsClearSearchButtonVisible
+        {
+            get => _isClearSearchButtonVisible;
+            set
+            {
+                _isClearSearchButtonVisible = value;
+                OnPropertyChanged("IsClearSearchButtonVisible");
+            }
+        }
+        
         public VprSearchViewModel(IViewPointRssReader viewPointRssReader
             , IViewPointReaderRepository viewPointReaderRepository)
         {
@@ -28,11 +50,19 @@ namespace ViewPointReader.ViewModels
             _viewPointReaderRepository = viewPointReaderRepository;
 
             SearchResults = new ObservableCollection<Feed>();
+            IsClearSearchButtonVisible = false;
 
             _modelBuilder = ((App) Application.Current).ModelBuilder;
         }
 
         public ICommand FeedSearchCommand => new Command( async () => { await Search(); });
+        public ICommand ClearResultsCommand => new Command(ClearSearchResults);
+
+        protected void OnPropertyChanged(string name)
+        {
+            PropertyChangedEventHandler handler = PropertyChanged;
+            handler?.Invoke(this, new PropertyChangedEventArgs(name));
+        }
 
         private async Task Search()
         {
@@ -63,7 +93,18 @@ namespace ViewPointReader.ViewModels
                 {
                     Title = "No Feeds Found!"
                 });
+
+                IsClearSearchButtonVisible = false;
             }
+
+            IsClearSearchButtonVisible = true;
+        }
+
+        private void ClearSearchResults()
+        {
+            SearchResults.Clear();
+            SearchPhrase = string.Empty;
+            IsClearSearchButtonVisible = false;
         }
 
         public async Task<int> SaveSubscription(Feed feed)

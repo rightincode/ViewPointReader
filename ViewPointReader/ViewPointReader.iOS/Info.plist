@@ -34,5 +34,11 @@
     <string>ViewPointReader</string>
     <key>XSAppIconAssets</key>
     <string>Assets.xcassets/AppIcon.appiconset</string>
+    <key>UIAppFonts</key>
+    <array>
+      <string>fonts/FontAwesome5Brands.otf</string>
+      <string>fonts/FontAwesome5Regular.otf</string>
+      <string>fonts/FontAwesome5Solid.otf</string>
+    </array>
 </dict>
 </plist>

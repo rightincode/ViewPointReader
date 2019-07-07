@@ -1,18 +1,20 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="ViewPointReader.Views.VprSearchView">
+             x:Class="ViewPointReader.Views.VprSearchView"
+             xmlns:fontawesome="clr-namespace:ViewPointReader.Utils.FontAwesome;assembly=ViewPointReader">
     <StackLayout>
         <StackLayout Orientation="Horizontal">
             <Entry x:Name="TxtSearchTerm" 
                    Placeholder="Enter topic..."
                    FontSize="Medium"
-                   WidthRequest="250"
+                   WidthRequest="300"
                    Text="{Binding VprSearchViewModel.SearchPhrase, Mode=TwoWay}"></Entry>
             <Button x:Name="BtnSearch"
-                    Text="Search"
+                    Text="{x:Static fontawesome:FontAwesomeIcons.Search}"
+                    FontFamily="{StaticResource FontAwesomeSolid}"
                     FontSize="Medium"
-                    WidthRequest="100"
+                    WidthRequest="50"
                     Command="{Binding VprSearchViewModel.FeedSearchCommand}"></Button>
         </StackLayout>
         

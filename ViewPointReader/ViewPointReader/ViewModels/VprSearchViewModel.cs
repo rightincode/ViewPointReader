@@ -17,7 +17,7 @@ namespace ViewPointReader.ViewModels
     {
         private readonly IViewPointRssReader _viewPointRssReader;
         private readonly IViewPointReaderRepository _viewPointReaderRepository;
-        private readonly ModelBuilder.ModelBuilder _modelBuilder;
+        //private readonly ModelBuilder.ModelBuilder _modelBuilder;
         private string _searchPhrase;
         private bool _isClearSearchButtonVisible;
 
@@ -52,7 +52,7 @@ namespace ViewPointReader.ViewModels
             SearchResults = new ObservableCollection<Feed>();
             IsClearSearchButtonVisible = false;
 
-            _modelBuilder = ((App) Application.Current).ModelBuilder;
+            //_modelBuilder = ((App) Application.Current).ModelBuilder;
         }
 
         public ICommand FeedSearchCommand => new Command( async () => { await Search(); });
@@ -125,7 +125,7 @@ namespace ViewPointReader.ViewModels
 
             var recommendedFeed = await CovertFeedToIFeedSubscription(feed);
             
-            recommendedFeed.RecommendationScore = _modelBuilder.ScoreFeed(recommendedFeed);
+            //recommendedFeed.RecommendationScore = _modelBuilder.ScoreFeed(recommendedFeed);
 
             ((App)Application.Current).RecommendedFeeds.Add(recommendedFeed);
         }

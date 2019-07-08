@@ -1,13 +1,11 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using ViewPointReader.CognitiveServices;
 using ViewPointReader.CognitiveServices.Interfaces;
 using ViewPointReader.Rss;
 using ViewPointReader.Rss.Interfaces;
 using Xamarin.Forms;
-using Xamarin.Forms.Xaml;
 using ViewPointReader.Views;
 using ViewPointReader.Data.Models;
 using ViewPointReader.Data.Interfaces;
@@ -19,7 +17,7 @@ namespace ViewPointReader
     public partial class App : Application
     {
         public readonly IFileHelper FileHelper = DependencyService.Get<IFileHelper>();
-        public ModelBuilder.ModelBuilder ModelBuilder;
+        //public ModelBuilder.ModelBuilder ModelBuilder;
 
         public IServiceProvider ServiceProvider { get; private set; }
 
@@ -62,7 +60,7 @@ namespace ViewPointReader
 
         private void UpdateVprRecommendationModel()
         {
-            ModelBuilder = new ModelBuilder.ModelBuilder(FileHelper);
-            ModelBuilder.BuildModel();
+            //ModelBuilder = new ModelBuilder.ModelBuilder(FileHelper);
+            //ModelBuilder.BuildModel();
         }}
 }

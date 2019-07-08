@@ -5,7 +5,10 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\FeedReader\FeedReader\FeedReader.csproj" />
+    <PackageReference Include="CodeHollow.FeedReader" Version="1.2.1" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\ViewPointReader.CognitiveServices\ViewPointReader.CognitiveServices.csproj" />
   </ItemGroup>
 

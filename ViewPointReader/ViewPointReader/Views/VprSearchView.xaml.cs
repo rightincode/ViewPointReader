@@ -38,15 +38,12 @@ namespace ViewPointReader.Views
             if (e.Item == null)
                 return;
 
-            await SaveSubscription((Feed)e.Item);
+            await VprSearchViewModel.SaveSubscription((Feed) e.Item);
+
+            VprSearchViewModel.RemoveFeedFromSearchResults((Feed) e.Item);
 
             //Deselect Item
             ((ListView)sender).SelectedItem = null;
-        }
-
-        private async Task SaveSubscription(Feed feed)
-        {
-            await VprSearchViewModel.SaveSubscription(feed);
         }
     }
 }

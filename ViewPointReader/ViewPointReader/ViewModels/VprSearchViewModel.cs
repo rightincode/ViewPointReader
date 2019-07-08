@@ -58,6 +58,18 @@ namespace ViewPointReader.ViewModels
         public ICommand FeedSearchCommand => new Command( async () => { await Search(); });
         public ICommand ClearResultsCommand => new Command(ClearSearchResults);
 
+        public async Task<int> SaveSubscription(Feed feed)
+        {
+            var feedSubscription = await CovertFeedToIFeedSubscription(feed);
+            
+            return await _viewPointReaderRepository.SaveFeedSubscriptionAsync(feedSubscription);
+        }
+
+        public void RemoveFeedFromSearchResults(Feed feed)
+        {
+            SearchResults.Remove(feed);
+        }
+
         protected void OnPropertyChanged(string name)
         {
             PropertyChangedEventHandler handler = PropertyChanged;
@@ -106,14 +118,7 @@ namespace ViewPointReader.ViewModels
             SearchPhrase = string.Empty;
             IsClearSearchButtonVisible = false;
         }
-
-        public async Task<int> SaveSubscription(Feed feed)
-        {
-            var feedSubscription = await CovertFeedToIFeedSubscription(feed);
-            
-            return await _viewPointReaderRepository.SaveFeedSubscriptionAsync(feedSubscription);
-        }
-
+        
         private async Task ScoreAndSave(Feed feed)
         {
             ((App)Application.Current).RecommendedFeeds = new List<IFeedSubscription>();

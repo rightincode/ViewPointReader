@@ -25,7 +25,9 @@
                     IsVisible="{Binding VprSearchViewModel.IsClearSearchButtonVisible}"
                     Command="{Binding VprSearchViewModel.ClearResultsCommand}"></Button>
             <ListView x:Name="SearchedSubscriptions"
-                        ItemsSource="{Binding VprSearchViewModel.SearchResults}" HasUnevenRows="True" VerticalOptions="FillAndExpand"
+                        ItemsSource="{Binding VprSearchViewModel.SearchResults}" 
+                        HasUnevenRows="True" 
+                        VerticalOptions="FillAndExpand"
                         ItemTapped="Handle_ItemTapped"
                         CachingStrategy="RecycleElement">
                

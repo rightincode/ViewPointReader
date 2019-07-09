@@ -68,7 +68,7 @@ namespace ViewPointReader.Data.Models
         {
             var feedItemDos =
                 await _databaseConnection.Table<VprFeedItemDo>().Where(x => x.FeedSubscriptionDoId == subscriptionId)
-                    .OrderBy(x => x.PublishingDate)
+                    .OrderByDescending(x => x.PublishingDate)
                     .ToListAsync();
 
             var feedItems = new List<VprFeedItem>();

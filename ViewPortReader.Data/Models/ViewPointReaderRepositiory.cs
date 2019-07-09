@@ -1,7 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Net;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using SQLite;
 using ViewPointReader.Core.Interfaces;
@@ -196,7 +198,7 @@ namespace ViewPointReader.Data.Models
                 Author = vprFeedItemDo.Author,
                 //Categories = vprFeedItemDo.Categories,
                 Content = vprFeedItemDo.Content,
-                Description = vprFeedItemDo.Description,
+                Description = RemoveHtmlTags(WebUtility.HtmlDecode(vprFeedItemDo.Description)),
                 FeedSubscriptionDoId = vprFeedItemDo.FeedSubscriptionDoId,
                 Link = vprFeedItemDo.Link,
                 PublishingDate = vprFeedItemDo.PublishingDate,
@@ -230,6 +232,11 @@ namespace ViewPointReader.Data.Models
             result.RemoveAll(string.IsNullOrEmpty);
 
             return result;
+        }
+
+        private string RemoveHtmlTags(string input)
+        {
+            return Regex.Replace(input, "<.+?>", string.Empty);
         }
     }
 }

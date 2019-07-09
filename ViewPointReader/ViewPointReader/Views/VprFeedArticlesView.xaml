@@ -1,0 +1,43 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             x:Class="ViewPointReader.Views.VprFeedArticlesView">
+  <ListView x:Name="VprFeedArticles"
+            ItemsSource="{Binding FeedItems}"
+            ItemTapped="Handle_ItemTapped"
+            HasUnevenRows="True" 
+            VerticalOptions="FillAndExpand"
+            CachingStrategy="RecycleElement">
+    <d:ListView.ItemsSource>
+        <x:Array Type="{x:Type x:String}">
+            <x:String>Item 1</x:String>
+            <x:String>Item 2</x:String>
+            <x:String>Item 3</x:String>
+            <x:String>Item 4</x:String>
+            <x:String>Item 5</x:String>
+        </x:Array>
+    </d:ListView.ItemsSource>
+    
+      <ListView.ItemTemplate>
+      <DataTemplate>
+        <ViewCell>
+          <StackLayout>
+            <Label Text="{Binding Title}" 
+                   d:Text="{Binding .}"
+                   FontSize="Medium" TextColor="Red"/>
+            <Label Text="{Binding Description}" 
+                   d:Text="{Binding .}"
+                   FontSize="Small" TextColor="Blue"/>
+            <Label Text="{Binding PublishingDate, StringFormat='{0:MMMM dd, yyyy h:mm tt}'}" 
+                   d:Text="{Binding .}"
+                   FontSize="Small"/>
+          </StackLayout>
+        </ViewCell>
+      </DataTemplate>
+    </ListView.ItemTemplate>
+    
+  </ListView>
+</ContentPage>

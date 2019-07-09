@@ -62,6 +62,23 @@ namespace ViewPointReader.Data.Models
             });
         }
 
+        public async Task<List<VprFeedItem>> GetFeedItemsForFeedAsync(int subscriptionId)
+        {
+            var feedItemDos =
+                await _databaseConnection.Table<VprFeedItemDo>().Where(x => x.FeedSubscriptionDoId == subscriptionId)
+                    .OrderBy(x => x.PublishingDate)
+                    .ToListAsync();
+
+            var feedItems = new List<VprFeedItem>();
+
+            foreach (var vprFeedItemDo in feedItemDos)
+            {
+                feedItems.Add(TransformToVprFeedItem(vprFeedItemDo));
+            }
+
+            return feedItems;
+        }
+
         public async Task<int> SaveFeedSubscriptionAsync(IFeedSubscription feedSubscription)
         {
             var feedSubscriptionDo = TransformToSubscriptionDo(feedSubscription);
@@ -169,6 +186,25 @@ namespace ViewPointReader.Data.Models
             //}
 
             return feedSubscription;
+        }
+
+        private VprFeedItem TransformToVprFeedItem(VprFeedItemDo vprFeedItemDo)
+        {
+            var vprFeedItem = new VprFeedItem
+            {
+                Id = vprFeedItemDo.Id,
+                Author = vprFeedItemDo.Author,
+                //Categories = vprFeedItemDo.Categories,
+                Content = vprFeedItemDo.Content,
+                Description = vprFeedItemDo.Description,
+                FeedSubscriptionDoId = vprFeedItemDo.FeedSubscriptionDoId,
+                Link = vprFeedItemDo.Link,
+                PublishingDate = vprFeedItemDo.PublishingDate,
+                PublishingDateString = vprFeedItemDo.PublishingDateString,
+                Title = vprFeedItemDo.Title
+            };
+
+            return vprFeedItem;
         }
 
         private string BuildCommaDelimitedStringFromStringList(List<string> stringList)

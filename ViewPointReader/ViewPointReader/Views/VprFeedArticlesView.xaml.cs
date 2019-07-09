@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections.ObjectModel;
-using System.ComponentModel;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using ViewPointReader.Core.Models;
 using ViewPointReader.Data.Interfaces;
 using ViewPointReader.ViewModels;
+using Xamarin.Essentials;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -26,15 +23,24 @@ namespace ViewPointReader.Views
             Vm.LoadFeedItems(subscriptionId);
         }
 
-        async void Handle_ItemTapped(object sender, ItemTappedEventArgs e)
+        public async void Handle_ItemTapped(object sender, ItemTappedEventArgs e)
         {
             if (e.Item == null)
                 return;
+            
+            var feedItem = (VprFeedItem) e.Item;
 
-            await DisplayAlert("Item Tapped", "An item was tapped.", "OK");
-
+            if (Connectivity.NetworkAccess == NetworkAccess.Internet && !string.IsNullOrEmpty(feedItem.Link))
+            {
+                await Browser.OpenAsync(feedItem.Link, BrowserLaunchMode.SystemPreferred);
+                
+            }
+            
             //Deselect Item
             ((ListView)sender).SelectedItem = null;
+
+            //TODO: display msg: no link available
+            
         }
     }
 }

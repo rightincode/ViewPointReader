@@ -125,8 +125,6 @@ namespace ViewPointReader.Data.Models
             {
                 PartitionKey = feedSubscription.Id.ToString(),
                 RowKey = feedSubscription.Title,
-                //Id = feedSubscription.Id,
-                //Title = feedSubscription.Title,
                 Description = feedSubscription.Description,
                 Url = feedSubscription.Url,
                 ImageUrl = feedSubscription.ImageUrl,

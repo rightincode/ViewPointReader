@@ -1,15 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Builder;
+﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
+using ViewPointReader.Data.Interfaces;
+using ViewPointReader.Data.Models;
 using ViewPointReader.WebAPI.Models;
 
 namespace ViewPointReader.WebAPI
@@ -29,6 +24,7 @@ namespace ViewPointReader.WebAPI
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
             services.Configure<ViewPointReaderApiSettings>(Configuration.GetSection("ViewPointReaderApiSettings"));
+            services.AddTransient<IViewPointReaderRepository>(s => new ViewPointReaderCloudRepository(Configuration.GetSection("ViewPointReaderApiSettings:StorageConnectionString").Value));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

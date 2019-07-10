@@ -1,14 +1,13 @@
 ﻿using System;
 using Microsoft.Azure.Cosmos.Table;
-using ViewPointReader.Data.Interfaces;
 
 namespace ViewPointReader.Data.Models.Cloud
 {
-    public class FeedSubscriptionEntity : TableEntity, IFeedSubscriptionDo
+    public class FeedSubscriptionEntity : TableEntity
     {
         public FeedSubscriptionEntity(){}
 
-        public int Id { get ; set ; }
+        //public int Id { get ; set ; }
         public string Title { get ; set ; }
         public string Description { get ; set ; }
         public string Url { get ; set ; }

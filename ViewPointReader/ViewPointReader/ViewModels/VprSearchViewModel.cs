@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Net;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using ViewPointReader.Core.Interfaces;
@@ -11,6 +12,7 @@ using ViewPointReader.Data.Interfaces;
 using ViewPointReader.Data.Models;
 using ViewPointReader.Rss.Interfaces;
 using Xamarin.Forms;
+using Xamarin.Essentials;
 
 namespace ViewPointReader.ViewModels
 {
@@ -23,9 +25,11 @@ namespace ViewPointReader.ViewModels
 
         private string _searchPhrase;
         private bool _isClearSearchButtonVisible;
+        private bool _isSearchEnabled;
+        private string _currentNetworkStatus;
 
         public event PropertyChangedEventHandler PropertyChanged;
-
+        
         public ObservableCollection<Feed> SearchResults { get; set; }
         public string SearchPhrase
         {
@@ -34,6 +38,16 @@ namespace ViewPointReader.ViewModels
             {
                 _searchPhrase = value;
                 OnPropertyChanged("SearchPhrase");
+
+                if (_searchPhrase.Length > 0 && IsSearchEnabled == false)
+                {
+                    IsSearchEnabled = true;
+                }
+
+                if (_searchPhrase.Length == 0)
+                {
+                    IsSearchEnabled = false;
+                }
             } }
 
         public bool IsClearSearchButtonVisible
@@ -45,6 +59,24 @@ namespace ViewPointReader.ViewModels
                 OnPropertyChanged("IsClearSearchButtonVisible");
             }
         }
+
+        public bool IsSearchEnabled { get => _isSearchEnabled;
+            set
+            {
+                _isSearchEnabled = value;
+                OnPropertyChanged("IsSearchEnabled");
+            }
+        }
+
+        public string CurrentNetworkStatus
+        {
+            get => _currentNetworkStatus;
+            set
+            {
+                _currentNetworkStatus = value;
+                OnPropertyChanged("CurrentNetworkStatus");
+            }
+        }
         
         public VprSearchViewModel(IViewPointRssReader viewPointRssReader
             , IViewPointReaderRepository viewPointReaderRepository)
@@ -54,7 +86,10 @@ namespace ViewPointReader.ViewModels
 
             SearchResults = new ObservableCollection<Feed>();
             IsClearSearchButtonVisible = false;
+            IsSearchEnabled = false;
+            CurrentNetworkStatus = string.Empty;
 
+            Connectivity.ConnectivityChanged += OnConnectivityChanged;
         }
 
         public ICommand FeedSearchCommand => new Command( async () => { await Search(); });
@@ -81,6 +116,21 @@ namespace ViewPointReader.ViewModels
             handler?.Invoke(this, new PropertyChangedEventArgs(name));
         }
 
+        protected void OnConnectivityChanged(object sender, ConnectivityChangedEventArgs e)
+        {
+            if (e.NetworkAccess != NetworkAccess.Internet)
+            {
+                IsSearchEnabled = false;
+
+                CurrentNetworkStatus = "No network connectivity";
+            }
+            else
+            {
+                IsSearchEnabled = true;
+                CurrentNetworkStatus = string.Empty;
+            }
+        }
+
         private async Task Search()
         {
             SearchResults.Clear();
@@ -90,7 +140,12 @@ namespace ViewPointReader.ViewModels
                 Title = "Searching..."
             });
 
-            var results = await _viewPointRssReader.SearchForFeedsAsync(SearchPhrase);
+            var results = new List<Feed>();
+
+            if (Connectivity.NetworkAccess == NetworkAccess.Internet)
+            {
+                results = await _viewPointRssReader.SearchForFeedsAsync(SearchPhrase);
+            }
 
             SearchResults.Clear();
 

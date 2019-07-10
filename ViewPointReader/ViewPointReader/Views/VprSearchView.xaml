@@ -2,7 +2,8 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="ViewPointReader.Views.VprSearchView"
-             xmlns:fontawesome="clr-namespace:ViewPointReader.Utils.FontAwesome;assembly=ViewPointReader">
+             xmlns:fontawesome="clr-namespace:ViewPointReader.Utils.FontAwesome;assembly=ViewPointReader"
+             Title ="{Binding VprSearchViewModel.CurrentNetworkStatus}">
     <StackLayout>
         <StackLayout Orientation="Horizontal">
             <Entry x:Name="TxtSearchTerm" 
@@ -15,6 +16,7 @@
                     FontFamily="{StaticResource FontAwesomeSolid}"
                     FontSize="Medium"
                     WidthRequest="50"
+                    IsEnabled="{Binding VprSearchViewModel.IsSearchEnabled}"
                     Command="{Binding VprSearchViewModel.FeedSearchCommand}"></Button>
         </StackLayout>
         

@@ -39,9 +39,9 @@ namespace ViewPointReader.WebAPI.Controllers
             await modelBuilder.BuildModel();
         }
 
-        [HttpGet]
+        [HttpPost]
         [Route("scorefeed")]
-        public async Task<float> ScoreFeed(FeedSubscription feedSubscription)
+        public async Task<float> ScoreFeed([FromBody] FeedSubscription feedSubscription)
         {
             var modelBuilder = new ModelBuilder.ModelBuilder(_repository);
             return await modelBuilder.ScoreFeed(feedSubscription);

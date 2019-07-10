@@ -20,7 +20,7 @@ namespace ViewPointReader.ViewModels
         private readonly IViewPointReaderRepository _viewPointReaderRepository;
         private readonly ViewPointReaderCloudRepository _viewPointReaderCloudRepository = 
             new ViewPointReaderCloudRepository("DefaultEndpointsProtocol=https;AccountName=viewpointreaderdb;AccountKey=ryh54Nxxe99Ay2OjpcxfDB8SCTrWAYt0wOgZd01da2gajopsMAnMouvcgFCgwtNRprUWjbJKJzscHVFFTUVg3Q==;TableEndpoint=https://viewpointreaderdb.table.cosmos.azure.com:443/;");
-        //private readonly ModelBuilder.ModelBuilder _modelBuilder;
+
         private string _searchPhrase;
         private bool _isClearSearchButtonVisible;
 
@@ -55,7 +55,6 @@ namespace ViewPointReader.ViewModels
             SearchResults = new ObservableCollection<Feed>();
             IsClearSearchButtonVisible = false;
 
-            //_modelBuilder = ((App) Application.Current).ModelBuilder;
         }
 
         public ICommand FeedSearchCommand => new Command( async () => { await Search(); });
@@ -131,7 +130,7 @@ namespace ViewPointReader.ViewModels
 
             var recommendedFeed = await CovertFeedToIFeedSubscription(feed);
             
-            //recommendedFeed.RecommendationScore = _modelBuilder.ScoreFeed(recommendedFeed);
+            recommendedFeed.RecommendationScore = await _viewPointReaderCloudRepository.ScoreFeed(recommendedFeed);
 
             ((App)Application.Current).RecommendedFeeds.Add(recommendedFeed);
         }

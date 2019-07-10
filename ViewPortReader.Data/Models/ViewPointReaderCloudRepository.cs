@@ -1,9 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
+using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Azure.Cosmos.Table;
+using Newtonsoft.Json;
 using ViewPointReader.Core.Interfaces;
 using ViewPointReader.Core.Models;
 using ViewPointReader.Data.Interfaces;
@@ -83,12 +86,54 @@ namespace ViewPointReader.Data.Models
                 TableOperation insertMergeOperation = TableOperation.InsertOrMerge(newFeedSubscriptionEntity);
                 TableResult result = await _feedSubscriptionsTable.ExecuteAsync(insertMergeOperation);
 
+                await UpdateModel();
+
                 return result.HttpStatusCode;
             }
             catch (StorageException e)
             {
                 Console.WriteLine(e.Message);
                 throw;
+            }
+        }
+
+        public async Task<float> ScoreFeed(IFeedSubscription feedSubscription)
+        {
+            float score = 0;
+
+            var requestUrl = new Uri("https://viewpointreaderwebapi.azurewebsites.net/api/subscriptions/scorefeed");
+
+            using (var request = new HttpRequestMessage(HttpMethod.Post, requestUrl))
+            {
+                using (var stringContent =
+                    new StringContent(JsonConvert.SerializeObject(feedSubscription), Encoding.UTF8, "application/json"))
+                {
+                    var httpClient = new HttpClient();
+                    request.Content = stringContent;
+
+                    var responseMessage = await httpClient.SendAsync(request);
+                    if (responseMessage.IsSuccessStatusCode)
+                    {
+                        float.TryParse(await responseMessage.Content.ReadAsStringAsync(), out score);
+                    }
+                }
+            }
+
+            return score;
+        }
+
+        public async Task UpdateModel()
+        {
+            using (var request = new HttpRequestMessage(HttpMethod.Post, 
+                "https://viewpointreaderwebapi.azurewebsites.net/api/subscriptions/buildmodel"))
+            {
+                var httpClient = new HttpClient();
+                var responseMessage = await httpClient.SendAsync(request);
+
+                if (!responseMessage.IsSuccessStatusCode)
+                {
+                    Console.WriteLine(responseMessage.StatusCode);
+                }
             }
         }
 

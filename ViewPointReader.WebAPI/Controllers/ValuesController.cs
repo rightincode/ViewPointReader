@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Options;
+using ViewPointReader.WebAPI.Models;
 
 namespace ViewPointReader.WebAPI.Controllers
 {
@@ -10,6 +12,13 @@ namespace ViewPointReader.WebAPI.Controllers
     [ApiController]
     public class ValuesController : ControllerBase
     {
+        private readonly IOptions<ViewPointReaderApiSettings> appsettings;
+
+        public ValuesController(IOptions<ViewPointReaderApiSettings> app)
+        {
+            appsettings = app;
+        }
+
         // GET api/values
         [HttpGet]
         public ActionResult<IEnumerable<string>> Get()

@@ -12,6 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\ViewPointReader.ModelBuilder\ViewPointReader.ModelBuilder.csproj" />
     <ProjectReference Include="..\ViewPortReader.Data\ViewPointReader.Data.csproj" />
   </ItemGroup>
 

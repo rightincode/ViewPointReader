@@ -30,5 +30,21 @@ namespace ViewPointReader.WebAPI.Controllers
         {
             await _repository.SaveFeedSubscriptionAsync(feedSubscription);
         }
+
+        [HttpPost]
+        [Route("buildmodel")]
+        public async Task BuildModel()
+        {
+            var modelBuilder = new ModelBuilder.ModelBuilder(_repository);
+            await modelBuilder.BuildModel();
+        }
+
+        [HttpGet]
+        [Route("scorefeed")]
+        public async Task<float> ScoreFeed(FeedSubscription feedSubscription)
+        {
+            var modelBuilder = new ModelBuilder.ModelBuilder(_repository);
+            return await modelBuilder.ScoreFeed(feedSubscription);
+        }
     }
 }

@@ -3,37 +3,43 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.Azure.Storage;
+using Microsoft.Azure.Storage.Blob;
 using Microsoft.ML;
-using Microsoft.ML.Data;
-using Microsoft.ML.Trainers;
 using ViewPointReader.Core.Interfaces;
 using ViewPointReader.Core.Models;
-using ViewPointReader.Data;
 using ViewPointReader.Data.Interfaces;
-using ViewPointReader.Data.Models;
 
 namespace ViewPointReader.ModelBuilder
 {
     public class ModelBuilder
     {
-        private readonly ViewPointReaderRepository _feedRepository;
+        private readonly string _storageAccountConnectionString =
+            "DefaultEndpointsProtocol=https;AccountName=viewpointreaderstorage;AccountKey=RY44OOYQwseuLJn3o3JAvqyf7qWnkQH1fFJlxtpQNnWHBJm9lBIbU2dO7Pv07TBu36EN5bOBOmcW485xV1xwQQ==;EndpointSuffix=core.windows.net";
+
+        private readonly string _viewPointReaderContainerName = "viewpointreader";
+        private CloudStorageAccount _cloudStorageAccount;
+        private CloudBlobClient _cloudBlobClient;
+        private CloudBlobContainer _cloudBlobContainer;
+
+
+        private readonly IViewPointReaderRepository _feedRepository;
         private ITransformer _trainedModel;
-        private IFileHelper _fileHelper;
 
         public ModelBuilder()
         {
-            _feedRepository = new ViewPointReaderRepository(new FileHelper());
-            _fileHelper = new FileHelper();
         }
 
-        public ModelBuilder(IFileHelper fileHelper)
+        public ModelBuilder(IViewPointReaderRepository feedRepository)
         {
-            _feedRepository = new ViewPointReaderRepository(fileHelper);
-            _fileHelper = fileHelper;
+            _feedRepository = feedRepository;
+            CreateCloudStorageAccountFromConnectionString();
         }
 
         public async Task BuildModel()
         {
+            var createBlobContainerTask = CreateBlobContainer();
+
             MLContext mlContext = new MLContext();
 
             try
@@ -77,30 +83,35 @@ namespace ViewPointReader.ModelBuilder
                 #endregion
 
                 //save model
-                mlContext.Model.Save(model, trainingData.Schema,
-                    _fileHelper.GetLocalFilePath("VprRecommendationModel.mdl"));
+                var modelMemoryStream = new MemoryStream();
+                mlContext.Model.Save(model, trainingData.Schema, modelMemoryStream);
+                modelMemoryStream.Seek(0, SeekOrigin.Begin);
+
+                await createBlobContainerTask;
+                var cloudBlockBlob = _cloudBlobContainer.GetBlockBlobReference("vprrecommendationmodel-mdl");
+                await cloudBlockBlob.UploadFromStreamAsync(modelMemoryStream);
+
             }
             catch (Exception e)
             {
                 Console.WriteLine(e.Message);
             }
-            finally
-            {
-                LoadModel();
-            }
         }
 
-        private void LoadModel()
+        private async Task LoadModel()
         {
             MLContext mlContext = new MLContext();
-            var modelPath = _fileHelper.GetLocalFilePath("VprRecommendationModel.mdl");
+
+            var modelMemoryStream = new MemoryStream();
+            await CreateBlobContainer();
+            var cloudBlockBlob = _cloudBlobContainer.GetBlockBlobReference("vprrecommendationmodel-mdl");
+            await cloudBlockBlob.DownloadToStreamAsync(modelMemoryStream);
 
             try
             {
-                using (FileStream stream = new FileStream(modelPath, FileMode.Open, FileAccess.Read, FileShare.Read))
-                {
-                    _trainedModel = mlContext.Model.Load(stream, out var modelInputSchema);
-                }
+
+                _trainedModel = mlContext.Model.Load(modelMemoryStream, out var modelInputSchema);
+
             }
             catch (Exception ex)
             {
@@ -108,9 +119,12 @@ namespace ViewPointReader.ModelBuilder
             }
         }
 
-        public float ScoreFeed(IFeedSubscription feedSubscription)
+        public async Task<float> ScoreFeed(IFeedSubscription feedSubscription)
         {
             if (!feedSubscription.KeyPhrases.Any()) return 0;
+
+            await LoadModel();
+
             var testFeedData = new FeedData
             {
                 KeyPhrases = feedSubscription.KeyPhrases.ToArray()
@@ -119,7 +133,8 @@ namespace ViewPointReader.ModelBuilder
             try
             {
                 MLContext mlContext = new MLContext();
-                var predictionEngine = mlContext.Model.CreatePredictionEngine<FeedData, FeedRecommendation>(_trainedModel);
+                var predictionEngine =
+                    mlContext.Model.CreatePredictionEngine<FeedData, FeedRecommendation>(_trainedModel);
 
                 var prediction = predictionEngine.Predict(testFeedData);
                 return prediction.Score;
@@ -154,18 +169,38 @@ namespace ViewPointReader.ModelBuilder
             return results.ToArray();
         }
 
-    }
-
-
-    //*******  This is only for local testing!!! *******
-    class FileHelper : IFileHelper
-    {
-        public string GetLocalFilePath(string filename)
+        private void CreateCloudStorageAccountFromConnectionString()
         {
-
-            //TODO: Replace this path with a local path to your machine if you would like to perform local testing....
-            return
-                "C:\\Users\\rtaylor\\AppData\\Local\\Packages\\1c992eaa-0a62-41b2-bc8b-71d92909cd6f_x11ngb3ehp7m2\\LocalState\\" + filename;
+            try
+            {
+                _cloudStorageAccount = CloudStorageAccount.Parse(_storageAccountConnectionString);
+            }
+            catch (FormatException e)
+            {
+                Console.WriteLine(e.Message);
+                throw;
+            }
+            catch (ArgumentException e)
+            {
+                Console.WriteLine(e.Message);
+                throw;
+            }
         }
+
+        private async Task CreateBlobContainer()
+        {
+            _cloudBlobClient = _cloudStorageAccount.CreateCloudBlobClient();
+            _cloudBlobContainer = _cloudBlobClient.GetContainerReference(_viewPointReaderContainerName);
+
+            await _cloudBlobContainer.CreateIfNotExistsAsync();
+
+            // Set the permissions so the blobs are public.
+            var permissions = new BlobContainerPermissions
+            {
+                PublicAccess = BlobContainerPublicAccessType.Blob
+            };
+            await _cloudBlobContainer.SetPermissionsAsync(permissions);
+        }
+
     }
 }

@@ -8,6 +8,7 @@ using System.Windows.Input;
 using ViewPointReader.Core.Interfaces;
 using ViewPointReader.Core.Models;
 using ViewPointReader.Data.Interfaces;
+using ViewPointReader.Data.Models;
 using ViewPointReader.Rss.Interfaces;
 using Xamarin.Forms;
 
@@ -17,6 +18,8 @@ namespace ViewPointReader.ViewModels
     {
         private readonly IViewPointRssReader _viewPointRssReader;
         private readonly IViewPointReaderRepository _viewPointReaderRepository;
+        private readonly ViewPointReaderCloudRepository _viewPointReaderCloudRepository = 
+            new ViewPointReaderCloudRepository("DefaultEndpointsProtocol=https;AccountName=viewpointreaderdb;AccountKey=ryh54Nxxe99Ay2OjpcxfDB8SCTrWAYt0wOgZd01da2gajopsMAnMouvcgFCgwtNRprUWjbJKJzscHVFFTUVg3Q==;TableEndpoint=https://viewpointreaderdb.table.cosmos.azure.com:443/;");
         //private readonly ModelBuilder.ModelBuilder _modelBuilder;
         private string _searchPhrase;
         private bool _isClearSearchButtonVisible;
@@ -61,8 +64,11 @@ namespace ViewPointReader.ViewModels
         public async Task<int> SaveSubscription(Feed feed)
         {
             var feedSubscription = await CovertFeedToIFeedSubscription(feed);
-            
-            return await _viewPointReaderRepository.SaveFeedSubscriptionAsync(feedSubscription);
+            var subId = await _viewPointReaderRepository.SaveFeedSubscriptionAsync(feedSubscription);
+
+            await _viewPointReaderCloudRepository.SaveFeedSubscriptionAsync(feedSubscription);
+
+            return subId;
         }
 
         public void RemoveFeedFromSearchResults(Feed feed)

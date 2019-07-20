@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Net;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using ViewPointReader.Core.Interfaces;
@@ -26,11 +26,13 @@ namespace ViewPointReader.ViewModels
         private string _searchPhrase;
         private bool _isClearSearchButtonVisible;
         private bool _isSearchEnabled;
+        private bool _searching;
         private string _currentNetworkStatus;
+        private readonly List<IFeedSubscription> _tempSearchResults = new List<IFeedSubscription>();
 
         public event PropertyChangedEventHandler PropertyChanged;
         
-        public ObservableCollection<Feed> SearchResults { get; set; }
+        public ObservableCollection<IFeedSubscription> SearchResults { get; set; }
         public string SearchPhrase
         {
             get => _searchPhrase;
@@ -67,6 +69,14 @@ namespace ViewPointReader.ViewModels
                 OnPropertyChanged("IsSearchEnabled");
             }
         }
+        public bool Searching { get => _searching;
+            set
+            {
+                _searching = value;
+                OnPropertyChanged("Searching");
+            }
+        }
+
 
         public string CurrentNetworkStatus
         {
@@ -84,7 +94,7 @@ namespace ViewPointReader.ViewModels
             _viewPointRssReader = viewPointRssReader;
             _viewPointReaderRepository = viewPointReaderRepository;
 
-            SearchResults = new ObservableCollection<Feed>();
+            SearchResults = new ObservableCollection<IFeedSubscription>();
             IsClearSearchButtonVisible = false;
             IsSearchEnabled = false;
             CurrentNetworkStatus = string.Empty;
@@ -95,17 +105,16 @@ namespace ViewPointReader.ViewModels
         public ICommand FeedSearchCommand => new Command( async () => { await Search(); });
         public ICommand ClearResultsCommand => new Command(ClearSearchResults);
 
-        public async Task<int> SaveSubscription(Feed feed)
+        public async Task<int> SaveSubscription(IFeedSubscription feed)
         {
-            var feedSubscription = await CovertFeedToIFeedSubscription(feed);
-            var subId = await _viewPointReaderRepository.SaveFeedSubscriptionAsync(feedSubscription);
+            var subId = await _viewPointReaderRepository.SaveFeedSubscriptionAsync(feed);
 
-            await _viewPointReaderCloudRepository.SaveFeedSubscriptionAsync(feedSubscription);
+            await _viewPointReaderCloudRepository.SaveFeedSubscriptionAsync(feed);
 
             return subId;
         }
 
-        public void RemoveFeedFromSearchResults(Feed feed)
+        public void RemoveFeedFromSearchResults(IFeedSubscription feed)
         {
             SearchResults.Remove(feed);
         }
@@ -133,13 +142,11 @@ namespace ViewPointReader.ViewModels
 
         private async Task Search()
         {
+            Searching = true;
+            IsSearchEnabled = false;
+            _tempSearchResults.Clear();
             SearchResults.Clear();
-
-            SearchResults.Add(new Feed
-            {
-                Title = "Searching..."
-            });
-
+            
             var results = new List<Feed>();
 
             if (Connectivity.NetworkAccess == NetworkAccess.Internet)
@@ -153,23 +160,28 @@ namespace ViewPointReader.ViewModels
 
             foreach (var feed in results)
             {
-                SearchResults.Add(feed);
                 scoreAndSaveTasks.Add(ScoreAndSave(feed));
             }
 
             await Task.WhenAll(scoreAndSaveTasks);
 
-            if (SearchResults.Count == 0)
+            if (_tempSearchResults.Count == 0)
             {
-                SearchResults.Add(new Feed
+                SearchResults.Add(new FeedSubscription()
                 {
                     Title = "No Feeds Found!"
                 });
 
                 IsClearSearchButtonVisible = false;
             }
+            else
+            {
+                _tempSearchResults.OrderByDescending(fs => fs.RecommendationScore).ToList().ForEach(x => SearchResults.Add(x));
+            }
 
             IsClearSearchButtonVisible = true;
+            Searching = false;
+            IsSearchEnabled = true;
         }
 
         private void ClearSearchResults()
@@ -181,13 +193,10 @@ namespace ViewPointReader.ViewModels
         
         private async Task ScoreAndSave(Feed feed)
         {
-            ((App)Application.Current).RecommendedFeeds = new List<IFeedSubscription>();
-
             var recommendedFeed = await CovertFeedToIFeedSubscription(feed);
             
             recommendedFeed.RecommendationScore = await _viewPointReaderCloudRepository.ScoreFeed(recommendedFeed);
-
-            ((App)Application.Current).RecommendedFeeds.Add(recommendedFeed);
+            _tempSearchResults.Add(recommendedFeed);
         }
 
         private async Task<IFeedSubscription> CovertFeedToIFeedSubscription(Feed feed)

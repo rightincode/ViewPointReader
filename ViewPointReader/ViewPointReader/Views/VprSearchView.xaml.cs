@@ -1,15 +1,10 @@
 ﻿using System;
-using System.Collections.ObjectModel;
-using System.ComponentModel;
-using System.Linq;
-using System.Threading.Tasks;
-using CodeHollow.FeedReader;
+using System.Globalization;
 using ViewPointReader.Core.Interfaces;
 using ViewPointReader.Data.Interfaces;
 using ViewPointReader.ViewModels;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
-using ViewPointReader.Rss;
 using ViewPointReader.Rss.Interfaces;
 
 namespace ViewPointReader.Views
@@ -38,12 +33,13 @@ namespace ViewPointReader.Views
             if (e.Item == null)
                 return;
 
-            await VprSearchViewModel.SaveSubscription((Feed) e.Item);
+            await VprSearchViewModel.SaveSubscription((IFeedSubscription) e.Item);
 
-            VprSearchViewModel.RemoveFeedFromSearchResults((Feed) e.Item);
+            VprSearchViewModel.RemoveFeedFromSearchResults((IFeedSubscription) e.Item);
 
             //Deselect Item
             ((ListView)sender).SelectedItem = null;
         }
+        
     }
 }

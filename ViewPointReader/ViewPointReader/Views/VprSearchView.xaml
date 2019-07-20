@@ -3,13 +3,14 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="ViewPointReader.Views.VprSearchView"
              xmlns:fontawesome="clr-namespace:ViewPointReader.Utils.FontAwesome;assembly=ViewPointReader"
+             xmlns:utils="clr-namespace:ViewPointReader.Utils;assembly=ViewPointReader"
              Title ="{Binding VprSearchViewModel.CurrentNetworkStatus}">
     <StackLayout>
-        <StackLayout Orientation="Horizontal">
+        <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand">
             <Entry x:Name="TxtSearchTerm" 
                    Placeholder="Enter topic..."
                    FontSize="Medium"
-                   WidthRequest="300"
+                   HorizontalOptions="FillAndExpand"
                    Text="{Binding VprSearchViewModel.SearchPhrase, Mode=TwoWay}"></Entry>
             <Button x:Name="BtnSearch"
                     Text="{x:Static fontawesome:FontAwesomeIcons.Search}"
@@ -31,7 +32,8 @@
                         HasUnevenRows="True" 
                         VerticalOptions="FillAndExpand"
                         ItemTapped="Handle_ItemTapped"
-                        CachingStrategy="RecycleElement">
+                        CachingStrategy="RecycleElement"
+                        IsVisible="{Binding VprSearchViewModel.Searching, Converter={utils:InverseBoolConverter}}">
                
                 <ListView.ItemTemplate>
                   <DataTemplate>
@@ -41,6 +43,8 @@
                                FontSize="Medium" TextColor="Red" />
                         <Label Text="{Binding Description}" 
                                FontSize="Small"/>
+                        <Label Text="{Binding RecommendationScore}" 
+                               FontSize="Small" TextColor="Green"/>
                       </StackLayout>
                     </ViewCell>
                   </DataTemplate>
@@ -48,5 +52,10 @@
                 
               </ListView>
         </StackLayout>
+        <ActivityIndicator
+            HorizontalOptions="CenterAndExpand"
+            VerticalOptions="CenterAndExpand"
+            IsVisible="{Binding VprSearchViewModel.Searching}"
+            IsRunning="{Binding VprSearchViewModel.Searching}"></ActivityIndicator>
     </StackLayout>
 </ContentPage>

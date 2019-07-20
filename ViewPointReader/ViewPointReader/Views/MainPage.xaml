@@ -14,9 +14,4 @@
             <local:VprSearchView />
         </x:Arguments>
     </NavigationPage>
-    <NavigationPage Title="Recommended">
-        <x:Arguments>
-            <local:VprRecommendedView />
-        </x:Arguments>
-    </NavigationPage>
 </TabbedPage>

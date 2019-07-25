@@ -1,28 +1,47 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:utils="clr-namespace:ViewPointReader.Utils;assembly=ViewPointReader"
              x:Class="ViewPointReader.Views.VprSubscribedView">
-    <ListView x:Name="FeedSubscriptions"
-            ItemsSource="{Binding FeedSubscriptions}"
-            ItemTapped="Handle_ItemTapped"
-            HasUnevenRows="True" 
-            VerticalOptions="FillAndExpand"
-            CachingStrategy="RecycleElement">
-
-        <ListView.ItemTemplate>
-            <DataTemplate>
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <DataTemplate x:Key="BlogWithImage">
+                <ViewCell>
+                    <StackLayout>
+                        <StackLayout Orientation="Horizontal">
+                            <Image Source="{Binding ImageUrl}" Aspect="AspectFit"
+                                   HeightRequest="25"
+                                   WidthRequest="25"></Image>
+                            <Label Text="{Binding Title}" 
+                                   FontSize="Medium" TextColor="Red" />
+                        </StackLayout>
+                        <Label Text="{Binding Description}" 
+                               FontSize="Small"/>
+                    </StackLayout>
+                </ViewCell>
+            </DataTemplate>
+            <DataTemplate x:Key="BlogWithoutImage">
                 <ViewCell>
                     <StackLayout>
                         <Label Text="{Binding Title}" 
                                FontSize="Medium" TextColor="Red" />
                         <Label Text="{Binding Description}" 
                                FontSize="Small"/>
-                        <Image Source="{Binding ImageUrl}" Aspect="AspectFit"
-                               HeightRequest="100"
-                               WidthRequest="100"></Image>
                     </StackLayout>
                 </ViewCell>
             </DataTemplate>
-        </ListView.ItemTemplate>
+            <utils:BlogTemplateSelector x:Key="BlogTemplateSelector"
+                                        BlogWithImageTemplate="{StaticResource BlogWithImage}"
+                                        BlogWithoutImageTemplate="{StaticResource BlogWithoutImage}" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    
+    <ListView x:Name="FeedSubscriptions"
+            ItemsSource="{Binding FeedSubscriptions}"
+            ItemTapped="Handle_ItemTapped"
+            HasUnevenRows="True" 
+            VerticalOptions="FillAndExpand"
+            CachingStrategy="RecycleElement"
+            ItemTemplate="{StaticResource BlogTemplateSelector}">
     </ListView>
 </ContentPage>

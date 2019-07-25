@@ -17,6 +17,9 @@
                                FontSize="Medium" TextColor="Red" />
                         <Label Text="{Binding Description}" 
                                FontSize="Small"/>
+                        <Image Source="{Binding ImageUrl}" Aspect="AspectFit"
+                               HeightRequest="100"
+                               WidthRequest="100"></Image>
                     </StackLayout>
                 </ViewCell>
             </DataTemplate>

@@ -60,7 +60,8 @@ namespace ViewPointReader.ModelBuilder
 
                 var pipeline = mlContext.Transforms.Text
                     .FeaturizeText("keyPhrasesFeaturized", nameof(FeedData.KeyPhrases))
-                    .Append(mlContext.Transforms.Concatenate("Features", "keyPhrasesFeaturized"))
+                    .Append(mlContext.Transforms.Text.FeaturizeText("titleFeaturized", nameof(FeedData.Title)))
+                    .Append(mlContext.Transforms.Concatenate("Features", "keyPhrasesFeaturized", "titleFeaturized"))
                     .Append(mlContext.BinaryClassification.Trainers.FieldAwareFactorizationMachine(new string[]
                         {"Features"}));
 
@@ -156,7 +157,7 @@ namespace ViewPointReader.ModelBuilder
                 results.Add(new FeedData
                 {
                     //Id = feedSubscription.Id,
-                    //Title = feedSubscription.Title,
+                    Title = feedSubscription.Title,
                     //Description = feedSubscription.Description,
                     KeyPhrases = feedSubscription.KeyPhrases.ToArray(),
                     //SubscribedDate = feedSubscription.SubscribedDate,

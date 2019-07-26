@@ -6,7 +6,7 @@ namespace ViewPointReader.ModelBuilder
     public class FeedData
     {
         //public int Id;
-        //public string Title { get; set; }
+        public string Title { get; set; }
         //public string Description { get; set; }
         public string[] KeyPhrases { get; set; }
         //public DateTime SubscribedDate { get; set; }

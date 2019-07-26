@@ -57,7 +57,13 @@ namespace ViewPointReader.Rss
                 {
                     if (intermediateResult.Count > 0)
                     {
-                        results.AddRange(intermediateResult);
+                        intermediateResult.ForEach(x =>
+                        {
+                            if (results.All(y => y.Link != x.Link))
+                            {
+                                results.Add(x);
+                            }
+                        });
                     }
                 }
             }

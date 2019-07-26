@@ -1,10 +1,48 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="ViewPointReader.Views.VprSearchView"
              xmlns:fontawesome="clr-namespace:ViewPointReader.Utils.FontAwesome;assembly=ViewPointReader"
              xmlns:utils="clr-namespace:ViewPointReader.Utils;assembly=ViewPointReader"
+             x:Class="ViewPointReader.Views.VprSearchView"
              Title ="{Binding VprSearchViewModel.CurrentNetworkStatus}">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <DataTemplate x:Key="BlogWithImage">
+                <ViewCell>
+                    <StackLayout>
+                        <StackLayout Orientation="Horizontal">
+                            <Image Source="{Binding ImageUrl}" Aspect="AspectFit"
+                                   HeightRequest="25"
+                                   WidthRequest="25"></Image>
+                            <Label Text="{Binding Title}" 
+                                   FontSize="Medium" TextColor="Red" />
+                        </StackLayout>
+                        <Label Text="{Binding Description}" 
+                               FontSize="Small"/>
+                        <Label Text="{Binding RecommendationScore}" 
+                               FontSize="Small" TextColor="Green"/>
+                    </StackLayout>
+                </ViewCell>
+            </DataTemplate>
+            <DataTemplate x:Key="BlogWithoutImage">
+                <ViewCell>
+                    <StackLayout>
+                        <Label Text="{Binding Title}" 
+                               FontSize="Medium" TextColor="Red" />
+                        <Label Text="{Binding Description}" 
+                               FontSize="Small"/>
+                        <Label Text="{Binding RecommendationScore}" 
+                               FontSize="Small" TextColor="Green"/>
+                    </StackLayout>
+                </ViewCell>
+            </DataTemplate>
+            <utils:BlogTemplateSelector x:Key="BlogTemplateSelector"
+                                              BlogWithImageTemplate="{StaticResource BlogWithImage}"
+                                              BlogWithoutImageTemplate="{StaticResource BlogWithoutImage}" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+
     <StackLayout>
         <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand">
             <Entry x:Name="TxtSearchTerm" 
@@ -33,24 +71,9 @@
                         VerticalOptions="FillAndExpand"
                         ItemTapped="Handle_ItemTapped"
                         CachingStrategy="RecycleElement"
-                        IsVisible="{Binding VprSearchViewModel.Searching, Converter={utils:InverseBoolConverter}}">
-               
-                <ListView.ItemTemplate>
-                  <DataTemplate>
-                    <ViewCell>
-                      <StackLayout>
-                        <Label Text="{Binding Title}" 
-                               FontSize="Medium" TextColor="Red" />
-                        <Label Text="{Binding Description}" 
-                               FontSize="Small"/>
-                        <Label Text="{Binding RecommendationScore}" 
-                               FontSize="Small" TextColor="Green"/>
-                      </StackLayout>
-                    </ViewCell>
-                  </DataTemplate>
-                </ListView.ItemTemplate>
-                
-              </ListView>
+                        IsVisible="{Binding VprSearchViewModel.Searching, Converter={utils:InverseBoolConverter}}"
+                        ItemTemplate="{StaticResource BlogTemplateSelector}">
+            </ListView>
         </StackLayout>
         <ActivityIndicator
             HorizontalOptions="CenterAndExpand"

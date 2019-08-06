@@ -77,6 +77,7 @@
     <AndroidAsset Include="Assets\fonts\FontAwesome5Solid.otf" />
     <AndroidAsset Include="Assets\fonts\FontAwesome5Brands.otf" />
     <AndroidAsset Include="Assets\fonts\FontAwesome5Regular.otf" />
+    <None Include="appcenter-post-clone.sh" />
     <None Include="Resources\AboutResources.txt" />
     <None Include="Assets\AboutAssets.txt" />
     <None Include="Properties\AndroidManifest.xml" />

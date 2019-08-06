@@ -16,7 +16,7 @@ using Xamarin.Essentials;
 
 namespace ViewPointReader.ViewModels
 {
-    public class VprSearchViewModel : INotifyPropertyChanged
+    public class VprSearchViewModel : BaseViewModel
     {
         private readonly IViewPointRssReader _viewPointRssReader;
         private readonly IViewPointReaderRepository _viewPointReaderRepository;
@@ -30,8 +30,6 @@ namespace ViewPointReader.ViewModels
         private string _currentNetworkStatus;
         private readonly List<IFeedSubscription> _tempSearchResults = new List<IFeedSubscription>();
 
-        public event PropertyChangedEventHandler PropertyChanged;
-        
         public ObservableCollection<IFeedSubscription> SearchResults { get; set; }
         public string SearchPhrase
         {
@@ -77,7 +75,6 @@ namespace ViewPointReader.ViewModels
             }
         }
 
-
         public string CurrentNetworkStatus
         {
             get => _currentNetworkStatus;
@@ -117,12 +114,6 @@ namespace ViewPointReader.ViewModels
         public void RemoveFeedFromSearchResults(IFeedSubscription feed)
         {
             SearchResults.Remove(feed);
-        }
-
-        protected void OnPropertyChanged(string name)
-        {
-            PropertyChangedEventHandler handler = PropertyChanged;
-            handler?.Invoke(this, new PropertyChangedEventArgs(name));
         }
 
         protected void OnConnectivityChanged(object sender, ConnectivityChangedEventArgs e)
@@ -237,6 +228,10 @@ namespace ViewPointReader.ViewModels
             }
 
             return feedSubscription;
+        }
+        public override Task Init()
+        {
+            throw new NotImplementedException();
         }
     }
 }

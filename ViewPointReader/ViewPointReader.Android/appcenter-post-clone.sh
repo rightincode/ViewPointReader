@@ -2,10 +2,10 @@
 
 echo “Found Unit test projects:”
 
-find $APPCENTER_SOURCE_DIRECTORY -regex ‘*Tests\*.csproj’ -exec echo {} \;
+find $APPCENTER_SOURCE_DIRECTORY -regex ‘.*Tests.*\.csproj’ -exec echo {} \;
 
 echo
 
 echo “Run Unit test projects:”
 
-find $APPCENTER_SOURCE_DIRECTORY -regex ‘*Tests\*.csproj’ | xargs dotnet test;
+find $APPCENTER_SOURCE_DIRECTORY -regex ‘.*Tests.*\.csproj’ | xargs dotnet test;

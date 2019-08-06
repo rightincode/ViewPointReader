@@ -1,13 +1,11 @@
 #!/usr/bin/env bash -e
 
-LC_ALL=C
+echo â€œFound Unit test projects:â€
 
-echo “Found Unit test projects:”
-
-find $APPCENTER_SOURCE_DIRECTORY -regex ‘*Tests\*.csproj’ -exec echo {} \;
+find $APPCENTER_SOURCE_DIRECTORY -regex â€˜*Tests\*.csprojâ€™ -exec echo {} \;
 
 echo
 
-echo “Run Unit test projects:”
+echo â€œRun Unit test projects:â€
 
-find $APPCENTER_SOURCE_DIRECTORY -regex ‘*Tests\*.csproj’ | xargs dotnet test;
+find $APPCENTER_SOURCE_DIRECTORY -regex â€˜*Tests\*.csprojâ€™ | xargs dotnet test;

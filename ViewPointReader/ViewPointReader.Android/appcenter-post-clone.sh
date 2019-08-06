@@ -1,4 +1,7 @@
 #!/usr/bin/env bash -e
+
+LC_ALL=C
+
 echo “Found Unit test projects:”
 
 find $APPCENTER_SOURCE_DIRECTORY -regex ‘*Tests\*.csproj’ -exec echo {} \;

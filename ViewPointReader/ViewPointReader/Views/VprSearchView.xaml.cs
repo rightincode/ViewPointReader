@@ -2,6 +2,7 @@
 using System.Globalization;
 using ViewPointReader.Core.Interfaces;
 using ViewPointReader.Data.Interfaces;
+using ViewPointReader.Interfaces;
 using ViewPointReader.ViewModels;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -16,6 +17,7 @@ namespace ViewPointReader.Views
 
         //TODO: protect from usage directly from this codebehind file
         private readonly IViewPointReaderRepository _viewPointReaderRepository = ((App)Application.Current).ServiceProvider.GetService<IViewPointReaderRepository>();
+        private readonly INavService _navService = ((App) Application.Current).ServiceProvider.GetService<INavService>();
 
         public VprSearchViewModel VprSearchViewModel { get; }
 
@@ -23,7 +25,7 @@ namespace ViewPointReader.Views
         {
             InitializeComponent();
 
-            VprSearchViewModel = new VprSearchViewModel(_viewPointRssReader, _viewPointReaderRepository);
+            VprSearchViewModel = new VprSearchViewModel(_viewPointRssReader, _viewPointReaderRepository, _navService);
 
             BindingContext = this;
         }

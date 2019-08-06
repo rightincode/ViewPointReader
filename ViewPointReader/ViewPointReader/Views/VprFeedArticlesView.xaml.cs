@@ -1,5 +1,6 @@
 ﻿using ViewPointReader.Core.Models;
 using ViewPointReader.Data.Interfaces;
+using ViewPointReader.Interfaces;
 using ViewPointReader.ViewModels;
 using Xamarin.Essentials;
 using Xamarin.Forms;
@@ -12,15 +13,15 @@ namespace ViewPointReader.Views
     {
         //TODO: protect from usage directly from this codebehind file
         private readonly IViewPointReaderRepository _viewPointReaderRepository = ((App)Application.Current).ServiceProvider.GetService<IViewPointReaderRepository>();
-        
+        private readonly INavService _navService = ((App) Application.Current).ServiceProvider.GetService<INavService>();
+
         public VprFeedArticlesViewModel Vm { get; set; }
 
-        public VprFeedArticlesView(int subscriptionId)
+        public VprFeedArticlesView()
         {
             InitializeComponent();
-            Vm = new VprFeedArticlesViewModel(_viewPointReaderRepository);
+            Vm = new VprFeedArticlesViewModel(_viewPointReaderRepository, _navService);
             BindingContext = Vm;
-            Vm.LoadFeedItems(subscriptionId);
         }
 
         public async void Handle_ItemTapped(object sender, ItemTappedEventArgs e)

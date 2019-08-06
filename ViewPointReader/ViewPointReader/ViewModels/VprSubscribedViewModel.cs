@@ -3,19 +3,26 @@ using System.Linq;
 using System.Threading.Tasks;
 using ViewPointReader.Core.Interfaces;
 using ViewPointReader.Data.Interfaces;
+using ViewPointReader.Interfaces;
 
 namespace ViewPointReader.ViewModels
 {
-    public class VprSubscribedViewModel
+    public class VprSubscribedViewModel : BaseViewModel
     {
         private readonly IViewPointReaderRepository _viewPointReaderRepository;
 
         public ObservableCollection<IFeedSubscription> FeedSubscriptions { get; }
 
-        public VprSubscribedViewModel(IViewPointReaderRepository viewPointReaderRepository)
+        public VprSubscribedViewModel(IViewPointReaderRepository viewPointReaderRepository, INavService navService) 
+            : base(navService)
         {
             _viewPointReaderRepository = viewPointReaderRepository;
             FeedSubscriptions = new ObservableCollection<IFeedSubscription>();
+        }
+
+        public override async Task Init()
+        {
+            await LoadSubscribedFeeds();
         }
 
         public async Task LoadSubscribedFeeds()

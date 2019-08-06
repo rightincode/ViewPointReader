@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.ObjectModel;
-using System.ComponentModel;
-using System.Linq;
-using System.Threading.Tasks;
-using ViewPointReader.Core.Models;
+﻿using ViewPointReader.Core.Models;
 using ViewPointReader.Data.Interfaces;
+using ViewPointReader.Interfaces;
 using ViewPointReader.ViewModels;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -16,15 +12,24 @@ namespace ViewPointReader.Views
     {
         //TODO: protect from usage directly from this codebehind file
         private readonly IViewPointReaderRepository _viewPointReaderRepository = ((App)Application.Current).ServiceProvider.GetService<IViewPointReaderRepository>();
-        
+        private readonly INavService _navService = ((App) Application.Current).ServiceProvider.GetService<INavService>();
+
         public VprSubscribedViewModel VM { get; }
 
         public VprSubscribedView()
         {
             InitializeComponent();
             //On<Xamarin.Forms.PlatformConfiguration.iOS>().SetUseSafeArea(true);
-            VM = new VprSubscribedViewModel(_viewPointReaderRepository);
+            VM = new VprSubscribedViewModel(_viewPointReaderRepository, _navService);
             BindingContext = VM;
+        }
+
+        protected override async void OnAppearing()
+        {
+            if (VM != null)
+            {
+                await VM.Init();
+            }
         }
 
         async void Handle_ItemTapped(object sender, ItemTappedEventArgs e)
@@ -36,7 +41,9 @@ namespace ViewPointReader.Views
             ((ListView)sender).SelectedItem = null;
 
             var subscription = (FeedSubscription) e.Item;
-            await Navigation.PushAsync(new VprFeedArticlesView(subscription.Id));
+            //await Navigation.PushAsync(new VprFeedArticlesView());
+
+            await _navService.NavigateTo<VprFeedArticlesViewModel, int>(subscription.Id);
         }
     }
 }

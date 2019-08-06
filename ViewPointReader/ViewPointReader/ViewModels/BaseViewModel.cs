@@ -1,6 +1,7 @@
 ﻿using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
+using ViewPointReader.Interfaces;
 
 namespace ViewPointReader.ViewModels
 {
@@ -8,8 +9,11 @@ namespace ViewPointReader.ViewModels
     {
         public event PropertyChangedEventHandler PropertyChanged;
 
-        protected BaseViewModel() 
-        { 
+        public INavService NavService { get; private set; } 
+
+        protected BaseViewModel(INavService navService)
+        {
+            NavService = navService;
         }
         
         protected virtual void OnPropertyChanged(
@@ -24,7 +28,7 @@ namespace ViewPointReader.ViewModels
 
     public abstract class BaseViewModel<TParameter> : BaseViewModel
     {
-        protected BaseViewModel() : base() 
+        protected BaseViewModel(INavService navService) : base(navService)
         {
         }
         public override async Task Init()

@@ -10,6 +10,7 @@ using ViewPointReader.Core.Interfaces;
 using ViewPointReader.Core.Models;
 using ViewPointReader.Data.Interfaces;
 using ViewPointReader.Data.Models;
+using ViewPointReader.Interfaces;
 using ViewPointReader.Rss.Interfaces;
 using Xamarin.Forms;
 using Xamarin.Essentials;
@@ -86,7 +87,8 @@ namespace ViewPointReader.ViewModels
         }
         
         public VprSearchViewModel(IViewPointRssReader viewPointRssReader
-            , IViewPointReaderRepository viewPointReaderRepository)
+            , IViewPointReaderRepository viewPointReaderRepository, INavService navService)
+            : base(navService)
         {
             _viewPointRssReader = viewPointRssReader;
             _viewPointReaderRepository = viewPointReaderRepository;
@@ -97,6 +99,11 @@ namespace ViewPointReader.ViewModels
             CurrentNetworkStatus = string.Empty;
 
             Connectivity.ConnectivityChanged += OnConnectivityChanged;
+        }
+
+        public override Task Init()
+        {
+            throw new NotImplementedException();
         }
 
         public ICommand FeedSearchCommand => new Command( async () => { await Search(); });
@@ -229,9 +236,5 @@ namespace ViewPointReader.ViewModels
 
             return feedSubscription;
         }
-        public override Task Init()
-        {
-            throw new NotImplementedException();
-        }
-    }
+       }
 }

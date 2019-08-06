@@ -16,15 +16,5 @@ namespace ViewPointReader.Views
 
             On<Android>().SetToolbarPlacement(ToolbarPlacement.Bottom);
         }
-
-        protected override void OnCurrentPageChanged()
-        {
-            base.OnCurrentPageChanged();
-            if (((NavigationPage)this.CurrentPage).CurrentPage is VprSubscribedView)
-            {
-                //reload subscribed feeds
-                ((VprSubscribedView)((NavigationPage)this.CurrentPage).CurrentPage).VM.LoadSubscribedFeeds();
-            }
-        }
     }
 }

@@ -14,21 +14,21 @@ namespace ViewPointReader.Views
         private readonly IViewPointReaderRepository _viewPointReaderRepository = ((App)Application.Current).ServiceProvider.GetService<IViewPointReaderRepository>();
         private readonly INavService _navService = ((App) Application.Current).ServiceProvider.GetService<INavService>();
 
-        public VprSubscribedViewModel VM { get; }
+        public VprSubscribedViewModel Vm { get; }
 
         public VprSubscribedView()
         {
             InitializeComponent();
             //On<Xamarin.Forms.PlatformConfiguration.iOS>().SetUseSafeArea(true);
-            VM = new VprSubscribedViewModel(_viewPointReaderRepository, _navService);
-            BindingContext = VM;
+            Vm = new VprSubscribedViewModel(_viewPointReaderRepository, _navService);
+            BindingContext = Vm;
         }
 
         protected override async void OnAppearing()
         {
-            if (VM != null)
+            if (Vm != null)
             {
-                await VM.Init();
+                await Vm.Init();
             }
         }
 
@@ -41,7 +41,6 @@ namespace ViewPointReader.Views
             ((ListView)sender).SelectedItem = null;
 
             var subscription = (FeedSubscription) e.Item;
-            //await Navigation.PushAsync(new VprFeedArticlesView());
 
             await _navService.NavigateTo<VprFeedArticlesViewModel, int>(subscription.Id);
         }

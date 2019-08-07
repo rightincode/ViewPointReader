@@ -78,9 +78,6 @@ namespace ViewPointReader.Rss.UnitTests.SearchingForRssFeed
                 });
 
             var textAnalyticsClientMock = new Mock<IVprTextAnalyticsClient>();
-            //textAnalyticsClientMock.Setup(tac => tac.ExtractKeyPhrasesAsync(It.IsAny<string>()))
-            //    .ReturnsAsync(() => new List<string>());
-
             var reader = new ViewPointRssReader(webSearchClientMock.Object, textAnalyticsClientMock.Object);
 
             var results = await reader.SearchForFeedsAsync("business success");

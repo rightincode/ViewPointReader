@@ -35,9 +35,7 @@ namespace ViewPointReader.Views
             if (e.Item == null)
                 return;
 
-            await VprSearchViewModel.SaveSubscription((IFeedSubscription) e.Item);
-
-            VprSearchViewModel.RemoveFeedFromSearchResults((IFeedSubscription) e.Item);
+            await VprSearchViewModel.SubscribeToFeed((IFeedSubscription) e.Item);
 
             //Deselect Item
             ((ListView)sender).SelectedItem = null;

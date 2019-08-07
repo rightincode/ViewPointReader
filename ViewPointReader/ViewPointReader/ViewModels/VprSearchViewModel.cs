@@ -109,18 +109,17 @@ namespace ViewPointReader.ViewModels
         public ICommand FeedSearchCommand => new Command( async () => { await Search(); });
         public ICommand ClearResultsCommand => new Command(ClearSearchResults);
 
-        public async Task<int> SaveSubscription(IFeedSubscription feed)
+        public async Task<int> SubscribeToFeed(IFeedSubscription feed)
         {
-            var subId = await _viewPointReaderRepository.SaveFeedSubscriptionAsync(feed);
+            var saveTasks = new List<Task<int>>
+            {
+                _viewPointReaderRepository.SaveFeedSubscriptionAsync(feed),
+                _viewPointReaderCloudRepository.SaveFeedSubscriptionAsync(feed)
+            };
 
-            await _viewPointReaderCloudRepository.SaveFeedSubscriptionAsync(feed);
-
-            return subId;
-        }
-
-        public void RemoveFeedFromSearchResults(IFeedSubscription feed)
-        {
+            var results =  await Task.WhenAll(saveTasks);
             SearchResults.Remove(feed);
+            return results[0];
         }
 
         protected void OnConnectivityChanged(object sender, ConnectivityChangedEventArgs e)

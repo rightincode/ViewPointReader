@@ -32,7 +32,7 @@ namespace ViewPointReader.Views
             }
         }
 
-        async void Handle_ItemTapped(object sender, ItemTappedEventArgs e)
+        public async void Handle_ItemTapped(object sender, ItemTappedEventArgs e)
         {
             if (e.Item == null)
                 return;
@@ -41,8 +41,7 @@ namespace ViewPointReader.Views
             ((ListView)sender).SelectedItem = null;
 
             var subscription = (FeedSubscription) e.Item;
-
-            await _navService.NavigateTo<VprFeedArticlesViewModel, int>(subscription.Id);
+            await Vm.HandleFeedSelection(subscription.Id);
         }
     }
 }

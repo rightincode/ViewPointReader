@@ -10,6 +10,7 @@ namespace ViewPointReader.ViewModels
     public class VprSubscribedViewModel : BaseViewModel
     {
         private readonly IViewPointReaderRepository _viewPointReaderRepository;
+        private readonly INavService _navService;
 
         public ObservableCollection<IFeedSubscription> FeedSubscriptions { get; }
 
@@ -17,6 +18,7 @@ namespace ViewPointReader.ViewModels
             : base(navService)
         {
             _viewPointReaderRepository = viewPointReaderRepository;
+            _navService = navService;
             FeedSubscriptions = new ObservableCollection<IFeedSubscription>();
         }
 
@@ -30,6 +32,11 @@ namespace ViewPointReader.ViewModels
             var feeds = await _viewPointReaderRepository.GetFeedSubscriptionsAsync();
             FeedSubscriptions.Clear();
             feeds.ToList().ForEach(FeedSubscriptions.Add);
+        }
+
+        public async Task HandleFeedSelection(int feedId)
+        {
+            await _navService.NavigateTo<VprFeedArticlesViewModel, int>(feedId);
         }
     }
 }

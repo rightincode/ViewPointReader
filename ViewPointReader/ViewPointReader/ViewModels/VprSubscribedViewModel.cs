@@ -10,15 +10,14 @@ namespace ViewPointReader.ViewModels
     public class VprSubscribedViewModel : BaseViewModel
     {
         private readonly IViewPointReaderRepository _viewPointReaderRepository;
-        private readonly INavService _navService;
 
         public ObservableCollection<IFeedSubscription> FeedSubscriptions { get; }
 
-        public VprSubscribedViewModel(IViewPointReaderRepository viewPointReaderRepository, INavService navService) 
-            : base(navService)
+        public VprSubscribedViewModel(IViewPointReaderRepository viewPointReaderRepository
+            , INavService navService) : base(navService)
         {
             _viewPointReaderRepository = viewPointReaderRepository;
-            _navService = navService;
+            NavService = navService;
             FeedSubscriptions = new ObservableCollection<IFeedSubscription>();
         }
 
@@ -36,7 +35,7 @@ namespace ViewPointReader.ViewModels
 
         public async Task HandleFeedSelection(int feedId)
         {
-            await _navService.NavigateTo<VprFeedArticlesViewModel, int>(feedId);
+            await NavService.NavigateTo<VprFeedArticlesViewModel, int>(feedId);
         }
     }
 }

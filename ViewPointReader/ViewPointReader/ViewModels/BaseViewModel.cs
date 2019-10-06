@@ -9,7 +9,7 @@ namespace ViewPointReader.ViewModels
     {
         public event PropertyChangedEventHandler PropertyChanged;
 
-        public INavService NavService { get; private set; } 
+        public INavService NavService { get; protected set; } 
 
         protected BaseViewModel(INavService navService)
         {
@@ -31,9 +31,10 @@ namespace ViewPointReader.ViewModels
         protected BaseViewModel(INavService navService) : base(navService)
         {
         }
+
         public override async Task Init()
         {
-            await Init (default(TParameter));
+            await Init (default);
         }
         public abstract Task Init (TParameter parameter);
     }

@@ -16,6 +16,7 @@ namespace ViewPointReader.ViewModels
             :base(navService)
         {
             _viewPointReaderRepository = viewPointReaderRepository;
+            NavService = navService;
             FeedItems = new ObservableCollection<VprFeedItem>();
         }
 

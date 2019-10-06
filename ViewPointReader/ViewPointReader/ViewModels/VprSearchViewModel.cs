@@ -92,6 +92,7 @@ namespace ViewPointReader.ViewModels
         {
             _viewPointRssReader = viewPointRssReader;
             _viewPointReaderRepository = viewPointReaderRepository;
+            NavService = navService;
 
             SearchResults = new ObservableCollection<IFeedSubscription>();
             IsClearSearchButtonVisible = false;

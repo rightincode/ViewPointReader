@@ -12,8 +12,8 @@ namespace ViewPointReader.ViewModels
         private readonly IViewPointReaderRepository _viewPointReaderRepository;
         public ObservableCollection<VprFeedItem> FeedItems { get; }
 
-        public VprFeedArticlesViewModel(IViewPointReaderRepository viewPointReaderRepository, INavService navService)
-            :base(navService)
+        public VprFeedArticlesViewModel(IViewPointReaderRepository viewPointReaderRepository
+            , INavService navService) : base(navService)
         {
             _viewPointReaderRepository = viewPointReaderRepository;
             NavService = navService;

@@ -10,13 +10,14 @@ using ViewPointReader.Core.Interfaces;
 using ViewPointReader.Core.Models;
 using ViewPointReader.Data.Interfaces;
 using ViewPointReader.Data.Models;
+using ViewPointReader.Interfaces;
 using ViewPointReader.Rss.Interfaces;
 using Xamarin.Forms;
 using Xamarin.Essentials;
 
 namespace ViewPointReader.ViewModels
 {
-    public class VprSearchViewModel : INotifyPropertyChanged
+    public class VprSearchViewModel : BaseViewModel
     {
         private readonly IViewPointRssReader _viewPointRssReader;
         private readonly IViewPointReaderRepository _viewPointReaderRepository;
@@ -30,8 +31,6 @@ namespace ViewPointReader.ViewModels
         private string _currentNetworkStatus;
         private readonly List<IFeedSubscription> _tempSearchResults = new List<IFeedSubscription>();
 
-        public event PropertyChangedEventHandler PropertyChanged;
-        
         public ObservableCollection<IFeedSubscription> SearchResults { get; set; }
         public string SearchPhrase
         {
@@ -77,7 +76,6 @@ namespace ViewPointReader.ViewModels
             }
         }
 
-
         public string CurrentNetworkStatus
         {
             get => _currentNetworkStatus;
@@ -89,10 +87,12 @@ namespace ViewPointReader.ViewModels
         }
         
         public VprSearchViewModel(IViewPointRssReader viewPointRssReader
-            , IViewPointReaderRepository viewPointReaderRepository)
+            , IViewPointReaderRepository viewPointReaderRepository, INavService navService)
+            : base(navService)
         {
             _viewPointRssReader = viewPointRssReader;
             _viewPointReaderRepository = viewPointReaderRepository;
+            NavService = navService;
 
             SearchResults = new ObservableCollection<IFeedSubscription>();
             IsClearSearchButtonVisible = false;
@@ -102,27 +102,25 @@ namespace ViewPointReader.ViewModels
             Connectivity.ConnectivityChanged += OnConnectivityChanged;
         }
 
+        public override Task Init()
+        {
+            throw new NotImplementedException();
+        }
+
         public ICommand FeedSearchCommand => new Command( async () => { await Search(); });
         public ICommand ClearResultsCommand => new Command(ClearSearchResults);
 
-        public async Task<int> SaveSubscription(IFeedSubscription feed)
+        public async Task<int> SubscribeToFeed(IFeedSubscription feed)
         {
-            var subId = await _viewPointReaderRepository.SaveFeedSubscriptionAsync(feed);
+            var saveTasks = new List<Task<int>>
+            {
+                _viewPointReaderRepository.SaveFeedSubscriptionAsync(feed),
+                _viewPointReaderCloudRepository.SaveFeedSubscriptionAsync(feed)
+            };
 
-            await _viewPointReaderCloudRepository.SaveFeedSubscriptionAsync(feed);
-
-            return subId;
-        }
-
-        public void RemoveFeedFromSearchResults(IFeedSubscription feed)
-        {
+            var results =  await Task.WhenAll(saveTasks);
             SearchResults.Remove(feed);
-        }
-
-        protected void OnPropertyChanged(string name)
-        {
-            PropertyChangedEventHandler handler = PropertyChanged;
-            handler?.Invoke(this, new PropertyChangedEventArgs(name));
+            return results[0];
         }
 
         protected void OnConnectivityChanged(object sender, ConnectivityChangedEventArgs e)
@@ -238,5 +236,5 @@ namespace ViewPointReader.ViewModels
 
             return feedSubscription;
         }
-    }
+       }
 }

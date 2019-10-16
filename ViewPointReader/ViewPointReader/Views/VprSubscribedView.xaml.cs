@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.ObjectModel;
-using System.ComponentModel;
-using System.Linq;
-using System.Threading.Tasks;
-using ViewPointReader.Core.Models;
+﻿using ViewPointReader.Core.Models;
 using ViewPointReader.Data.Interfaces;
+using ViewPointReader.Interfaces;
 using ViewPointReader.ViewModels;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -16,18 +12,27 @@ namespace ViewPointReader.Views
     {
         //TODO: protect from usage directly from this codebehind file
         private readonly IViewPointReaderRepository _viewPointReaderRepository = ((App)Application.Current).ServiceProvider.GetService<IViewPointReaderRepository>();
-        
-        public VprSubscribedViewModel VM { get; }
+        private readonly INavService _navService = ((App) Application.Current).ServiceProvider.GetService<INavService>();
+
+        public VprSubscribedViewModel Vm { get; }
 
         public VprSubscribedView()
         {
             InitializeComponent();
             //On<Xamarin.Forms.PlatformConfiguration.iOS>().SetUseSafeArea(true);
-            VM = new VprSubscribedViewModel(_viewPointReaderRepository);
-            BindingContext = VM;
+            Vm = new VprSubscribedViewModel(_viewPointReaderRepository, _navService);
+            BindingContext = Vm;
         }
 
-        async void Handle_ItemTapped(object sender, ItemTappedEventArgs e)
+        protected override async void OnAppearing()
+        {
+            if (Vm != null)
+            {
+                await Vm.Init();
+            }
+        }
+
+        public async void Handle_ItemTapped(object sender, ItemTappedEventArgs e)
         {
             if (e.Item == null)
                 return;
@@ -36,7 +41,7 @@ namespace ViewPointReader.Views
             ((ListView)sender).SelectedItem = null;
 
             var subscription = (FeedSubscription) e.Item;
-            await Navigation.PushAsync(new VprFeedArticlesView(subscription.Id));
+            await Vm.HandleFeedSelection(subscription.Id);
         }
     }
 }

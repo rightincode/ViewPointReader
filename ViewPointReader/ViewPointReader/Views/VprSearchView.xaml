@@ -4,7 +4,7 @@
              xmlns:fontawesome="clr-namespace:ViewPointReader.Utils.FontAwesome;assembly=ViewPointReader"
              xmlns:utils="clr-namespace:ViewPointReader.Utils;assembly=ViewPointReader"
              x:Class="ViewPointReader.Views.VprSearchView"
-             Title ="{Binding VprSearchViewModel.CurrentNetworkStatus}">
+             Title ="{Binding CurrentNetworkStatus}">
     <ContentPage.Resources>
         <ResourceDictionary>
             <DataTemplate x:Key="BlogWithImage">
@@ -49,36 +49,36 @@
                    Placeholder="Enter topic..."
                    FontSize="Medium"
                    HorizontalOptions="FillAndExpand"
-                   Text="{Binding VprSearchViewModel.SearchPhrase, Mode=TwoWay}"></Entry>
+                   Text="{Binding SearchPhrase, Mode=TwoWay}"></Entry>
             <Button x:Name="BtnSearch"
                     Text="{x:Static fontawesome:FontAwesomeIcons.Search}"
                     FontFamily="{StaticResource FontAwesomeSolid}"
                     FontSize="Medium"
                     WidthRequest="50"
-                    IsEnabled="{Binding VprSearchViewModel.IsSearchEnabled}"
-                    Command="{Binding VprSearchViewModel.FeedSearchCommand}"></Button>
+                    IsEnabled="{Binding IsSearchEnabled}"
+                    Command="{Binding FeedSearchCommand}"></Button>
         </StackLayout>
         
         <StackLayout Orientation="Vertical">
             <Button x:Name="BtnClear"
                     Text="Clear Search Results"
                     WidthRequest="200"
-                    IsVisible="{Binding VprSearchViewModel.IsClearSearchButtonVisible}"
-                    Command="{Binding VprSearchViewModel.ClearResultsCommand}"></Button>
+                    IsVisible="{Binding IsClearSearchButtonVisible}"
+                    Command="{Binding ClearResultsCommand}"></Button>
             <ListView x:Name="SearchedSubscriptions"
-                        ItemsSource="{Binding VprSearchViewModel.SearchResults}" 
+                        ItemsSource="{Binding SearchResults}" 
                         HasUnevenRows="True" 
                         VerticalOptions="FillAndExpand"
                         ItemTapped="Handle_ItemTapped"
                         CachingStrategy="RecycleElement"
-                        IsVisible="{Binding VprSearchViewModel.Searching, Converter={utils:InverseBoolConverter}}"
+                        IsVisible="{Binding Searching, Converter={utils:InverseBoolConverter}}"
                         ItemTemplate="{StaticResource BlogTemplateSelector}">
             </ListView>
         </StackLayout>
         <ActivityIndicator
             HorizontalOptions="CenterAndExpand"
             VerticalOptions="CenterAndExpand"
-            IsVisible="{Binding VprSearchViewModel.Searching}"
-            IsRunning="{Binding VprSearchViewModel.Searching}"></ActivityIndicator>
+            IsVisible="{Binding Searching}"
+            IsRunning="{Binding Searching}"></ActivityIndicator>
     </StackLayout>
 </ContentPage>

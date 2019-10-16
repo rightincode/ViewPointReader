@@ -99,7 +99,7 @@ namespace ViewPointReader.Data.Models
                 await SaveFeedItems(feedSubscription.FeedItems, feedSubscriptionDo.Id);
             }
 
-            return feedSubscription.Id;
+            return feedSubscriptionDo.Id;
         }
 
         //TODO: Research bulk insert option, transaction?

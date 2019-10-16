@@ -2,6 +2,7 @@
 using System.Globalization;
 using ViewPointReader.Core.Interfaces;
 using ViewPointReader.Data.Interfaces;
+using ViewPointReader.Interfaces;
 using ViewPointReader.ViewModels;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -16,16 +17,17 @@ namespace ViewPointReader.Views
 
         //TODO: protect from usage directly from this codebehind file
         private readonly IViewPointReaderRepository _viewPointReaderRepository = ((App)Application.Current).ServiceProvider.GetService<IViewPointReaderRepository>();
+        private readonly INavService _navService = ((App) Application.Current).ServiceProvider.GetService<INavService>();
 
-        public VprSearchViewModel VprSearchViewModel { get; }
+        public VprSearchViewModel Vm { get; }
 
         public VprSearchView()
         {
             InitializeComponent();
 
-            VprSearchViewModel = new VprSearchViewModel(_viewPointRssReader, _viewPointReaderRepository);
+            Vm = new VprSearchViewModel(_viewPointRssReader, _viewPointReaderRepository, _navService);
 
-            BindingContext = this;
+            BindingContext = Vm;
         }
 
         public async void Handle_ItemTapped(object sender, ItemTappedEventArgs e)
@@ -33,9 +35,7 @@ namespace ViewPointReader.Views
             if (e.Item == null)
                 return;
 
-            await VprSearchViewModel.SaveSubscription((IFeedSubscription) e.Item);
-
-            VprSearchViewModel.RemoveFeedFromSearchResults((IFeedSubscription) e.Item);
+            await Vm.SubscribeToFeed((IFeedSubscription) e.Item);
 
             //Deselect Item
             ((ListView)sender).SelectedItem = null;

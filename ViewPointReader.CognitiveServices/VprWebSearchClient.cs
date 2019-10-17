@@ -17,17 +17,19 @@ namespace ViewPointReader.CognitiveServices
             _azureWebSearchApiClient = new WebSearchClient(new ApiKeyServiceClientCredentials(apiKey));
         }
 
-        public Task<List<VprWebSearchResult>> SearchAsync(string query)
+        public async Task<List<VprWebSearchResult>> SearchAsync(string query)
         {
-            return Task.Run(() => BuildSearchResults(_azureWebSearchApiClient.Web.SearchAsync(
-                query,null,null,null,null,null,null
-                ,1,null,25,null,null,null,null
-                ,null, safeSearch:"Strict",null,null)));
+            var searchResults = await _azureWebSearchApiClient.Web.SearchAsync(
+                query, null, null, null, null, null, null
+                , 1, null, 25, null, null, null, null
+                , null, safeSearch: "Strict", null, null);
+
+            return BuildSearchResults(searchResults);
         }
 
-        private static List<VprWebSearchResult> BuildSearchResults(Task<SearchResponse> response)
+        private static List<VprWebSearchResult> BuildSearchResults(SearchResponse response)
         {
-            return response.Result.WebPages?.Value?.Select(webPage =>
+            return response.WebPages?.Value?.Select(webPage =>
                 new VprWebSearchResult
                 {
                     Id = webPage.Id,

@@ -79,14 +79,17 @@ namespace ViewPointReaderFunctions
         private static async Task<List<Feed>> ProcessSearchResult(VprWebSearchResult vprWebSearchResult)
         {
             var results = new List<Feed>();
+
+            if (vprWebSearchResult.Url.Contains("feedspot.com")) return results;
             
             try
             {
                 var htmlFeedLinks = await FeedReader.GetFeedUrlsFromUrlAsync(vprWebSearchResult.Url);
+                var feedLinks = htmlFeedLinks.ToList();
 
-                if (htmlFeedLinks != null)
+                if (feedLinks.Any())
                 {
-                    var feedTasks = ProcessHtmlFeedLinks(htmlFeedLinks);
+                    var feedTasks = ProcessHtmlFeedLinks(feedLinks);
                     var feeds = await Task.WhenAll(feedTasks);
 
                     foreach (var feed in feeds)

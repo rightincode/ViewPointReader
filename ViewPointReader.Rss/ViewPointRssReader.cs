@@ -42,8 +42,7 @@ namespace ViewPointReader.Rss
  
             try
             {
-                //var uri = new System.Uri(_searchUri + queryText + " blog");
-                var uri = new System.Uri(_searchUri + queryText);
+                var uri = new System.Uri(_searchUri + "'" + queryText + " rss" + "'");
 
                 var responseString = await _httpClient.GetStringAsync(uri);
                 results = JsonConvert.DeserializeObject<List<Feed>>(responseString

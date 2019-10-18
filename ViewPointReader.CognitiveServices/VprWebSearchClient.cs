@@ -21,7 +21,7 @@ namespace ViewPointReader.CognitiveServices
         {
             var searchResults = await _azureWebSearchApiClient.Web.SearchAsync(
                 query, null, null, null, null, null, null
-                , 1, null, 25, null, null, null, null
+                , 1, null, 50, null, null, null, null
                 , null, safeSearch: "Strict", null, null);
 
             return BuildSearchResults(searchResults);

@@ -1,9 +1,11 @@
 ﻿using CodeHollow.FeedReader;
 using System;
 using System.Collections.Generic;
-using System.Linq;
+using System.Net.Http;
+using System.Text;
 using System.Threading.Tasks;
-using ViewPointReader.CognitiveServices.Interfaces;
+using Newtonsoft.Json;
+using ViewPointReader.Core.Models;
 using ViewPointReader.Rss.Interfaces;
 using FeedItem = CodeHollow.FeedReader.FeedItem;
 
@@ -11,18 +13,40 @@ namespace ViewPointReader.Rss
 {
     public class ViewPointRssReader : IViewPointRssReader
     {
-        private readonly IVprWebSearchClient _vprWebSearchClient;
-        private readonly IVprTextAnalyticsClient _vprTextAnalyticsClient;
+        private const string SearchUri = "https://viewpointreaderfunctions.azurewebsites.net/api/Vprsearch?searchtext=";
+        private const string ExtractKeyPhrasesUri = "https://viewpointreaderfunctions.azurewebsites.net/api/vprkeyphraseextract";
+        private readonly HttpClient _httpClient;
 
-        public ViewPointRssReader(IVprWebSearchClient vprWebSearchClient, IVprTextAnalyticsClient vprTextAnalyticsClient)
+        public ViewPointRssReader(HttpClient httpClient)
         {
-            _vprWebSearchClient = vprWebSearchClient;
-            _vprTextAnalyticsClient = vprTextAnalyticsClient;
+            _httpClient = httpClient;
         }
-
+        
+        //TODO:This will be moved to the azure vprsearch function (score/extract in one search call)
         public async Task<List<string>> ExtractKeyPhrasesAsync(string feedDescription)
         {
-            return await _vprTextAnalyticsClient.ExtractKeyPhrasesAsync(feedDescription);
+            var results = new List<string>();
+            var content = new VprKeyPhraseContent
+            {
+                Content = feedDescription
+            };
+
+            try
+            {
+                var uri = new Uri(ExtractKeyPhrasesUri);
+
+                var response = await _httpClient.PostAsync(uri, new StringContent(JsonConvert.SerializeObject(content),
+                    Encoding.UTF8, "application/json"));
+
+                results = JsonConvert.DeserializeObject<List<string>>(await response.Content.ReadAsStringAsync());
+
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
+
+            return results;
         }
 
         public Task<List<FeedItem>> LoadSubscribedFeeds()
@@ -33,39 +57,17 @@ namespace ViewPointReader.Rss
         public async Task<List<Feed>> SearchForFeedsAsync(string queryText)
         {
             var results = new List<Feed>();
+ 
             try
             {
-                var webSearchResults = await _vprWebSearchClient.SearchAsync(queryText + " blog");
+                var uri = new System.Uri(SearchUri + "'" + queryText + " rss" + "'");
 
-                var processingTasks = new List<Task<List<Feed>>>();
-
-                foreach (var vprWebSearchResult in webSearchResults)
+                var responseString = await _httpClient.GetStringAsync(uri);
+                results = JsonConvert.DeserializeObject<List<Feed>>(responseString
+                , new JsonSerializerSettings
                 {
-                    try
-                    {
-                        processingTasks.Add(ProcessSearchResult(vprWebSearchResult));
-                    }
-                    catch (Exception e)
-                    {
-                        Console.WriteLine(e.Message);
-                    }
-                }
-
-                var intermediateResults = await Task.WhenAll(processingTasks);
-
-                foreach (var intermediateResult in intermediateResults)
-                {
-                    if (intermediateResult.Count > 0)
-                    {
-                        intermediateResult.ForEach(x =>
-                        {
-                            if (results.All(y => y.Link != x.Link))
-                            {
-                                results.Add(x);
-                            }
-                        });
-                    }
-                }
+                    TypeNameHandling = TypeNameHandling.Auto
+                });
             }
             catch (Exception e)
             {
@@ -73,55 +75,6 @@ namespace ViewPointReader.Rss
             }
 
             return results;
-        }
-
-        private async Task<List<Feed>> ProcessSearchResult(CognitiveServices.Models.VprWebSearchResult vprWebSearchResult)
-        {
-            var results = new List<Feed>();
-            
-            try
-            {
-                var htmlFeedLinks = await FeedReader.GetFeedUrlsFromUrlAsync(vprWebSearchResult.Url);
-
-                if (htmlFeedLinks != null)
-                {
-                    var feedTasks = ProcessHtmlFeedLinks(htmlFeedLinks);
-                    var feeds = await Task.WhenAll(feedTasks);
-
-                    foreach (var feed in feeds)
-                    {
-                        if (results.Any(x => x.Link == feed.Link) || feed.Items.Count <= 0) continue;
-                        if (string.IsNullOrEmpty(feed.Title) || string.IsNullOrEmpty(feed.Description)) continue;
-                        feed.Title = feed.Title.Trim();
-                        results.Add(feed);
-                    }
-                }
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e.Message);
-            }
-
-            return results;
-        }
-
-        private IEnumerable<Task<Feed>> ProcessHtmlFeedLinks(IEnumerable<HtmlFeedLink> htmlFeedLinks)
-        {
-            var feedTasks = new List<Task<Feed>>();
-
-            foreach (var htmlFeedLink in htmlFeedLinks)
-            {
-                try
-                {
-                    feedTasks.Add(FeedReader.ReadAsync(htmlFeedLink.Url));
-                }
-                catch (Exception e)
-                {
-                    Console.WriteLine(e.Message);
-                }
-            }
-
-            return feedTasks;
         }
     }
 }

@@ -154,13 +154,7 @@ namespace ViewPointReader.ViewModels
 
             SearchResults.Clear();
 
-            var scoreAndSaveTasks = new List<Task>();
-
-            foreach (var feed in results)
-            {
-                scoreAndSaveTasks.Add(ScoreAndSave(feed));
-            }
-
+            var scoreAndSaveTasks = results.Select(ScoreAndSave).ToList();
             await Task.WhenAll(scoreAndSaveTasks);
 
             if (_tempSearchResults.Count == 0)

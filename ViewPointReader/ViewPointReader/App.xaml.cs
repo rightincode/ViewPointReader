@@ -57,7 +57,6 @@ namespace ViewPointReader
             services.AddHttpClient<IViewPointRssReader, ViewPointRssReader>();
             services.AddTransient<IFeedSubscription, FeedSubscription>();
             services.AddTransient<IViewPointReaderRepository>(s => new ViewPointReaderRepository(FileHelper));
-            services.AddTransient<IVprTextAnalyticsClient>(s => new VprTextAnalyticsClient("0ae5b7dd8d584b3196516ce807b9aa4e")); //TODO: must secure key
             services.AddSingleton<INavService, VprNavigationService>();
             ServiceProvider = services.BuildServiceProvider();
 

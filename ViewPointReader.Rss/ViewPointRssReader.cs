@@ -1,13 +1,11 @@
 ﻿using CodeHollow.FeedReader;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Net.Http;
+using System.Text;
 using System.Threading.Tasks;
-using CodeHollow.FeedReader.Feeds;
 using Newtonsoft.Json;
-using ViewPointReader.CognitiveServices.Interfaces;
-using ViewPointReader.CognitiveServices.Models;
+using ViewPointReader.Core.Models;
 using ViewPointReader.Rss.Interfaces;
 using FeedItem = CodeHollow.FeedReader.FeedItem;
 
@@ -15,20 +13,40 @@ namespace ViewPointReader.Rss
 {
     public class ViewPointRssReader : IViewPointRssReader
     {
-        private readonly string _searchUri =
-            "https://viewpointreaderfunctions.azurewebsites.net/api/Vprsearch?searchtext=";
+        private const string SearchUri = "https://viewpointreaderfunctions.azurewebsites.net/api/Vprsearch?searchtext=";
+        private const string ExtractKeyPhrasesUri = "https://viewpointreaderfunctions.azurewebsites.net/api/vprkeyphraseextract";
         private readonly HttpClient _httpClient;
-        private readonly IVprTextAnalyticsClient _vprTextAnalyticsClient;
 
-        public ViewPointRssReader(IVprTextAnalyticsClient vprTextAnalyticsClient, HttpClient httpClient)
+        public ViewPointRssReader(HttpClient httpClient)
         {
-            _vprTextAnalyticsClient = vprTextAnalyticsClient;
             _httpClient = httpClient;
         }
-
+        
+        //TODO:This will be moved to the azure vprsearch function (score/extract in one search call)
         public async Task<List<string>> ExtractKeyPhrasesAsync(string feedDescription)
         {
-            return await _vprTextAnalyticsClient.ExtractKeyPhrasesAsync(feedDescription);
+            var results = new List<string>();
+            var content = new VprKeyPhraseContent
+            {
+                Content = feedDescription
+            };
+
+            try
+            {
+                var uri = new Uri(ExtractKeyPhrasesUri);
+
+                var response = await _httpClient.PostAsync(uri, new StringContent(JsonConvert.SerializeObject(content),
+                    Encoding.UTF8, "application/json"));
+
+                results = JsonConvert.DeserializeObject<List<string>>(await response.Content.ReadAsStringAsync());
+
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
+
+            return results;
         }
 
         public Task<List<FeedItem>> LoadSubscribedFeeds()
@@ -42,7 +60,7 @@ namespace ViewPointReader.Rss
  
             try
             {
-                var uri = new System.Uri(_searchUri + "'" + queryText + " rss" + "'");
+                var uri = new System.Uri(SearchUri + "'" + queryText + " rss" + "'");
 
                 var responseString = await _httpClient.GetStringAsync(uri);
                 results = JsonConvert.DeserializeObject<List<Feed>>(responseString

@@ -6,6 +6,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\ViewPointReader.CognitiveServices\ViewPointReader.CognitiveServices.csproj" />
+    <ProjectReference Include="..\ViewPointReader.Core\ViewPointReader.Core.csproj" />
   </ItemGroup>
 
 </Project>

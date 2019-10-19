@@ -1,8 +1,6 @@
-﻿using CodeHollow.FeedReader;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.ComponentModel;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
@@ -29,7 +27,6 @@ namespace ViewPointReader.ViewModels
         private bool _isSearchEnabled;
         private bool _searching;
         private string _currentNetworkStatus;
-        private readonly List<IFeedSubscription> _tempSearchResults = new List<IFeedSubscription>();
 
         public ObservableCollection<IFeedSubscription> SearchResults { get; set; }
         public string SearchPhrase
@@ -142,10 +139,9 @@ namespace ViewPointReader.ViewModels
         {
             Searching = true;
             IsSearchEnabled = false;
-            _tempSearchResults.Clear();
             SearchResults.Clear();
             
-            var results = new List<Feed>();
+            var results = new List<FeedSubscription>();
 
             if (Connectivity.NetworkAccess == NetworkAccess.Internet)
             {
@@ -154,10 +150,7 @@ namespace ViewPointReader.ViewModels
 
             SearchResults.Clear();
 
-            var scoreAndSaveTasks = results.Select(ScoreAndSave).ToList();
-            await Task.WhenAll(scoreAndSaveTasks);
-
-            if (_tempSearchResults.Count == 0)
+            if (results.Count == 0)
             {
                 SearchResults.Add(new FeedSubscription()
                 {
@@ -168,7 +161,7 @@ namespace ViewPointReader.ViewModels
             }
             else
             {
-                _tempSearchResults.OrderByDescending(fs => fs.RecommendationScore).ToList().ForEach(x => SearchResults.Add(x));
+                results.OrderByDescending(fs => fs.RecommendationScore).ToList().ForEach(x => SearchResults.Add(x));
             }
 
             IsClearSearchButtonVisible = true;
@@ -182,53 +175,6 @@ namespace ViewPointReader.ViewModels
             SearchPhrase = string.Empty;
             IsClearSearchButtonVisible = false;
         }
-        
-        private async Task ScoreAndSave(Feed feed)
-        {
-            var recommendedFeed = await CovertFeedToIFeedSubscription(feed);
-            
-            recommendedFeed.RecommendationScore = await _viewPointReaderCloudRepository.ScoreFeed(recommendedFeed);
-            _tempSearchResults.Add(recommendedFeed);
-        }
 
-        private async Task<IFeedSubscription> CovertFeedToIFeedSubscription(Feed feed)
-        {
-            var feedSubscription =  new FeedSubscription
-            {
-                Title = feed.Title,
-                Description = feed.Description,
-                Url = feed.Link,
-                ImageUrl = feed.ImageUrl,
-                LastUpdated = feed.LastUpdatedDate,
-                SubscribedDate = DateTime.Now,
-                FeedItems = new List<VprFeedItem>()
-            };
-            
-            if (!string.IsNullOrEmpty(feedSubscription.Description))
-            {
-                feedSubscription.KeyPhrases = await _viewPointRssReader.ExtractKeyPhrasesAsync(feedSubscription.Description);
-            }
-
-            if (feed.Items.Count == 0) return feedSubscription;
-
-            foreach (var feedItem in feed.Items)
-            {
-                var vprFeedItem = new VprFeedItem
-                {
-                    Author = feedItem.Author,
-                    Categories = feedItem.Categories,
-                    Content = feedItem.Content,
-                    Description = feedItem.Description,
-                    Link = feedItem.Link,
-                    PublishingDate = feedItem.PublishingDate,
-                    PublishingDateString = feedItem.PublishingDateString,
-                    Title = feedItem.Title
-                };
-
-                feedSubscription.FeedItems.Add(vprFeedItem);
-            }
-
-            return feedSubscription;
-        }
        }
 }

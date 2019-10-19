@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using ViewPointReader.CognitiveServices;
+using ViewPointReader.Core.Models;
 
 namespace ViewPointReaderFunctions
 {
@@ -20,16 +21,15 @@ namespace ViewPointReaderFunctions
             log.LogInformation("C# HTTP trigger function processed a request.");
 
             var requestBody = await new StreamReader(req.Body).ReadToEndAsync();
-            dynamic data = JsonConvert.DeserializeObject(requestBody);
-            string content = data?.content ?? string.Empty;
-
-            if (string.IsNullOrEmpty(content))
+            var vprKeyPhraseContent = JsonConvert.DeserializeObject<VprKeyPhraseContent>(requestBody);
+            
+            if (string.IsNullOrEmpty(vprKeyPhraseContent.Content))
             {
                 return new NoContentResult();
             }
 
             var textAnalyticsClient = new VprTextAnalyticsClient("0ae5b7dd8d584b3196516ce807b9aa4e");
-            var keyPhraseResults = await textAnalyticsClient.ExtractKeyPhrasesAsync(content);
+            var keyPhraseResults = await textAnalyticsClient.ExtractKeyPhrasesAsync(vprKeyPhraseContent.Content);
 
             return new OkObjectResult(keyPhraseResults);
         }

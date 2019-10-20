@@ -1,5 +1,4 @@
-﻿using CodeHollow.FeedReader;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Text;
@@ -7,7 +6,6 @@ using System.Threading.Tasks;
 using Newtonsoft.Json;
 using ViewPointReader.Core.Models;
 using ViewPointReader.Rss.Interfaces;
-using FeedItem = CodeHollow.FeedReader.FeedItem;
 
 namespace ViewPointReader.Rss
 {
@@ -49,25 +47,16 @@ namespace ViewPointReader.Rss
             return results;
         }
 
-        public Task<List<FeedItem>> LoadSubscribedFeeds()
+        public async Task<List<FeedSubscription>> SearchForFeedsAsync(string queryText)
         {
-            throw new NotImplementedException();
-        }
-
-        public async Task<List<Feed>> SearchForFeedsAsync(string queryText)
-        {
-            var results = new List<Feed>();
+            var results = new List<FeedSubscription>();
  
             try
             {
                 var uri = new System.Uri(SearchUri + "'" + queryText + " rss" + "'");
 
                 var responseString = await _httpClient.GetStringAsync(uri);
-                results = JsonConvert.DeserializeObject<List<Feed>>(responseString
-                , new JsonSerializerSettings
-                {
-                    TypeNameHandling = TypeNameHandling.Auto
-                });
+                results = JsonConvert.DeserializeObject<List<FeedSubscription>>(responseString);
             }
             catch (Exception e)
             {

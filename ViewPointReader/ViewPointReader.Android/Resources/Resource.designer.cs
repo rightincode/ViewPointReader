@@ -1323,7 +1323,6 @@ namespace ViewPointReader.Droid
 			global::Telerik.XamarinForms.Common.Android.Resource.Id.listMode = global::ViewPointReader.Droid.Resource.Id.listMode;
 			global::Telerik.XamarinForms.Common.Android.Resource.Id.list_item = global::ViewPointReader.Droid.Resource.Id.list_item;
 			global::Telerik.XamarinForms.Common.Android.Resource.Id.main_appbar = global::ViewPointReader.Droid.Resource.Id.main_appbar;
-			global::Telerik.XamarinForms.Common.Android.Resource.Id.main_scrollview = global::ViewPointReader.Droid.Resource.Id.main_scrollview;
 			global::Telerik.XamarinForms.Common.Android.Resource.Id.main_tablayout = global::ViewPointReader.Droid.Resource.Id.main_tablayout;
 			global::Telerik.XamarinForms.Common.Android.Resource.Id.main_toolbar = global::ViewPointReader.Droid.Resource.Id.main_toolbar;
 			global::Telerik.XamarinForms.Common.Android.Resource.Id.masked = global::ViewPointReader.Droid.Resource.Id.masked;
@@ -1420,7 +1419,6 @@ namespace ViewPointReader.Droid
 			global::Telerik.XamarinForms.Common.Android.Resource.Id.select_dialog_listview = global::ViewPointReader.Droid.Resource.Id.select_dialog_listview;
 			global::Telerik.XamarinForms.Common.Android.Resource.Id.selected = global::ViewPointReader.Droid.Resource.Id.selected;
 			global::Telerik.XamarinForms.Common.Android.Resource.Id.shellcontent_appbar = global::ViewPointReader.Droid.Resource.Id.shellcontent_appbar;
-			global::Telerik.XamarinForms.Common.Android.Resource.Id.shellcontent_scrollview = global::ViewPointReader.Droid.Resource.Id.shellcontent_scrollview;
 			global::Telerik.XamarinForms.Common.Android.Resource.Id.shellcontent_toolbar = global::ViewPointReader.Droid.Resource.Id.shellcontent_toolbar;
 			global::Telerik.XamarinForms.Common.Android.Resource.Id.shortcut = global::ViewPointReader.Droid.Resource.Id.shortcut;
 			global::Telerik.XamarinForms.Common.Android.Resource.Id.showCustom = global::ViewPointReader.Droid.Resource.Id.showCustom;
@@ -4368,7 +4366,6 @@ namespace ViewPointReader.Droid
 			global::Telerik.XamarinForms.ConversationalUIRenderer.Android.Resource.Id.listMode = global::ViewPointReader.Droid.Resource.Id.listMode;
 			global::Telerik.XamarinForms.ConversationalUIRenderer.Android.Resource.Id.list_item = global::ViewPointReader.Droid.Resource.Id.list_item;
 			global::Telerik.XamarinForms.ConversationalUIRenderer.Android.Resource.Id.main_appbar = global::ViewPointReader.Droid.Resource.Id.main_appbar;
-			global::Telerik.XamarinForms.ConversationalUIRenderer.Android.Resource.Id.main_scrollview = global::ViewPointReader.Droid.Resource.Id.main_scrollview;
 			global::Telerik.XamarinForms.ConversationalUIRenderer.Android.Resource.Id.main_tablayout = global::ViewPointReader.Droid.Resource.Id.main_tablayout;
 			global::Telerik.XamarinForms.ConversationalUIRenderer.Android.Resource.Id.main_toolbar = global::ViewPointReader.Droid.Resource.Id.main_toolbar;
 			global::Telerik.XamarinForms.ConversationalUIRenderer.Android.Resource.Id.masked = global::ViewPointReader.Droid.Resource.Id.masked;
@@ -4474,7 +4471,6 @@ namespace ViewPointReader.Droid
 			global::Telerik.XamarinForms.ConversationalUIRenderer.Android.Resource.Id.select_dialog_listview = global::ViewPointReader.Droid.Resource.Id.select_dialog_listview;
 			global::Telerik.XamarinForms.ConversationalUIRenderer.Android.Resource.Id.selected = global::ViewPointReader.Droid.Resource.Id.selected;
 			global::Telerik.XamarinForms.ConversationalUIRenderer.Android.Resource.Id.shellcontent_appbar = global::ViewPointReader.Droid.Resource.Id.shellcontent_appbar;
-			global::Telerik.XamarinForms.ConversationalUIRenderer.Android.Resource.Id.shellcontent_scrollview = global::ViewPointReader.Droid.Resource.Id.shellcontent_scrollview;
 			global::Telerik.XamarinForms.ConversationalUIRenderer.Android.Resource.Id.shellcontent_toolbar = global::ViewPointReader.Droid.Resource.Id.shellcontent_toolbar;
 			global::Telerik.XamarinForms.ConversationalUIRenderer.Android.Resource.Id.shortcut = global::ViewPointReader.Droid.Resource.Id.shortcut;
 			global::Telerik.XamarinForms.ConversationalUIRenderer.Android.Resource.Id.showCustom = global::ViewPointReader.Droid.Resource.Id.showCustom;
@@ -7421,7 +7417,6 @@ namespace ViewPointReader.Droid
 			global::Telerik.XamarinForms.DataControlsRenderer.Android.Resource.Id.listMode = global::ViewPointReader.Droid.Resource.Id.listMode;
 			global::Telerik.XamarinForms.DataControlsRenderer.Android.Resource.Id.list_item = global::ViewPointReader.Droid.Resource.Id.list_item;
 			global::Telerik.XamarinForms.DataControlsRenderer.Android.Resource.Id.main_appbar = global::ViewPointReader.Droid.Resource.Id.main_appbar;
-			global::Telerik.XamarinForms.DataControlsRenderer.Android.Resource.Id.main_scrollview = global::ViewPointReader.Droid.Resource.Id.main_scrollview;
 			global::Telerik.XamarinForms.DataControlsRenderer.Android.Resource.Id.main_tablayout = global::ViewPointReader.Droid.Resource.Id.main_tablayout;
 			global::Telerik.XamarinForms.DataControlsRenderer.Android.Resource.Id.main_toolbar = global::ViewPointReader.Droid.Resource.Id.main_toolbar;
 			global::Telerik.XamarinForms.DataControlsRenderer.Android.Resource.Id.masked = global::ViewPointReader.Droid.Resource.Id.masked;
@@ -7520,7 +7515,6 @@ namespace ViewPointReader.Droid
 			global::Telerik.XamarinForms.DataControlsRenderer.Android.Resource.Id.select_dialog_listview = global::ViewPointReader.Droid.Resource.Id.select_dialog_listview;
 			global::Telerik.XamarinForms.DataControlsRenderer.Android.Resource.Id.selected = global::ViewPointReader.Droid.Resource.Id.selected;
 			global::Telerik.XamarinForms.DataControlsRenderer.Android.Resource.Id.shellcontent_appbar = global::ViewPointReader.Droid.Resource.Id.shellcontent_appbar;
-			global::Telerik.XamarinForms.DataControlsRenderer.Android.Resource.Id.shellcontent_scrollview = global::ViewPointReader.Droid.Resource.Id.shellcontent_scrollview;
 			global::Telerik.XamarinForms.DataControlsRenderer.Android.Resource.Id.shellcontent_toolbar = global::ViewPointReader.Droid.Resource.Id.shellcontent_toolbar;
 			global::Telerik.XamarinForms.DataControlsRenderer.Android.Resource.Id.shortcut = global::ViewPointReader.Droid.Resource.Id.shortcut;
 			global::Telerik.XamarinForms.DataControlsRenderer.Android.Resource.Id.showCustom = global::ViewPointReader.Droid.Resource.Id.showCustom;
@@ -10402,7 +10396,6 @@ namespace ViewPointReader.Droid
 			global::Telerik.XamarinForms.ImageEditor.Resource.Id.listMode = global::ViewPointReader.Droid.Resource.Id.listMode;
 			global::Telerik.XamarinForms.ImageEditor.Resource.Id.list_item = global::ViewPointReader.Droid.Resource.Id.list_item;
 			global::Telerik.XamarinForms.ImageEditor.Resource.Id.main_appbar = global::ViewPointReader.Droid.Resource.Id.main_appbar;
-			global::Telerik.XamarinForms.ImageEditor.Resource.Id.main_scrollview = global::ViewPointReader.Droid.Resource.Id.main_scrollview;
 			global::Telerik.XamarinForms.ImageEditor.Resource.Id.main_tablayout = global::ViewPointReader.Droid.Resource.Id.main_tablayout;
 			global::Telerik.XamarinForms.ImageEditor.Resource.Id.main_toolbar = global::ViewPointReader.Droid.Resource.Id.main_toolbar;
 			global::Telerik.XamarinForms.ImageEditor.Resource.Id.masked = global::ViewPointReader.Droid.Resource.Id.masked;
@@ -10501,7 +10494,6 @@ namespace ViewPointReader.Droid
 			global::Telerik.XamarinForms.ImageEditor.Resource.Id.select_dialog_listview = global::ViewPointReader.Droid.Resource.Id.select_dialog_listview;
 			global::Telerik.XamarinForms.ImageEditor.Resource.Id.selected = global::ViewPointReader.Droid.Resource.Id.selected;
 			global::Telerik.XamarinForms.ImageEditor.Resource.Id.shellcontent_appbar = global::ViewPointReader.Droid.Resource.Id.shellcontent_appbar;
-			global::Telerik.XamarinForms.ImageEditor.Resource.Id.shellcontent_scrollview = global::ViewPointReader.Droid.Resource.Id.shellcontent_scrollview;
 			global::Telerik.XamarinForms.ImageEditor.Resource.Id.shellcontent_toolbar = global::ViewPointReader.Droid.Resource.Id.shellcontent_toolbar;
 			global::Telerik.XamarinForms.ImageEditor.Resource.Id.shortcut = global::ViewPointReader.Droid.Resource.Id.shortcut;
 			global::Telerik.XamarinForms.ImageEditor.Resource.Id.showCustom = global::ViewPointReader.Droid.Resource.Id.showCustom;
@@ -13480,7 +13472,6 @@ namespace ViewPointReader.Droid
 			global::Telerik.XamarinForms.InputRenderer.Android.Resource.Id.listMode = global::ViewPointReader.Droid.Resource.Id.listMode;
 			global::Telerik.XamarinForms.InputRenderer.Android.Resource.Id.list_item = global::ViewPointReader.Droid.Resource.Id.list_item;
 			global::Telerik.XamarinForms.InputRenderer.Android.Resource.Id.main_appbar = global::ViewPointReader.Droid.Resource.Id.main_appbar;
-			global::Telerik.XamarinForms.InputRenderer.Android.Resource.Id.main_scrollview = global::ViewPointReader.Droid.Resource.Id.main_scrollview;
 			global::Telerik.XamarinForms.InputRenderer.Android.Resource.Id.main_tablayout = global::ViewPointReader.Droid.Resource.Id.main_tablayout;
 			global::Telerik.XamarinForms.InputRenderer.Android.Resource.Id.main_toolbar = global::ViewPointReader.Droid.Resource.Id.main_toolbar;
 			global::Telerik.XamarinForms.InputRenderer.Android.Resource.Id.masked = global::ViewPointReader.Droid.Resource.Id.masked;
@@ -13586,7 +13577,6 @@ namespace ViewPointReader.Droid
 			global::Telerik.XamarinForms.InputRenderer.Android.Resource.Id.select_dialog_listview = global::ViewPointReader.Droid.Resource.Id.select_dialog_listview;
 			global::Telerik.XamarinForms.InputRenderer.Android.Resource.Id.selected = global::ViewPointReader.Droid.Resource.Id.selected;
 			global::Telerik.XamarinForms.InputRenderer.Android.Resource.Id.shellcontent_appbar = global::ViewPointReader.Droid.Resource.Id.shellcontent_appbar;
-			global::Telerik.XamarinForms.InputRenderer.Android.Resource.Id.shellcontent_scrollview = global::ViewPointReader.Droid.Resource.Id.shellcontent_scrollview;
 			global::Telerik.XamarinForms.InputRenderer.Android.Resource.Id.shellcontent_toolbar = global::ViewPointReader.Droid.Resource.Id.shellcontent_toolbar;
 			global::Telerik.XamarinForms.InputRenderer.Android.Resource.Id.shortcut = global::ViewPointReader.Droid.Resource.Id.shortcut;
 			global::Telerik.XamarinForms.InputRenderer.Android.Resource.Id.showCustom = global::ViewPointReader.Droid.Resource.Id.showCustom;
@@ -16514,7 +16504,6 @@ namespace ViewPointReader.Droid
 			global::Telerik.XamarinForms.PrimitivesRenderer.Android.Resource.Id.listMode = global::ViewPointReader.Droid.Resource.Id.listMode;
 			global::Telerik.XamarinForms.PrimitivesRenderer.Android.Resource.Id.list_item = global::ViewPointReader.Droid.Resource.Id.list_item;
 			global::Telerik.XamarinForms.PrimitivesRenderer.Android.Resource.Id.main_appbar = global::ViewPointReader.Droid.Resource.Id.main_appbar;
-			global::Telerik.XamarinForms.PrimitivesRenderer.Android.Resource.Id.main_scrollview = global::ViewPointReader.Droid.Resource.Id.main_scrollview;
 			global::Telerik.XamarinForms.PrimitivesRenderer.Android.Resource.Id.main_tablayout = global::ViewPointReader.Droid.Resource.Id.main_tablayout;
 			global::Telerik.XamarinForms.PrimitivesRenderer.Android.Resource.Id.main_toolbar = global::ViewPointReader.Droid.Resource.Id.main_toolbar;
 			global::Telerik.XamarinForms.PrimitivesRenderer.Android.Resource.Id.masked = global::ViewPointReader.Droid.Resource.Id.masked;
@@ -16613,7 +16602,6 @@ namespace ViewPointReader.Droid
 			global::Telerik.XamarinForms.PrimitivesRenderer.Android.Resource.Id.select_dialog_listview = global::ViewPointReader.Droid.Resource.Id.select_dialog_listview;
 			global::Telerik.XamarinForms.PrimitivesRenderer.Android.Resource.Id.selected = global::ViewPointReader.Droid.Resource.Id.selected;
 			global::Telerik.XamarinForms.PrimitivesRenderer.Android.Resource.Id.shellcontent_appbar = global::ViewPointReader.Droid.Resource.Id.shellcontent_appbar;
-			global::Telerik.XamarinForms.PrimitivesRenderer.Android.Resource.Id.shellcontent_scrollview = global::ViewPointReader.Droid.Resource.Id.shellcontent_scrollview;
 			global::Telerik.XamarinForms.PrimitivesRenderer.Android.Resource.Id.shellcontent_toolbar = global::ViewPointReader.Droid.Resource.Id.shellcontent_toolbar;
 			global::Telerik.XamarinForms.PrimitivesRenderer.Android.Resource.Id.shortcut = global::ViewPointReader.Droid.Resource.Id.shortcut;
 			global::Telerik.XamarinForms.PrimitivesRenderer.Android.Resource.Id.showCustom = global::ViewPointReader.Droid.Resource.Id.showCustom;
@@ -19397,9 +19385,9 @@ namespace ViewPointReader.Droid
 			global::Xamarin.Forms.Platform.Android.Resource.Id.listMode = global::ViewPointReader.Droid.Resource.Id.listMode;
 			global::Xamarin.Forms.Platform.Android.Resource.Id.list_item = global::ViewPointReader.Droid.Resource.Id.list_item;
 			global::Xamarin.Forms.Platform.Android.Resource.Id.main_appbar = global::ViewPointReader.Droid.Resource.Id.main_appbar;
-			global::Xamarin.Forms.Platform.Android.Resource.Id.main_scrollview = global::ViewPointReader.Droid.Resource.Id.main_scrollview;
 			global::Xamarin.Forms.Platform.Android.Resource.Id.main_tablayout = global::ViewPointReader.Droid.Resource.Id.main_tablayout;
 			global::Xamarin.Forms.Platform.Android.Resource.Id.main_toolbar = global::ViewPointReader.Droid.Resource.Id.main_toolbar;
+			global::Xamarin.Forms.Platform.Android.Resource.Id.main_viewpager = global::ViewPointReader.Droid.Resource.Id.main_viewpager;
 			global::Xamarin.Forms.Platform.Android.Resource.Id.masked = global::ViewPointReader.Droid.Resource.Id.masked;
 			global::Xamarin.Forms.Platform.Android.Resource.Id.media_actions = global::ViewPointReader.Droid.Resource.Id.media_actions;
 			global::Xamarin.Forms.Platform.Android.Resource.Id.message = global::ViewPointReader.Droid.Resource.Id.message;
@@ -19448,7 +19436,6 @@ namespace ViewPointReader.Droid
 			global::Xamarin.Forms.Platform.Android.Resource.Id.select_dialog_listview = global::ViewPointReader.Droid.Resource.Id.select_dialog_listview;
 			global::Xamarin.Forms.Platform.Android.Resource.Id.selected = global::ViewPointReader.Droid.Resource.Id.selected;
 			global::Xamarin.Forms.Platform.Android.Resource.Id.shellcontent_appbar = global::ViewPointReader.Droid.Resource.Id.shellcontent_appbar;
-			global::Xamarin.Forms.Platform.Android.Resource.Id.shellcontent_scrollview = global::ViewPointReader.Droid.Resource.Id.shellcontent_scrollview;
 			global::Xamarin.Forms.Platform.Android.Resource.Id.shellcontent_toolbar = global::ViewPointReader.Droid.Resource.Id.shellcontent_toolbar;
 			global::Xamarin.Forms.Platform.Android.Resource.Id.shortcut = global::ViewPointReader.Droid.Resource.Id.shortcut;
 			global::Xamarin.Forms.Platform.Android.Resource.Id.showCustom = global::ViewPointReader.Droid.Resource.Id.showCustom;
@@ -20142,6 +20129,7 @@ namespace ViewPointReader.Droid
 			global::Xamarin.Forms.Platform.Android.Resource.Style.Widget_MaterialComponents_TextInputLayout_OutlinedBox_Dense = global::ViewPointReader.Droid.Resource.Style.Widget_MaterialComponents_TextInputLayout_OutlinedBox_Dense;
 			global::Xamarin.Forms.Platform.Android.Resource.Style.Widget_MaterialComponents_Toolbar = global::ViewPointReader.Droid.Resource.Style.Widget_MaterialComponents_Toolbar;
 			global::Xamarin.Forms.Platform.Android.Resource.Style.Widget_Support_CoordinatorLayout = global::ViewPointReader.Droid.Resource.Style.Widget_Support_CoordinatorLayout;
+			global::Xamarin.Forms.Platform.Android.Resource.Style.collectionViewStyle = global::ViewPointReader.Droid.Resource.Style.collectionViewStyle;
 			global::Xamarin.Forms.Platform.Android.Resource.Styleable.ActionBar = global::ViewPointReader.Droid.Resource.Styleable.ActionBar;
 			global::Xamarin.Forms.Platform.Android.Resource.Styleable.ActionBar_background = global::ViewPointReader.Droid.Resource.Styleable.ActionBar_background;
 			global::Xamarin.Forms.Platform.Android.Resource.Styleable.ActionBar_backgroundSplit = global::ViewPointReader.Droid.Resource.Styleable.ActionBar_backgroundSplit;
@@ -25535,13 +25523,13 @@ namespace ViewPointReader.Droid
 			public const int main_appbar = 2131230906;
 			
 			// aapt resource value: 0x7F0800BB
-			public const int main_scrollview = 2131230907;
+			public const int main_tablayout = 2131230907;
 			
 			// aapt resource value: 0x7F0800BC
-			public const int main_tablayout = 2131230908;
+			public const int main_toolbar = 2131230908;
 			
 			// aapt resource value: 0x7F0800BD
-			public const int main_toolbar = 2131230909;
+			public const int main_viewpager = 2131230909;
 			
 			// aapt resource value: 0x7F0800BE
 			public const int masked = 2131230910;
@@ -25735,11 +25723,11 @@ namespace ViewPointReader.Droid
 			// aapt resource value: 0x7F0800F7
 			public const int never = 2131230967;
 			
-			// aapt resource value: 0x7F080016
-			public const int None = 2131230742;
-			
 			// aapt resource value: 0x7F0800F8
 			public const int none = 2131230968;
+			
+			// aapt resource value: 0x7F080016
+			public const int None = 2131230742;
 			
 			// aapt resource value: 0x7F0800F9
 			public const int normal = 2131230969;
@@ -25901,61 +25889,58 @@ namespace ViewPointReader.Droid
 			public const int shellcontent_appbar = 2131231014;
 			
 			// aapt resource value: 0x7F080127
-			public const int shellcontent_scrollview = 2131231015;
-			
-			// aapt resource value: 0x7F080128
-			public const int shellcontent_toolbar = 2131231016;
+			public const int shellcontent_toolbar = 2131231015;
 			
 			// aapt resource value: 0x7F08001D
 			public const int SHIFT = 2131230749;
 			
+			// aapt resource value: 0x7F080128
+			public const int shortcut = 2131231016;
+			
 			// aapt resource value: 0x7F080129
-			public const int shortcut = 2131231017;
+			public const int showCustom = 2131231017;
 			
 			// aapt resource value: 0x7F08012A
-			public const int showCustom = 2131231018;
+			public const int showHome = 2131231018;
 			
 			// aapt resource value: 0x7F08012B
-			public const int showHome = 2131231019;
-			
-			// aapt resource value: 0x7F08012C
-			public const int showTitle = 2131231020;
+			public const int showTitle = 2131231019;
 			
 			// aapt resource value: 0x7F080020
 			public const int Single = 2131230752;
 			
+			// aapt resource value: 0x7F08012C
+			public const int sliding_tabs = 2131231020;
+			
 			// aapt resource value: 0x7F08012D
-			public const int sliding_tabs = 2131231021;
+			public const int smallLabel = 2131231021;
 			
 			// aapt resource value: 0x7F08012E
-			public const int smallLabel = 2131231022;
+			public const int snackbar_action = 2131231022;
 			
 			// aapt resource value: 0x7F08012F
-			public const int snackbar_action = 2131231023;
+			public const int snackbar_text = 2131231023;
 			
 			// aapt resource value: 0x7F080130
-			public const int snackbar_text = 2131231024;
+			public const int snap = 2131231024;
 			
 			// aapt resource value: 0x7F080131
-			public const int snap = 2131231025;
+			public const int snapMargins = 2131231025;
 			
 			// aapt resource value: 0x7F080132
-			public const int snapMargins = 2131231026;
+			public const int spacer = 2131231026;
 			
 			// aapt resource value: 0x7F080133
-			public const int spacer = 2131231027;
+			public const int split_action_bar = 2131231027;
 			
 			// aapt resource value: 0x7F080134
-			public const int split_action_bar = 2131231028;
+			public const int src_atop = 2131231028;
 			
 			// aapt resource value: 0x7F080135
-			public const int src_atop = 2131231029;
+			public const int src_in = 2131231029;
 			
 			// aapt resource value: 0x7F080136
-			public const int src_in = 2131231030;
-			
-			// aapt resource value: 0x7F080137
-			public const int src_over = 2131231031;
+			public const int src_over = 2131231030;
 			
 			// aapt resource value: 0x7F080021
 			public const int Stack = 2131230753;
@@ -25963,173 +25948,173 @@ namespace ViewPointReader.Droid
 			// aapt resource value: 0x7F080022
 			public const int Stack100 = 2131230754;
 			
+			// aapt resource value: 0x7F080137
+			public const int start = 2131231031;
+			
 			// aapt resource value: 0x7F080138
-			public const int start = 2131231032;
+			public const int status_bar_latest_event_content = 2131231032;
 			
 			// aapt resource value: 0x7F080139
-			public const int status_bar_latest_event_content = 2131231033;
+			public const int stretch = 2131231033;
 			
 			// aapt resource value: 0x7F08013A
-			public const int stretch = 2131231034;
+			public const int submenuarrow = 2131231034;
 			
 			// aapt resource value: 0x7F08013B
-			public const int submenuarrow = 2131231035;
+			public const int submit_area = 2131231035;
 			
 			// aapt resource value: 0x7F08013C
-			public const int submit_area = 2131231036;
+			public const int suggestion_img = 2131231036;
 			
 			// aapt resource value: 0x7F08013D
-			public const int suggestion_img = 2131231037;
-			
-			// aapt resource value: 0x7F08013E
-			public const int suggestion_text = 2131231038;
+			public const int suggestion_text = 2131231037;
 			
 			// aapt resource value: 0x7F08001E
 			public const int SYM = 2131230750;
 			
+			// aapt resource value: 0x7F08013E
+			public const int tabItemImageView = 2131231038;
+			
 			// aapt resource value: 0x7F08013F
-			public const int tabItemImageView = 2131231039;
+			public const int tabItemTextView = 2131231039;
 			
 			// aapt resource value: 0x7F080140
-			public const int tabItemTextView = 2131231040;
+			public const int tabMode = 2131231040;
 			
 			// aapt resource value: 0x7F080141
-			public const int tabMode = 2131231041;
+			public const int tag_transition_group = 2131231041;
 			
 			// aapt resource value: 0x7F080142
-			public const int tag_transition_group = 2131231042;
+			public const int tag_unhandled_key_event_manager = 2131231042;
 			
 			// aapt resource value: 0x7F080143
-			public const int tag_unhandled_key_event_manager = 2131231043;
+			public const int tag_unhandled_key_listeners = 2131231043;
 			
 			// aapt resource value: 0x7F080144
-			public const int tag_unhandled_key_listeners = 2131231044;
+			public const int text = 2131231044;
 			
 			// aapt resource value: 0x7F080145
-			public const int text = 2131231045;
+			public const int text1 = 2131231045;
 			
 			// aapt resource value: 0x7F080146
-			public const int text1 = 2131231046;
-			
-			// aapt resource value: 0x7F080147
-			public const int text2 = 2131231047;
-			
-			// aapt resource value: 0x7F08014C
-			public const int textinput_counter = 2131231052;
-			
-			// aapt resource value: 0x7F08014D
-			public const int textinput_error = 2131231053;
-			
-			// aapt resource value: 0x7F08014E
-			public const int textinput_helper_text = 2131231054;
-			
-			// aapt resource value: 0x7F080148
-			public const int textSpacerNoButtons = 2131231048;
-			
-			// aapt resource value: 0x7F080149
-			public const int textSpacerNoTitle = 2131231049;
-			
-			// aapt resource value: 0x7F08014A
-			public const int textStart = 2131231050;
+			public const int text2 = 2131231046;
 			
 			// aapt resource value: 0x7F08014B
-			public const int text_input_password_toggle = 2131231051;
+			public const int textinput_counter = 2131231051;
 			
-			// aapt resource value: 0x7F08014F
-			public const int time = 2131231055;
+			// aapt resource value: 0x7F08014C
+			public const int textinput_error = 2131231052;
+			
+			// aapt resource value: 0x7F08014D
+			public const int textinput_helper_text = 2131231053;
+			
+			// aapt resource value: 0x7F080147
+			public const int textSpacerNoButtons = 2131231047;
+			
+			// aapt resource value: 0x7F080148
+			public const int textSpacerNoTitle = 2131231048;
+			
+			// aapt resource value: 0x7F080149
+			public const int textStart = 2131231049;
+			
+			// aapt resource value: 0x7F08014A
+			public const int text_input_password_toggle = 2131231050;
+			
+			// aapt resource value: 0x7F08014E
+			public const int time = 2131231054;
 			
 			// aapt resource value: 0x7F080023
 			public const int TimeOfDay = 2131230755;
 			
+			// aapt resource value: 0x7F08014F
+			public const int title = 2131231055;
+			
 			// aapt resource value: 0x7F080150
-			public const int title = 2131231056;
+			public const int titleDividerNoCustom = 2131231056;
 			
 			// aapt resource value: 0x7F080151
-			public const int titleDividerNoCustom = 2131231057;
+			public const int title_template = 2131231057;
 			
 			// aapt resource value: 0x7F080152
-			public const int title_template = 2131231058;
+			public const int toolbar = 2131231058;
 			
 			// aapt resource value: 0x7F080153
-			public const int toolbar = 2131231059;
-			
-			// aapt resource value: 0x7F080154
-			public const int tooltip_content_container = 2131231060;
+			public const int tooltip_content_container = 2131231059;
 			
 			// aapt resource value: 0x7F080024
 			public const int Top = 2131230756;
 			
+			// aapt resource value: 0x7F080154
+			public const int top = 2131231060;
+			
 			// aapt resource value: 0x7F080155
-			public const int top = 2131231061;
+			public const int topPanel = 2131231061;
 			
 			// aapt resource value: 0x7F080156
-			public const int topPanel = 2131231062;
+			public const int touch_outside = 2131231062;
 			
 			// aapt resource value: 0x7F080157
-			public const int touch_outside = 2131231063;
+			public const int trackball_points_list = 2131231063;
 			
 			// aapt resource value: 0x7F080158
-			public const int trackball_points_list = 2131231064;
+			public const int transition_current_scene = 2131231064;
 			
 			// aapt resource value: 0x7F080159
-			public const int transition_current_scene = 2131231065;
+			public const int transition_layout_save = 2131231065;
 			
 			// aapt resource value: 0x7F08015A
-			public const int transition_layout_save = 2131231066;
+			public const int transition_position = 2131231066;
 			
 			// aapt resource value: 0x7F08015B
-			public const int transition_position = 2131231067;
+			public const int transition_scene_layoutid_cache = 2131231067;
 			
 			// aapt resource value: 0x7F08015C
-			public const int transition_scene_layoutid_cache = 2131231068;
+			public const int transition_transform = 2131231068;
 			
 			// aapt resource value: 0x7F08015D
-			public const int transition_transform = 2131231069;
+			public const int uniform = 2131231069;
 			
 			// aapt resource value: 0x7F08015E
-			public const int uniform = 2131231070;
+			public const int unlabeled = 2131231070;
 			
 			// aapt resource value: 0x7F08015F
-			public const int unlabeled = 2131231071;
+			public const int up = 2131231071;
 			
 			// aapt resource value: 0x7F080160
-			public const int up = 2131231072;
+			public const int useLogo = 2131231072;
 			
 			// aapt resource value: 0x7F080161
-			public const int useLogo = 2131231073;
+			public const int vertical = 2131231073;
 			
 			// aapt resource value: 0x7F080162
-			public const int vertical = 2131231074;
+			public const int view_offset_helper = 2131231074;
 			
 			// aapt resource value: 0x7F080163
-			public const int view_offset_helper = 2131231075;
-			
-			// aapt resource value: 0x7F080164
-			public const int visible = 2131231076;
+			public const int visible = 2131231075;
 			
 			// aapt resource value: 0x7F080025
 			public const int Visible = 2131230757;
 			
-			// aapt resource value: 0x7F080165
-			public const int volume_item_container = 2131231077;
+			// aapt resource value: 0x7F080164
+			public const int volume_item_container = 2131231076;
 			
 			// aapt resource value: 0x7F080026
 			public const int Week = 2131230758;
 			
+			// aapt resource value: 0x7F080165
+			public const int withText = 2131231077;
+			
 			// aapt resource value: 0x7F080166
-			public const int withText = 2131231078;
+			public const int wrap_content = 2131231078;
 			
 			// aapt resource value: 0x7F080167
-			public const int wrap_content = 2131231079;
-			
-			// aapt resource value: 0x7F080168
-			public const int xText = 2131231080;
+			public const int xText = 2131231079;
 			
 			// aapt resource value: 0x7F080027
 			public const int Year = 2131230759;
 			
-			// aapt resource value: 0x7F080169
-			public const int yText = 2131231081;
+			// aapt resource value: 0x7F080168
+			public const int yText = 2131231080;
 			
 			static Id()
 			{
@@ -27642,6 +27627,9 @@ namespace ViewPointReader.Droid
 			
 			// aapt resource value: 0x7F0E00D7
 			public const int ChartSeriesStyle_CategoricalSeriesStyle_TestBarSeriesStyle = 2131624151;
+			
+			// aapt resource value: 0x7F0E0222
+			public const int collectionViewStyle = 2131624482;
 			
 			// aapt resource value: 0x7F0E00D8
 			public const int CustomCheckBoxEditorThemeBlue = 2131624152;

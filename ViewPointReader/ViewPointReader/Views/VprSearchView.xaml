@@ -5,7 +5,7 @@
              xmlns:utils="clr-namespace:ViewPointReader.Utils;assembly=ViewPointReader"
              xmlns:telerikInput="clr-namespace:Telerik.XamarinForms.Input;assembly=Telerik.XamarinForms.Input"
              x:Class="ViewPointReader.Views.VprSearchView"
-             Title ="{Binding CurrentNetworkStatus}">
+             NavigationPage.HasNavigationBar="False">
     <ContentPage.Resources>
         <ResourceDictionary>
             <DataTemplate x:Key="BlogWithImage">
@@ -44,34 +44,34 @@
     </ContentPage.Resources>
 
     <StackLayout>
-        <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand">
+        <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand" Padding="5">
             <Entry x:Name="TxtSearchTerm" 
                    Placeholder="Enter topic..."
                    FontSize="Medium"
                    HorizontalOptions="FillAndExpand"
                    Text="{Binding SearchPhrase, Mode=TwoWay}"></Entry>
-            <Button x:Name="BtnSearch"
+            <telerikInput:RadButton WidthRequest="40" 
+                    HeightRequest="40"                                
                     Text="{x:Static fontawesome:FontAwesomeIcons.Search}"
                     FontFamily="{StaticResource FontAwesomeSolid}"
-                    FontSize="Medium"
-                    WidthRequest="50"
-                    IsEnabled="{Binding IsSearchEnabled}"
-                    Command="{Binding FeedSearchCommand}"></Button>
-            <!--<telerikInput:RadButton WidthRequest="50" 
-                    HeightRequest="50"                                
-                    Text="Circle Button" 
-                    FontSize="Micro" 
+                    FontSize="Medium" 
                     TextColor="White" 
                     BackgroundColor="DarkBlue" 
-                    BorderRadius="60"  />-->
+                    BorderRadius="60"
+                    IsEnabled="{Binding IsSearchEnabled}"
+                    Command="{Binding FeedSearchCommand}"/>
         </StackLayout>
         
         <StackLayout Orientation="Vertical">
-            <Button x:Name="BtnClear"
+            <telerikInput:RadButton
+                    FontSize="Small"
+                    TextColor="White" 
+                    BackgroundColor="DarkBlue" 
+                    HeightRequest="40"
+                    BorderRadius="10"
                     Text="Clear Search Results"
-                    WidthRequest="200"
                     IsVisible="{Binding IsClearSearchButtonVisible}"
-                    Command="{Binding ClearResultsCommand}"></Button>
+                    Command="{Binding ClearResultsCommand}"/>
             <ListView x:Name="SearchedSubscriptions"
                         ItemsSource="{Binding SearchResults}" 
                         HasUnevenRows="True" 
@@ -83,6 +83,7 @@
             </ListView>
         </StackLayout>
         <ActivityIndicator
+            Color="DarkBlue"
             HorizontalOptions="CenterAndExpand"
             VerticalOptions="CenterAndExpand"
             IsVisible="{Binding Searching}"

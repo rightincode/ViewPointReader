@@ -31,8 +31,13 @@ namespace ViewPointReader
         {
             InitializeComponent();
             StartupConfiguration();
-            
-            MainPage = new NavigationPage(new MainPage());
+
+            var vprMainPage = new NavigationPage(new MainPage())
+            {
+                BarBackgroundColor = Color.DarkBlue
+            };
+
+            MainPage = vprMainPage;
             ConfigureNavService();
         }
 

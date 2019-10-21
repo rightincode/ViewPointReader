@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:fontawesome="clr-namespace:ViewPointReader.Utils.FontAwesome;assembly=ViewPointReader"
              xmlns:utils="clr-namespace:ViewPointReader.Utils;assembly=ViewPointReader"
+             xmlns:telerikInput="clr-namespace:Telerik.XamarinForms.Input;assembly=Telerik.XamarinForms.Input"
              x:Class="ViewPointReader.Views.VprSearchView"
              Title ="{Binding CurrentNetworkStatus}">
     <ContentPage.Resources>
@@ -42,7 +43,6 @@
         </ResourceDictionary>
     </ContentPage.Resources>
 
-
     <StackLayout>
         <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand">
             <Entry x:Name="TxtSearchTerm" 
@@ -57,6 +57,13 @@
                     WidthRequest="50"
                     IsEnabled="{Binding IsSearchEnabled}"
                     Command="{Binding FeedSearchCommand}"></Button>
+            <!--<telerikInput:RadButton WidthRequest="50" 
+                    HeightRequest="50"                                
+                    Text="Circle Button" 
+                    FontSize="Micro" 
+                    TextColor="White" 
+                    BackgroundColor="DarkBlue" 
+                    BorderRadius="60"  />-->
         </StackLayout>
         
         <StackLayout Orientation="Vertical">

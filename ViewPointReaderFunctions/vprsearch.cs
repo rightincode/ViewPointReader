@@ -154,7 +154,7 @@ namespace ViewPointReaderFunctions
                 feedSubscription.KeyPhrases = await ExtractKeyPhrasesAsync(feedSubscription.Description);
             }
 
-            feedSubscription = await ScoreFeed(feedSubscription);
+            feedSubscription = await ScoreFeedAsync(feedSubscription);
 
             if (feed.Items.Count == 0) return feedSubscription;
 
@@ -204,7 +204,7 @@ namespace ViewPointReaderFunctions
             return results;
         }
 
-        public static async Task<FeedSubscription> ScoreFeed(FeedSubscription feed)
+        public static async Task<FeedSubscription> ScoreFeedAsync(FeedSubscription feed)
         {
             var result = feed;
 

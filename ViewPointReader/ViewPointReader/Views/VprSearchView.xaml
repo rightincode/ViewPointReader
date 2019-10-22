@@ -46,10 +46,10 @@
     <StackLayout>
         <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand" Padding="5">
             <Entry x:Name="TxtSearchTerm" 
-                   Placeholder="Enter topic..."
-                   FontSize="Medium"
-                   HorizontalOptions="FillAndExpand"
-                   Text="{Binding SearchPhrase, Mode=TwoWay}"></Entry>
+                    Placeholder="Enter topic..."
+                    FontSize="Medium"
+                    HorizontalOptions="FillAndExpand"
+                    Text="{Binding SearchPhrase, Mode=TwoWay}"></Entry>
             <telerikInput:RadButton WidthRequest="40" 
                     HeightRequest="40"                                
                     Text="{x:Static fontawesome:FontAwesomeIcons.Search}"

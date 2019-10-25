@@ -3,7 +3,6 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:fontawesome="clr-namespace:ViewPointReader.Utils.FontAwesome;assembly=ViewPointReader"
              xmlns:utils="clr-namespace:ViewPointReader.Utils;assembly=ViewPointReader"
-             xmlns:telerikInput="clr-namespace:Telerik.XamarinForms.Input;assembly=Telerik.XamarinForms.Input"
              x:Class="ViewPointReader.Views.VprSearchView"
              NavigationPage.HasNavigationBar="False">
     <ContentPage.Resources>
@@ -50,28 +49,28 @@
                     FontSize="Medium"
                     HorizontalOptions="FillAndExpand"
                     Text="{Binding SearchPhrase, Mode=TwoWay}"></Entry>
-            <telerikInput:RadButton WidthRequest="40" 
-                    HeightRequest="40"                                
+            <Button WidthRequest="40"
+                    HeightRequest="40" 
+                    BorderRadius="20"
                     Text="{x:Static fontawesome:FontAwesomeIcons.Search}"
                     FontFamily="{StaticResource FontAwesomeSolid}"
                     FontSize="Medium" 
-                    TextColor="White" 
-                    BackgroundColor="DarkBlue" 
-                    BorderRadius="60"
+                    TextColor="White"
+                    BackgroundColor="DarkBlue"
                     IsEnabled="{Binding IsSearchEnabled}"
-                    Command="{Binding FeedSearchCommand}"/>
+                    Command="{Binding FeedSearchCommand}"></Button>
         </StackLayout>
         
         <StackLayout Orientation="Vertical">
-            <telerikInput:RadButton
-                    FontSize="Small"
+            <Button
+                FontSize="Small"
                     TextColor="White" 
                     BackgroundColor="DarkBlue" 
                     HeightRequest="40"
                     BorderRadius="10"
                     Text="Clear Search Results"
                     IsVisible="{Binding IsClearSearchButtonVisible}"
-                    Command="{Binding ClearResultsCommand}"/>
+                    Command="{Binding ClearResultsCommand}"></Button>
             <ListView x:Name="SearchedSubscriptions"
                         ItemsSource="{Binding SearchResults}" 
                         HasUnevenRows="True" 
